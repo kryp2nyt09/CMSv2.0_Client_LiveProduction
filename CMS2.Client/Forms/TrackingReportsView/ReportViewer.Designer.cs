@@ -41,6 +41,7 @@
             this.reportViewer1.ReportSource = typeReportSource1;
             this.reportViewer1.Size = new System.Drawing.Size(936, 532);
             this.reportViewer1.TabIndex = 0;
+            this.reportViewer1.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
             // 
             // ReportViewer
             // 
