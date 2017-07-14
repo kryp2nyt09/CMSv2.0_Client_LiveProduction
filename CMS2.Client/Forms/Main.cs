@@ -149,6 +149,7 @@ namespace CMS2.Client
         private HoldCargoBL holdCargoService;
         private DeliveryBL deliveryService;
         private DeliveryReceiptBL deliveryReceiptService;
+        private DeliveredPackageBL deliveredPackageService;
 
         private List<RevenueUnitType> revenueUnitTypes;
         private List<Airlines> airlines;
@@ -1848,6 +1849,7 @@ namespace CMS2.Client
             holdCargoService = new HoldCargoBL(GlobalVars.UnitOfWork);
             deliveryService = new DeliveryBL(GlobalVars.UnitOfWork);
             deliveryReceiptService = new DeliveryReceiptBL(GlobalVars.UnitOfWork);
+            deliveredPackageService = new DeliveredPackageBL(GlobalVars.UnitOfWork);
 
             revenueUnitTypes = new List<RevenueUnitType>();
             airlines = new List<Airlines>();
@@ -3952,7 +3954,7 @@ namespace CMS2.Client
 
 
         #endregion
-        
+
         #region TODO in creating Tracking Reports
         //TODO 1: Create container
 
@@ -4168,8 +4170,7 @@ namespace CMS2.Client
                         BranchAcceptanceViewModel isAirawayBillExist = _results.Find(x => x.AirwayBillNo == shipment.AirwayBillNo);
 
                         BranchAcceptance _brachAcceptance = _branchAcceptances.Find(x => x.Cargo == packagenumber.PackageNo);
-
-
+                        
                         if (_brachAcceptance != null)
                         {
                             if (isAirawayBillExist != null)
@@ -4680,7 +4681,6 @@ namespace CMS2.Client
             List<GatewayTransmitalViewModel> _results = new List<GatewayTransmitalViewModel>();
             try
             {
-
                 foreach (GatewayTransmittal transmital in _transmital)
                 {
                     GatewayTransmitalViewModel model = new GatewayTransmitalViewModel();
@@ -4724,12 +4724,12 @@ namespace CMS2.Client
                     }
                     else
                     {
-                        GatewayTransmitalViewModel isExist = _results.Find(x => x.AirwayBillNo == shipment.AirwayBillNo);
+                        GatewayTransmitalViewModel isExist = _results.Find(x => x.AirwayBillNo == transmital.AirwayBillNo);
 
                         if (isExist != null)
                         {
                             isExist.QTY++;
-                            isExist.AGW += Convert.ToDecimal(shipmentService.FilterActive().Find(x => x.AirwayBillNo == transmital.AirwayBillNo).Weight);
+                            isExist.AGW += shipment.Weight;
                         }
                         else
                         {
@@ -4967,68 +4967,64 @@ namespace CMS2.Client
                 foreach (GatewayOutbound outbound in outbounds)
                 {
                     GatewayOutboundViewModel model = new GatewayOutboundViewModel();
-                    try
+                    GatewayTransmittal transmittal = transmittals.Where(x => x.Cargo == outbound.Cargo).FirstOrDefault();
+                    if (transmittal == null)
                     {
-                        GatewayTransmittal transmittal = transmittals.Where(x => x.Cargo == outbound.Cargo).FirstOrDefault();
-                        if (transmittal == null)
-                        {
-                            transmittal = transmittals.Where(x => x.AirwayBillNo == outbound.Cargo).FirstOrDefault();
-                        }
-                        if (transmittal == null) continue;
+                        transmittal = transmittals.Where(x => x.AirwayBillNo == outbound.Cargo).FirstOrDefault();
+                    }
+                    if (transmittal == null) continue;
 
-                        GatewayOutboundViewModel isExist = _results.Find(x => x.AirwayBillNo == transmittal.AirwayBillNo);
-                        if (transmittals.Exists(x => x.Cargo == outbound.Cargo))
+                    GatewayOutboundViewModel isExist = _results.Find(x => x.AirwayBillNo == transmittal.AirwayBillNo);
+                    if (transmittals.Exists(x => x.Cargo == outbound.Cargo))
+                    {
+                        if (isExist != null)
                         {
-                            if (isExist != null)
-                            {
-                                isExist.TotalRecieved++;
-                                isExist.Total = isExist.TotalRecieved;
-                            }
-                            else
-                            {
-                                model.AirwayBillNo = transmittal.AirwayBillNo;
-                                model.Gateway = outbound.Gateway;
-                                model.Driver = outbound.Driver;
-                                model.PlateNo = outbound.PlateNo;
-                                model.Batch = outbound.Batch.BatchName;
-                                model.TotalRecieved++;
-                                model.Total = model.TotalRecieved;
-                                model.Destination = outbound.BranchCorpOffice.BranchCorpOfficeName;
-                                model.ScannedBy = outbound.OutboundBy.Employee.FullName;
-                                model.CommodityType = transmittal.CommodityType.CommodityTypeName;
-                                model.MAWB = "N/A";
-                                model.MAWB = outbound.MasterAirwayBill;
-
-                                _results.Add(model);
-                            }
+                            isExist.TotalRecieved++;
+                            isExist.Total = isExist.TotalRecieved;
                         }
                         else
                         {
-                            if (isExist != null)
-                            {
-                                isExist.TotalDiscrepency++;
-                                isExist.Total = isExist.TotalDiscrepency;
-                            }
-                            else
-                            {
-                                model.AirwayBillNo = transmittal.AirwayBillNo;
-                                model.Gateway = outbound.Gateway;
-                                model.Driver = outbound.Driver;
-                                model.PlateNo = outbound.PlateNo;
-                                model.Batch = outbound.Batch.BatchName;
-                                model.TotalDiscrepency++;
-                                model.Total = model.TotalDiscrepency;
-                                model.Destination = outbound.BranchCorpOffice.BranchCorpOfficeName;
-                                model.ScannedBy = outbound.OutboundBy.Employee.FullName;
-                                model.CommodityType = transmittal.CommodityType.CommodityTypeName;
-                                model.MAWB = "N/A";
-                                model.MAWB = outbound.MasterAirwayBill;
+                            model.AirwayBillNo = transmittal.AirwayBillNo;
+                            model.Gateway = outbound.Gateway;
+                            model.Driver = outbound.Driver;
+                            model.PlateNo = outbound.PlateNo;
+                            model.Batch = outbound.Batch.BatchName;
+                            model.TotalRecieved++;
+                            model.Total = model.TotalRecieved;
+                            model.Destination = outbound.BranchCorpOffice.BranchCorpOfficeName;
+                            model.ScannedBy = outbound.OutboundBy.Employee.FullName;
+                            model.CommodityType = transmittal.CommodityType.CommodityTypeName;
+                            model.MAWB = "N/A";
+                            model.MAWB = outbound.MasterAirwayBill;
 
-                                _results.Add(model);
-                            }
+                            _results.Add(model);
                         }
                     }
-                    catch (Exception) { continue; }
+                    else
+                    {
+                        if (isExist != null)
+                        {
+                            isExist.TotalDiscrepency++;
+                            isExist.Total = isExist.TotalDiscrepency;
+                        }
+                        else
+                        {
+                            model.AirwayBillNo = transmittal.AirwayBillNo;
+                            model.Gateway = outbound.Gateway;
+                            model.Driver = outbound.Driver;
+                            model.PlateNo = outbound.PlateNo;
+                            model.Batch = outbound.Batch.BatchName;
+                            model.TotalDiscrepency++;
+                            model.Total = model.TotalDiscrepency;
+                            model.Destination = outbound.BranchCorpOffice.BranchCorpOfficeName;
+                            model.ScannedBy = outbound.OutboundBy.Employee.FullName;
+                            model.CommodityType = transmittal.CommodityType.CommodityTypeName;
+                            model.MAWB = "N/A";
+                            model.MAWB = outbound.MasterAirwayBill;
+
+                            _results.Add(model);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -5719,7 +5715,7 @@ namespace CMS2.Client
                         model.Batch = segregation.Batch.BatchName;
                         model.AirwayBillNo = _packageNumber.Shipment.AirwayBillNo;
                         model.Qty++;
-                        model.Area = shipmentService.FilterActiveBy(x => x.AirwayBillNo == _packageNumber.Shipment.AirwayBillNo).FirstOrDefault().Booking.AssignedToArea.RevenueUnitName;
+                        model.Area = _packageNumber.Shipment.AcceptedBy.AssignedToArea.RevenueUnitName;
                         model.ScannedBy = segregation.SegregatedBy.Employee.FullName;
 
                         _results.Add(model);
@@ -6187,39 +6183,33 @@ namespace CMS2.Client
             List<DeliveryStatusViewModel> _results = new List<DeliveryStatusViewModel>();
             try
             {
-
                 foreach (Delivery delivery in _deliveries)
                 {
                     DeliveryStatusViewModel model = new DeliveryStatusViewModel();
+
                     DeliveryStatusViewModel isExist = _results.Find(x => x.AirwayBillNo == delivery.Shipment.AirwayBillNo);
 
-                    if (isExist != null)
+                    model.AirwayBillNo = delivery.Shipment.AirwayBillNo;
+                    model.QTY = delivery.DeliveredPackages.Count();
+                    model.Status = delivery.DeliveryStatus.DeliveryStatusName;
+                    model.Remarks = "NA";
+                    if (delivery.DeliveryRemark != null)
                     {
-                        isExist.QTY++;
+                        model.Remarks = delivery.DeliveryRemark.DeliveryRemarkName;
                     }
-                    else
-                    {
-                        model.AirwayBillNo = delivery.Shipment.AirwayBillNo;
-                        model.QTY++;
-                        model.Status = delivery.DeliveryStatus.DeliveryStatusName;
-                        model.Remarks = "NA";
-                        if (delivery.DeliveryRemark != null)
-                        {
-                            model.Remarks = delivery.DeliveryRemark.DeliveryRemarkName;
-                        }
-                        Distribution distribution = distributionService.FilterActiveBy(x => x.AirwayBillNo == delivery.Shipment.AirwayBillNo).FirstOrDefault();
-                        model.RevenueUnitType = distribution.Area.RevenueUnitType.RevenueUnitTypeName;
-                        model.Area = distribution.Area.RevenueUnitName;
-                        model.Driver = distribution.Driver;
-                        model.Checker = distribution.Checker;
-                        model.Batch = distribution.Batch.BatchName;
-                        model.PlateNo = distribution.PlateNo;
-                        model.BCO = distribution.Area.City.BranchCorpOffice.BranchCorpOfficeName;
-                        model.DeliveredBy = delivery.DeliveredBy.FullName;
-                        model.ScannedBy = delivery.DeliveredBy.FullName;
+                    Distribution distribution = distributionService.FilterActiveBy(x => x.AirwayBillNo == delivery.Shipment.AirwayBillNo).FirstOrDefault();
+                    model.RevenueUnitType = distribution.Area.RevenueUnitType.RevenueUnitTypeName;
+                    model.Area = distribution.Area.RevenueUnitName;
+                    model.Driver = distribution.Driver;
+                    model.Checker = distribution.Checker;
+                    model.Batch = distribution.Batch.BatchName;
+                    model.PlateNo = distribution.PlateNo;
+                    model.BCO = distribution.Area.City.BranchCorpOffice.BranchCorpOfficeName;
+                    model.DeliveredBy = delivery.DeliveredBy.FullName;
+                    model.ScannedBy = delivery.DeliveredBy.FullName;
 
-                        _results.Add(model);
-                    }
+                    _results.Add(model);
+
                 }
             }
             catch (Exception ex)
@@ -6849,7 +6839,7 @@ namespace CMS2.Client
             }
         }
         #endregion
-        
+
         #region Payment Summary Events
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -6990,7 +6980,7 @@ namespace CMS2.Client
                     saving.ShowDialog();
                     btnPrintPaymentSummary.Enabled = true;
                     //chk_ReceivedAll.Checked = false;
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -7520,7 +7510,7 @@ namespace CMS2.Client
                     ReportGlobalModel.Report = "PaymentSummaryReport";
                     ReportViewer viewer = new ReportViewer();
                     viewer.Show();
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -7533,7 +7523,7 @@ namespace CMS2.Client
                 x.PaymentSummaryStatus == paymentSummaryStatuses.Find(y => y.PaymentSummaryStatusName == PaymentSummaryStatuses.Validated)).ToList();
 
             List<PaymentSummary> Summaries = new List<PaymentSummary>();
-            Guid remmittedBy = PaymentSummaryToBeSave.Where(x => x.RemittedBy.FullName == lstRemittedBy.SelectedItem.Text  && x.IsSaved == false).First().RemittedById;
+            Guid remmittedBy = PaymentSummaryToBeSave.Where(x => x.RemittedBy.FullName == lstRemittedBy.SelectedItem.Text && x.IsSaved == false).First().RemittedById;
             foreach (PaymentSummaryDetails details in PaymentSummaryToBeSave)
             {
                 PaymentSummary summary = new PaymentSummary();

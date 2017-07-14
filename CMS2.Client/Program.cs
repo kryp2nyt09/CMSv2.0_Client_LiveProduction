@@ -12,8 +12,6 @@ namespace CMS2.Client
 {
     internal static class Program
     {
-        private static bool RestartApp = false;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
