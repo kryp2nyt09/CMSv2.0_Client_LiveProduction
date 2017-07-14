@@ -15,7 +15,7 @@ namespace AP_CARGO_SERVICE
 
         public SyncTables()
         {
-            Status = TableStatus.Good;
+            Status = TableStatus.Working;
             isSelected = false;
         }
 
@@ -68,8 +68,8 @@ namespace AP_CARGO_SERVICE
     public enum TableStatus
     {
         Fresh, // currently provision
-        Good, //sync working
-        Bad, //sync not working
+        Working, //sync working
+        Error, //sync not working
         Provisioned,
         Deprovisioned,
         ErrorProvision,

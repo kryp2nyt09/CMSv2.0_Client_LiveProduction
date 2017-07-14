@@ -102,6 +102,7 @@ namespace AP_CARGO_SERVICE
 
         public void PerformSync(Object obj)
         {
+
             State = (ThreadState)obj;
             SyncOrchestrator syncOrchestrator = new SyncOrchestrator();
             syncOrchestrator.LocalProvider = new SqlSyncProvider(_tableName + _filter, _localConnection);
@@ -112,7 +113,6 @@ namespace AP_CARGO_SERVICE
 
             switch (_tableName)
             {
-
                 case "Shipment":
                 case "PackageNumber":
                 case "PackageDimension":
@@ -125,28 +125,15 @@ namespace AP_CARGO_SERVICE
                 case "DeliveryReceipt":
                 case "Booking":
                 case "Client":
-                case "BranchAcceptance":
-                case "GatewayTransmittal":
-                case "GatewayInbound":
-                case "GatewayOutbound":
                 case "Bundle":
-                case "Unbundle":
-                case "HoldCargo":
-                case "Distribution":
-                case "Segregation":
-                case "CargoTransfer":
 
-                    syncOrchestrator.Direction = SyncDirectionOrder.UploadAndDownload;
 
                     try
                     {
-
+                        syncOrchestrator.Direction = SyncDirectionOrder.UploadAndDownload;
                         syncStats = syncOrchestrator.Synchronize();
-
-
                         Log.WriteLogs(_tableName + " Total Changes Uploaded: " + syncStats.UploadChangesTotal + " Total Changes Downloaded: " + syncStats.DownloadChangesTotal + " Total Changes applied: " + syncStats.DownloadChangesApplied + " Total Changes failed: " + syncStats.DownloadChangesFailed);
-
-                        State.table.Status = TableStatus.Good;
+                        State.table.Status = TableStatus.Working;
                         State.table.isSelected = false;
                         State.worker.ReportProgress(1, _tableName + " was synchronized.");
                         break;
@@ -156,7 +143,7 @@ namespace AP_CARGO_SERVICE
                         try
                         {
                             Log.WriteErrorLogs(ex);
-                            State.table.Status = TableStatus.Bad;
+                            State.table.Status = TableStatus.Error;
                             State.table.isSelected = true;
                             State.worker.ReportProgress(1, _tableName + " synchronize error.");
                         }
@@ -167,14 +154,24 @@ namespace AP_CARGO_SERVICE
                     }
                     break;
 
-                default:
-                    syncOrchestrator.Direction = SyncDirectionOrder.Download;
+                case "PaymentSummary":
+                case "BranchAcceptance":
+                case "GatewayTransmittal":
+                case "GatewayOutbound":
+                case "GatewayInbound":
+                case "Unbundle":
+                case "HoldCargo":
+                case "Distribution":
+                case "Segregation":
+                case "CargoTransfer":
+
+
                     try
                     {
+                        syncOrchestrator.Direction = SyncDirectionOrder.Upload;
                         syncStats = syncOrchestrator.Synchronize();
-
                         Log.WriteLogs(_tableName + " Total Changes Uploaded: " + syncStats.UploadChangesTotal + " Total Changes Downloaded: " + syncStats.DownloadChangesTotal + " Total Changes applied: " + syncStats.DownloadChangesApplied + " Total Changes failed: " + syncStats.DownloadChangesFailed);
-                        State.table.Status = TableStatus.Good;
+                        State.table.Status = TableStatus.Working;
                         State.table.isSelected = false;
                         State.worker.ReportProgress(1, _tableName + " was synchronized.");
                         break;
@@ -184,9 +181,39 @@ namespace AP_CARGO_SERVICE
                         try
                         {
                             Log.WriteErrorLogs(ex);
-                            State.table.Status = TableStatus.Bad;
+                            State.table.Status = TableStatus.Error;
                             State.table.isSelected = true;
                             State.worker.ReportProgress(1, _tableName + " synchronize error.");
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                    }
+                    break;
+                default:
+                    syncOrchestrator.Direction = SyncDirectionOrder.Download;
+                    try
+                    {
+                        syncStats = syncOrchestrator.Synchronize();
+
+                        Log.WriteLogs(_tableName + " Total Changes Uploaded: " + syncStats.UploadChangesTotal + " Total Changes Downloaded: " + syncStats.DownloadChangesTotal + " Total Changes applied: " + syncStats.DownloadChangesApplied + " Total Changes failed: " + syncStats.DownloadChangesFailed);
+
+                        State.table.Status = TableStatus.Working;
+                        State.table.isSelected = false;
+                        State.worker.ReportProgress(1, _tableName + " was synchronized.");
+                        //AddCount();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            Log.WriteErrorLogs(ex);
+                            State.table.Status = TableStatus.Error;
+                            State.table.isSelected = true;
+                            State.worker.ReportProgress(1, _tableName + " synchronize error.");
+                            //AddCount();
                         }
                         catch (Exception)
                         {
@@ -775,14 +802,14 @@ namespace AP_CARGO_SERVICE
      static class Log
     {
         private static string _fileName = "\\" + DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString() + ".txt";
-        public static async Task WriteLogs(string Logs)
+        public static void WriteLogs(string Logs)
         {
             string _filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs\\SyncTransactionLogs";
             System.IO.Directory.CreateDirectory(_filepath);
             System.IO.File.AppendAllText(_filepath + _fileName, Environment.NewLine + DateTime.Now.ToString() + " :: " + Logs);
         }
 
-        public static async Task WriteErrorLogs(Exception ex)
+        public static void WriteErrorLogs(Exception ex)
         {
             string _filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs\\SyncErrorLogs";
             System.IO.Directory.CreateDirectory(_filepath);
@@ -790,7 +817,7 @@ namespace AP_CARGO_SERVICE
             System.IO.File.AppendAllText(_filepath + _fileName, Environment.NewLine + DateTime.Now.ToString() + " :: " + ex.StackTrace.ToString());
         }
 
-        public static async Task WriteErrorLogs(string Location, Exception ex)
+        public static  void WriteErrorLogs(string Location, Exception ex)
         {
             string _filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs\\SyncErrorLogs";
             System.IO.Directory.CreateDirectory(_filepath);
