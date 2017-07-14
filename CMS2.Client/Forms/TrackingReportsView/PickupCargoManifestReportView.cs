@@ -27,8 +27,8 @@ namespace CMS2.Client.Forms.TrackingReportsView
 
             txtDate.Value = ReportGlobalModel.Date;
             txtArea.Value = ReportGlobalModel.Area;
-            txtDriver.Value = ReportGlobalModel.Driver;
-            txtChecker.Value = ReportGlobalModel.Checker;
+            //txtDriver.Value = ReportGlobalModel.Driver;
+            //txtChecker.Value = ReportGlobalModel.Checker;
             txtScannedBy.Value = ReportGlobalModel.ScannedBy;
         }
     }
