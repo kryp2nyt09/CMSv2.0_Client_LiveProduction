@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B446C38F-EA3B-4311-93C1-0A3C813229B5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CMS2.Entities</RootNamespace>
+    <AssemblyName>CMS2.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>C:\Users\Dev - Kim\Desktop\CMS2 Client Source Code\CMS Client Source Code\CMS2.BusinessLogic\bin\Debug\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>C:\Users\Dev - Kim\Desktop\CMS2 Client Source Code\CMS Client Source Code\CMS2.Client\bin\Debug\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>C:\Users\Dev - Kim\Desktop\CMS Repository\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>C:\Users\Dev - Kim\Desktop\CMS Repository\CMS2.Entities\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountStatus.cs" />
+    <Compile Include="AccountType.cs" />
+    <Compile Include="AdjustmentReason.cs" />
+    <Compile Include="Airlines.cs" />
+    <Compile Include="ApplicableRate.cs" />
+    <Compile Include="ApplicationSetting.cs" />
+    <Compile Include="ApprovingAuthority.cs" />
+    <Compile Include="AwbIssuance.cs" />
+    <Compile Include="Batch.cs" />
+    <Compile Include="BillingPeriod.cs" />
+    <Compile Include="Booking.cs" />
+    <Compile Include="BookingRemark.cs" />
+    <Compile Include="BookingStatus.cs" />
+    <Compile Include="BranchAcceptance.cs" />
+    <Compile Include="Bundle.cs" />
+    <Compile Include="CargoTransfer.cs" />
+    <Compile Include="Commodity.cs" />
+    <Compile Include="Crating.cs" />
+    <Compile Include="DeliveredPackage.cs" />
+    <Compile Include="DeliveryRemark.cs" />
+    <Compile Include="Distribution.cs" />
+    <Compile Include="FlightInformation.cs" />
+    <Compile Include="GatewayInbound.cs" />
+    <Compile Include="GatewayOutbound.cs" />
+    <Compile Include="GatewayTransmittal.cs" />
+    <Compile Include="GoodsDescription.cs" />
+    <Compile Include="HoldCargo.cs" />
+    <Compile Include="MenuAccess.cs" />
+    <Compile Include="Models\PackageDimensionModel.cs" />
+    <Compile Include="Models\PaymentSummaryDetails.cs" />
+    <Compile Include="Models\PaymentSummaryModel.cs" />
+    <Compile Include="Models\PaymentSummary_MainDetailsModel.cs" />
+    <Compile Include="Models\ShipmentByDateBcoModel.cs" />
+    <Compile Include="PackageNumberAcceptance.cs" />
+    <Compile Include="PackageNumberTransfer.cs" />
+    <Compile Include="PackageTransfer.cs" />
+    <Compile Include="Packaging.cs" />
+    <Compile Include="PaymentSummary.cs" />
+    <Compile Include="PaymentSummaryStatus.cs" />
+    <Compile Include="Province.cs" />
+    <Compile Include="RateMatrix.cs" />
+    <Compile Include="Reason.cs" />
+    <Compile Include="Remarks.cs" />
+    <Compile Include="ReportModel\BranchAcceptanceViewModel.cs" />
+    <Compile Include="ReportModel\BundleViewModel.cs" />
+    <Compile Include="ReportModel\CargoTransferViewModel.cs" />
+    <Compile Include="ReportModel\DailyTripViewModel.cs" />
+    <Compile Include="ReportModel\DeliveryStatusViewModel.cs" />
+    <Compile Include="ReportModel\GatewayInboundViewModel.cs" />
+    <Compile Include="ReportModel\GatewayOutboundViewModel.cs" />
+    <Compile Include="ReportModel\GatewayTransmitalViewModel.cs" />
+    <Compile Include="ReportModel\HoldCargoViewModel.cs" />
+    <Compile Include="ReportModel\PickupCargoManifestViewModel.cs" />
+    <Compile Include="ReportModel\SegregationViewModel.cs" />
+    <Compile Include="ReportModel\StatusModel.cs" />
+    <Compile Include="ReportModel\UnbundleViewModel.cs" />
+    <Compile Include="Segregation.cs" />
+    <Compile Include="ServiceType.cs" />
+    <Compile Include="ShipMode.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="Terminal.cs" />
+    <Compile Include="TerminalRevenueUnitMapping.cs" />
+    <Compile Include="TntMaint.cs" />
+    <Compile Include="BranchCorpOffice.cs" />
+    <Compile Include="BusinessType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="City.cs" />
+    <Compile Include="Claim.cs" />
+    <Compile Include="Cluster.cs" />
+    <Compile Include="CommodityType.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="Company.cs" />
+    <Compile Include="Delivery.cs" />
+    <Compile Include="DeliveryReceipt.cs" />
+    <Compile Include="DeliveryStatus.cs" />
+    <Compile Include="Department.cs" />
+    <Compile Include="Employee.cs" />
+    <Compile Include="Models\ShipmentModel.cs" />
+    <Compile Include="Models\StatementOfAccountModel.cs" />
+    <Compile Include="PackageDimension.cs" />
+    <Compile Include="PackageNumber.cs" />
+    <Compile Include="PaymentTurnover.cs" />
+    <Compile Include="Position.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="ExpressRate.cs" />
+    <Compile Include="FuelSurcharge.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="Industry.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="OrganizationType.cs" />
+    <Compile Include="Payment.cs" />
+    <Compile Include="PaymentMode.cs" />
+    <Compile Include="PaymentTerm.cs" />
+    <Compile Include="PaymentType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordChange.cs" />
+    <Compile Include="Region.cs" />
+    <Compile Include="RevenueUnit.cs" />
+    <Compile Include="RevenueUnitType.cs" />
+    <Compile Include="RoleUser.cs" />
+    <Compile Include="ServiceMode.cs" />
+    <Compile Include="Shipment.cs" />
+    <Compile Include="ShipmentAdjustment.cs" />
+    <Compile Include="ShipmentBasicFee.cs" />
+    <Compile Include="ShipmentStatus.cs" />
+    <Compile Include="ShipmentTracking.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StatementOfAccount.cs" />
+    <Compile Include="StatementOfAccountNumber.cs" />
+    <Compile Include="StatementOfAccountPayment.cs" />
+    <Compile Include="StatementOfAccountPrint.cs" />
+    <Compile Include="TransferAcceptance.cs" />
+    <Compile Include="TransmittalStatus.cs" />
+    <Compile Include="TransShipmentLeg.cs" />
+    <Compile Include="TransShipmentRoute.cs" />
+    <Compile Include="Truck.cs" />
+    <Compile Include="TruckAreaMapping.cs" />
+    <Compile Include="Unbundle.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="WeightBreak.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMS2.Common\CMS2.Common.csproj">
+      <Project>{40dd132a-44bb-4054-80a2-0a0a848cbda1}</Project>
+      <Name>CMS2.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

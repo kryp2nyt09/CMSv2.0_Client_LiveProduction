@@ -1,0 +1,35 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AP_CARGO_SERVICE.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BranchCorpOfficeId" Type="System.Guid" Scope="Application">
+      <Value Profile="(Default)">d3ef4a7f-9207-4320-8434-b9e3ad20c599</Value>
+    </Setting>
+    <Setting Name="Filter" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Zamboanga</Value>
+    </Setting>
+    <Setting Name="DeprovisionServer" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="LocalConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=192.168.5.1;Initial Catalog=cms2_Beta3;User ID=sa;Password=d0me$tic$QL;Connect Timeout=180;Connection Lifetime=0;Pooling=true;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=192.168.5.1;Initial Catalog=cms2_Beta3;User ID=sa;Password=d0me$tic$QL;Connect Timeout=180;Connection Lifetime=0;Pooling=true;</Value>
+    </Setting>
+    <Setting Name="ServerConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=121.96.38.24;Initial Catalog=cms2_Beta3;User ID=sa;Password=Ap123456#;Connect Timeout=180;Connection Lifetime=0;Pooling=true;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=121.96.38.24;Initial Catalog=cms2_Beta3;User ID=sa;Password=Ap123456#;Connect Timeout=180;Connection Lifetime=0;Pooling=true;</Value>
+    </Setting>
+    <Setting Name="Provision" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DeprovisionClient" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

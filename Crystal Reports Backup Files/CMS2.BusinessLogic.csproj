@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B28F8FEC-45B4-465E-8438-727C1C2294D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CMS2.BusinessLogic</RootNamespace>
+    <AssemblyName>CMS2.BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BarcodeLib, Version=1.0.0.20, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Dev - Kim\Desktop\CMS2 Client Source Code\CMS Client Source Code\CMS2.BusinessLogic\bin\Debug\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine">
+      <HintPath>..\..\AP CARGO Web Central Local Repository\BusinessLogic\bin\Debug\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource">
+      <HintPath>..\..\AP CARGO Web Central Local Repository\BusinessLogic\bin\Debug\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared">
+      <HintPath>..\..\AP CARGO Web Central Local Repository\BusinessLogic\bin\Debug\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Dev - Kim\Desktop\CMS2 Client Source Code\CMS Client Source Code\CMS2.BusinessLogic\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>C:\Users\Dev - Kim\Desktop\CMS Repository\CMS2.BusinessLogic\Helpers\bin\Debug\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountStatusBL.cs" />
+    <Compile Include="AccountTypeBL.cs" />
+    <Compile Include="AdjustmentReasonBL.cs" />
+    <Compile Include="ApplicableRateBL.cs" />
+    <Compile Include="ApplicationSettingBL.cs" />
+    <Compile Include="ApprovingAuthorityBL.cs" />
+    <Compile Include="AreaBL.cs" />
+    <Compile Include="BaseAPCargoBL.cs" />
+    <Compile Include="BatchBL.cs" />
+    <Compile Include="BillingPeriodBL.cs" />
+    <Compile Include="BookingBL.cs" />
+    <Compile Include="BookingRemarkBL.cs" />
+    <Compile Include="BookingStatusBL.cs" />
+    <Compile Include="BranchAcceptanceBL.cs" />
+    <Compile Include="BranchSatOfficeBL.cs" />
+    <Compile Include="BranchCorpOfficeBL.cs" />
+    <Compile Include="BundleBL.cs" />
+    <Compile Include="BusinessTypeBL.cs" />
+    <Compile Include="CargoTransferBL.cs" />
+    <Compile Include="CityBL.cs" />
+    <Compile Include="ClientBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClusterBL.cs" />
+    <Compile Include="CommodityBL.cs" />
+    <Compile Include="CommodityTypeBL.cs" />
+    <Compile Include="CompanyBL.cs" />
+    <Compile Include="CratingBL.cs" />
+    <Compile Include="DeliveredPackageBL.cs" />
+    <Compile Include="DeliveryBL.cs" />
+    <Compile Include="DeliveryReceiptBL.cs" />
+    <Compile Include="DeliveryRemarkBL.cs" />
+    <Compile Include="DeliveryStatusBL.cs" />
+    <Compile Include="DepartmentBL.cs" />
+    <Compile Include="DistributionBL.cs" />
+    <Compile Include="EmployeeBL.cs" />
+    <Compile Include="FlightInfoBL.cs" />
+    <Compile Include="GatewayInboundBL.cs" />
+    <Compile Include="GatewayOutboundBL.cs" />
+    <Compile Include="GatewaySatOfficeBL.cs" />
+    <Compile Include="GatewayTransmittalBL.cs" />
+    <Compile Include="GoodsDescriptionBL.cs" />
+    <Compile Include="GroupBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\BarcodeGenerator.cs" />
+    <Compile Include="HoldCargoBL.cs" />
+    <Compile Include="IndustryBL.cs" />
+    <Compile Include="PackageDimensionBL.cs" />
+    <Compile Include="PackageNumberAcceptanceBL.cs" />
+    <Compile Include="PackageNumberBL.cs" />
+    <Compile Include="PackageNumberTransferBL.cs" />
+    <Compile Include="PackageTransferBL.cs" />
+    <Compile Include="PackagingBL.cs" />
+    <Compile Include="PaymentBL.cs" />
+    <Compile Include="PaymentSummaryBL.cs" />
+    <Compile Include="PaymentSummaryStatusBL.cs" />
+    <Compile Include="PaymentTurnoverBL.cs" />
+    <Compile Include="PositionBL.cs" />
+    <Compile Include="ExpressRateBL.cs" />
+    <Compile Include="FuelSurchargeBL.cs" />
+    <Compile Include="Interfaces\ICmsBL.cs" />
+    <Compile Include="MenuBL.cs" />
+    <Compile Include="OrganizationTypeBL.cs" />
+    <Compile Include="PaymentModeBL.cs" />
+    <Compile Include="PaymentTermBL.cs" />
+    <Compile Include="PaymentTypeBL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RateMatrixBL.cs" />
+    <Compile Include="ReasonBL.cs" />
+    <Compile Include="RecordChangeBL.cs" />
+    <Compile Include="RegionBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RemarkBL.cs" />
+    <Compile Include="ReportModels\StatementOfAccountDataSet.cs">
+      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportModels\StatementOfAccountDataSet.Designer.cs">
+      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\SoaCurrentCharges.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoaCurrentCharges.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\SoaPastBalances.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoaPastBalances.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\StatementOfAccount.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StatementOfAccount.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="RevenueUnitBL.cs" />
+    <Compile Include="RevenueUnitTypeBL.cs" />
+    <Compile Include="RoleStore.cs" />
+    <Compile Include="SegregationBL.cs" />
+    <Compile Include="ServiceModeBL.cs" />
+    <Compile Include="ServiceTypeBL.cs" />
+    <Compile Include="ShipmentAdjustmentBL.cs" />
+    <Compile Include="ShipmentBasicFeeBL.cs" />
+    <Compile Include="ShipmentBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShipmentStatusBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShipmentTrackingBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShipModeBL.cs" />
+    <Compile Include="StatementOfAccountBL.cs" />
+    <Compile Include="StatementOfAccountNumberBL.cs" />
+    <Compile Include="StatementOfAccountPaymentBL.cs" />
+    <Compile Include="StatusBL.cs" />
+    <Compile Include="TerminalBL.cs" />
+    <Compile Include="TerminalRevenueUnitMappingBL.cs" />
+    <Compile Include="TntMaintBL.cs" />
+    <Compile Include="TrackingBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransmittalStatusBL.cs" />
+    <Compile Include="TransShipmentLegBL.cs" />
+    <Compile Include="TransShipmentRouteBL.cs" />
+    <Compile Include="TruckAreaMappingBL.cs" />
+    <Compile Include="TruckBL.cs" />
+    <Compile Include="UnbundleBL.cs" />
+    <Compile Include="UserRoleBL.cs" />
+    <Compile Include="UserStore.cs" />
+    <Compile Include="WeightBreakBL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <Content Include="ReportModels\StatementOfAccountDataSet.xsc">
+      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="ReportModels\StatementOfAccountDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>StatementOfAccountDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ReportModels\StatementOfAccountDataSet.xss">
+      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\SoaCurrentCharges.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SoaPastBalances.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SoaPayments.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatementOfAccount.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMS2.Common\CMS2.Common.csproj">
+      <Project>{40dd132a-44bb-4054-80a2-0a0a848cbda1}</Project>
+      <Name>CMS2.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMS2.DataAccess\CMS2.DataAccess.csproj">
+      <Project>{30451916-c807-4426-9ceb-31cbb2736f88}</Project>
+      <Name>CMS2.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMS2.Entities\CMS2.Entities.csproj">
+      <Project>{b446c38f-ea3b-4311-93c1-0a3c813229b5}</Project>
+      <Name>CMS2.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
