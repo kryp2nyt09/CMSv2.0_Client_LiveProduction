@@ -24,7 +24,7 @@ namespace CMS2.Client
             //Application.SetCompatibleTextRenderingDefault(false);
            
             bool xBool = Convert.ToBoolean(ConfigurationManager.AppSettings["isSync"]);
-            if (!xBool)
+            if (xBool)
             {
                 Extract_Database extract = new Extract_Database();
                 Application.Run(extract);
