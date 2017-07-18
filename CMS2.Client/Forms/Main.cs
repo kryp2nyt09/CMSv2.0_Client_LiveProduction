@@ -534,14 +534,17 @@ namespace CMS2.Client
         }
         private void lstAssignedTo_Enter(object sender, EventArgs e)
         {
+            //TODO 1: change to revenue unit under bco only, where bco is in the app settings
             assignedTo = new AutoCompleteStringCollection();
-
-            // change to revenue unit under bco only, where bco is in the app settings
-            foreach (var item in areas.OrderBy(x => x.RevenueUnitName).Select(x => x.RevenueUnitName).ToList())
+            if (lstOriginBco.SelectedIndex > -1)
             {
-                assignedTo.Add(item);
+                foreach (var item in areas.Where(c => c.City.BranchCorpOfficeId == Guid.Parse(lstOriginBco.SelectedValue.ToString())).OrderBy(x => x.RevenueUnitName).Select(x => x.RevenueUnitName).ToList())
+                {
+                    assignedTo.Add(item);
+                }
+                lstAssignedTo.AutoCompleteDataSource = assignedTo;
             }
-            lstAssignedTo.AutoCompleteDataSource = assignedTo;
+
         }
         private void txtShipperAddress2_Enter(object sender, EventArgs e)
         {
@@ -803,7 +806,7 @@ namespace CMS2.Client
 
                 lstAssignedTo.DataSource = null;
                 lstAssignedTo.Refresh();
-                areas = areaService.FilterActive().OrderBy(x => x.RevenueUnitName).ToList();
+                //areas = areaService.FilterActive().OrderBy(x => x.RevenueUnitName).ToList();
                 var _areas = areas.Where(x => x.City.BranchCorpOfficeId == bcoId).ToList();
                 lstAssignedTo.DataSource = _areas;
                 lstAssignedTo.DisplayMember = "RevenueUnitName";
@@ -817,7 +820,7 @@ namespace CMS2.Client
                 lstAssignedTo.SelectedIndex = -1;
 
                 lstOriginCity.Refresh();
-                lstOriginCity.Focus();
+                //lstOriginCity.Focus();
             }
         }
         private void lstDestinationBco_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
@@ -852,7 +855,7 @@ namespace CMS2.Client
 
                 lstDestinationCity.SelectedIndex = -1;
                 lstDestinationCity.Refresh();
-                lstDestinationCity.Focus();
+                //lstDestinationCity.Focus();
             }
         }
         private void txtShipperEmail_Validating(object sender, CancelEventArgs e)
@@ -1300,10 +1303,10 @@ namespace CMS2.Client
         }
         private void AcceptancetxtAirwayBill_Enter(object sender, EventArgs e)
         {
-            AirwayBill = new AutoCompleteStringCollection();
-            string[] awbs = shipmentService.FilterActive().Select(x => x.AirwayBillNo).ToArray();
-            AirwayBill.AddRange(awbs);
-            AcceptancetxtAirwayBill.AutoCompleteCustomSource = AirwayBill;
+            //AirwayBill = new AutoCompleteStringCollection();
+            //string[] awbs = shipmentService.FilterActive().Select(x => x.AirwayBillNo).ToArray();
+            //AirwayBill.AddRange(awbs);
+            //AcceptancetxtAirwayBill.AutoCompleteCustomSource = AirwayBill;
         }
         private void EditAcceptance_Click(object sender, EventArgs e)
         {
@@ -1519,13 +1522,13 @@ namespace CMS2.Client
         }
         private void txtAwb_Enter(object sender, EventArgs e)
         {
-            AirwayBill = new AutoCompleteStringCollection();
-            List<string> awbs = shipmentService.GetAll().Select(x => x.AirwayBillNo).ToList();
-            foreach (string item in awbs)
-            {
-                AirwayBill.Add(item);
-            }
-            txtAwb.AutoCompleteCustomSource = AirwayBill;
+            //AirwayBill = new AutoCompleteStringCollection();
+            //List<string> awbs = shipmentService.GetAll().Select(x => x.AirwayBillNo).ToList();
+            //foreach (string item in awbs)
+            //{
+            //    AirwayBill.Add(item);
+            //}
+            //txtAwb.AutoCompleteCustomSource = AirwayBill;
         }
         private void txtAwb_KeyUp(object sender, KeyEventArgs e)
         {
@@ -2279,7 +2282,7 @@ namespace CMS2.Client
                 booking.Shipper = shipper;
                 txtShipperAccountNo.Text = shipper.AccountNo;
                 if (shipper.CompanyId != null)
-                { txtShipperCompany.Text = shipper.Company.CompanyName + " - " + shipper.Company.AccountNo; }
+                { txtShipperCompany.Text = shipper.Company.CompanyName; }
                 else
                 {
                     txtShipperCompany.Text = shipper.CompanyName;
@@ -2294,6 +2297,10 @@ namespace CMS2.Client
                 {
                     lstOriginBco.SelectedValue = shipper.City.BranchCorpOfficeId;
                     lstOriginCity.SelectedValue = shipper.City.CityId;
+                }
+                if (shipper.Area != null)
+                {
+                    lstAssignedTo.SelectedValue = shipper.AreaId;
                 }
                 txtShipperContactNo.Text = shipper.ContactNo;
                 txtShipperMobile.Text = shipper.Mobile;
@@ -2316,7 +2323,7 @@ namespace CMS2.Client
                 booking.Consignee = consignee;
                 txtConsigneeAccountNo.Text = consignee.AccountNo;
                 if (consignee.CompanyId != null)
-                { txtConsigneeCompany.Text = consignee.Company.CompanyName + " - " + consignee.Company.AccountNo; }
+                { txtConsigneeCompany.Text = consignee.Company.CompanyName; }
                 else
                 { txtConsigneeCompany.Text = consignee.CompanyName; }
 
@@ -2598,6 +2605,7 @@ namespace CMS2.Client
                 shipper.Address2 = txtShipperAddress2.Text.Trim();
                 shipper.Street = txtShipperStreet.Text.Trim();
                 shipper.Barangay = txtShipperBarangay.Text.Trim();
+
                 if (lstOriginCity.SelectedIndex >= 0)
                 {
                     shipper.CityId = Guid.Parse(lstOriginCity.SelectedValue.ToString());
@@ -2656,6 +2664,7 @@ namespace CMS2.Client
                 #endregion
 
                 #region CaptureBookingInput
+
                 booking.OriginAddress1 = txtShipperAddress1.Text.Trim();
                 booking.OriginAddress2 = txtShipperAddress2.Text.Trim();
                 booking.OriginStreet = txtShipperStreet.Text.Trim();
@@ -2669,6 +2678,7 @@ namespace CMS2.Client
                 booking.DateBooked = dateDateBooked.Value;
                 booking.Remarks = txtRemarks.Text;
                 booking.HasDailyBooking = chkHasDailyBooking.Checked;
+
                 if (lstAssignedTo.SelectedIndex > -1)
                 {
                     booking.AssignedToAreaId = Guid.Parse(lstAssignedTo.SelectedValue.ToString());
@@ -3211,6 +3221,7 @@ namespace CMS2.Client
             {
                 if (shipment.Shipper != null)
                 {
+                    dateAcceptedDate.Value = shipment.DateAccepted;
                     AcceptancetxtShipperAccountNo.Text = shipment.Shipper.AccountNo;
                     AcceptancetxtShipperFullName.Text = shipment.Shipper.LastName + ", " + shipment.Shipper.FirstName;
                     if (shipment.Shipper.CompanyId != null)
@@ -3528,18 +3539,18 @@ namespace CMS2.Client
         {
             PaymentDetailsViewModel newPayment = new PaymentDetailsViewModel();
             newPayment.AwbSoa = AcceptancetxtAirwayBill.Text;
-            try
+
+            if (txtSumTotal.Value.ToString().Contains("₱"))
             {
                 newPayment.AmountPaid = decimal.Parse(txtSumTotal.Value.ToString().Replace("₱", ""));
             }
-            catch (Exception ex)
+            else
             {
                 newPayment.AmountPaid = decimal.Parse(txtSumTotal.Value.ToString().Replace("Php", ""));
             }
 
-
             NewPayment = newPayment;
-            ((RadPageView)BookingPage.Parent).SelectedPage = this.PaymentPage;
+            pageViewMain.SelectedPage = this.PaymentPage;
 
         }
         private void RefreshOptions()
@@ -4170,7 +4181,7 @@ namespace CMS2.Client
                         BranchAcceptanceViewModel isAirawayBillExist = _results.Find(x => x.AirwayBillNo == shipment.AirwayBillNo);
 
                         BranchAcceptance _brachAcceptance = _branchAcceptances.Find(x => x.Cargo == packagenumber.PackageNo);
-                        
+
                         if (_brachAcceptance != null)
                         {
                             if (isAirawayBillExist != null)
@@ -8279,10 +8290,6 @@ namespace CMS2.Client
 
 
         #endregion
-
-
-
-
 
     }
 }
