@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn1 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.label1 = new Telerik.WinControls.UI.RadLabel();
             this.txtLocalDbPassword = new Telerik.WinControls.UI.RadTextBox();
             this.txtLocalDbUsername = new Telerik.WinControls.UI.RadTextBox();
@@ -518,7 +518,7 @@
             this.radPageView1.Controls.Add(this.radPageViewPage2);
             this.radPageView1.Location = new System.Drawing.Point(12, 12);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.radPageViewPage2;
+            this.radPageView1.SelectedPage = this.radPageViewPage1;
             this.radPageView1.Size = new System.Drawing.Size(399, 590);
             this.radPageView1.TabIndex = 2;
             this.radPageView1.ThemeName = "Office2010Black";
@@ -629,32 +629,32 @@
             this.gridTables.MasterTemplate.AllowSearchRow = true;
             this.gridTables.MasterTemplate.AutoExpandGroups = true;
             this.gridTables.MasterTemplate.AutoGenerateColumns = false;
-            gridViewTextBoxColumn3.FieldName = "TableName";
-            gridViewTextBoxColumn3.HeaderText = "Table";
-            gridViewTextBoxColumn3.Name = "colTable";
-            gridViewTextBoxColumn3.Width = 160;
-            gridViewTextBoxColumn4.FieldName = "Status";
-            gridViewTextBoxColumn4.HeaderText = "Status";
-            gridViewTextBoxColumn4.Name = "colStatus";
-            gridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            gridViewTextBoxColumn4.Width = 120;
-            gridViewCheckBoxColumn2.AllowFiltering = false;
-            gridViewCheckBoxColumn2.AllowGroup = false;
-            gridViewCheckBoxColumn2.AllowSearching = false;
-            gridViewCheckBoxColumn2.EnableHeaderCheckBox = true;
-            gridViewCheckBoxColumn2.FieldName = "isSelected";
-            gridViewCheckBoxColumn2.HeaderText = "Select";
-            gridViewCheckBoxColumn2.IsPinned = true;
-            gridViewCheckBoxColumn2.Name = "column1";
-            gridViewCheckBoxColumn2.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
-            gridViewCheckBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            gridViewCheckBoxColumn2.WrapText = true;
+            gridViewTextBoxColumn1.FieldName = "TableName";
+            gridViewTextBoxColumn1.HeaderText = "Table";
+            gridViewTextBoxColumn1.Name = "colTable";
+            gridViewTextBoxColumn1.Width = 160;
+            gridViewTextBoxColumn2.FieldName = "Status";
+            gridViewTextBoxColumn2.HeaderText = "Status";
+            gridViewTextBoxColumn2.Name = "colStatus";
+            gridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            gridViewTextBoxColumn2.Width = 120;
+            gridViewCheckBoxColumn1.AllowFiltering = false;
+            gridViewCheckBoxColumn1.AllowGroup = false;
+            gridViewCheckBoxColumn1.AllowSearching = false;
+            gridViewCheckBoxColumn1.EnableHeaderCheckBox = true;
+            gridViewCheckBoxColumn1.FieldName = "isSelected";
+            gridViewCheckBoxColumn1.HeaderText = "Select";
+            gridViewCheckBoxColumn1.IsPinned = true;
+            gridViewCheckBoxColumn1.Name = "column1";
+            gridViewCheckBoxColumn1.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
+            gridViewCheckBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            gridViewCheckBoxColumn1.WrapText = true;
             this.gridTables.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
-            gridViewTextBoxColumn3,
-            gridViewTextBoxColumn4,
-            gridViewCheckBoxColumn2});
+            gridViewTextBoxColumn1,
+            gridViewTextBoxColumn2,
+            gridViewCheckBoxColumn1});
             this.gridTables.MasterTemplate.EnableSorting = false;
-            this.gridTables.MasterTemplate.ViewDefinition = tableViewDefinition2;
+            this.gridTables.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.gridTables.Name = "gridTables";
             this.gridTables.Size = new System.Drawing.Size(366, 424);
             this.gridTables.TabIndex = 14;
