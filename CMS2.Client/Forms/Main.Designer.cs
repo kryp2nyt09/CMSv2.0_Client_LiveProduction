@@ -5214,7 +5214,7 @@
             this.Manifest.ItemSize = new System.Drawing.SizeF(71F, 30F);
             this.Manifest.Location = new System.Drawing.Point(12, 40);
             this.Manifest.Name = "Manifest";
-            this.Manifest.Size = new System.Drawing.Size(1234, 587);
+            this.Manifest.Size = new System.Drawing.Size(1234, 631);
             this.Manifest.Text = "Manifest";
             // 
             // gridManifest
@@ -5378,11 +5378,10 @@
             this.gridManifest.MasterTemplate.PageSize = 1;
             this.gridManifest.MasterTemplate.ShowFilteringRow = false;
             this.gridManifest.MasterTemplate.ShowGroupedColumns = true;
-            this.gridManifest.MasterTemplate.ShowRowHeaderColumn = false;
             this.gridManifest.MasterTemplate.ViewDefinition = tableViewDefinition3;
             this.gridManifest.Name = "gridManifest";
             this.gridManifest.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gridManifest.Size = new System.Drawing.Size(1234, 522);
+            this.gridManifest.Size = new System.Drawing.Size(1234, 566);
             this.gridManifest.TabIndex = 2;
             this.gridManifest.Text = "radGridView1";
             this.gridManifest.ThemeName = "Office2010Black";
