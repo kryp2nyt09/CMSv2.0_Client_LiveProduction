@@ -21,7 +21,7 @@ namespace CMS2.Entities
         [DisplayName("Account No")]
         public string AccountNo { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(200)]
         [DisplayName("Company Name")]
         public string CompanyName { get; set; }
         [Required]

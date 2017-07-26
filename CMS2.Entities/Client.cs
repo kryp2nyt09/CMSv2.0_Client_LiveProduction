@@ -20,34 +20,34 @@ namespace CMS2.Entities
         [DisplayName("Account No")]
         public string AccountNo { get; set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(200)]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
         [Required]
-        [MaxLength(30)]
+        [MaxLength(200)]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
         [DisplayName("Fullname")]
         [NotMapped]
         public string FullName { get { return LastName + ", " + FirstName; } }
         [Required]
-        [MaxLength(15)]
+        [MaxLength(100)]
         [DisplayName("Contact No")]
         public string ContactNo { get; set; }
-        [MaxLength(15)]
+        [MaxLength(100)]
         [DisplayName("Mobile No")]
         public string Mobile { get; set; }
-        [MaxLength(50)]
+        [MaxLength(100)]
         [DisplayName("Fax")]
         public string Fax { get; set; }
-        [MaxLength(50)]
+        [MaxLength(100)]
         [DisplayName("Email")]
         public string Email { get; set; }
         [Required]
-        [MaxLength(250)]
+        [MaxLength(500)]
         [DisplayName("House/Bldg No")]
         public string Address1 { get; set; }
-        [MaxLength(250)]
+        [MaxLength(500)]
         [DisplayName("House/Bldg Name")]
         public string Address2 { get; set; }
         [MaxLength(250)]
@@ -64,14 +64,14 @@ namespace CMS2.Entities
         [DisplayName("Zip Code")]
         public string ZipCode { get; set; }
         //  optional information for regular customer
-        [MaxLength(30)]
+        [MaxLength(100)]
         [DisplayName("Zip Code")]
         public string Title { get; set; }
-        [MaxLength(50)]
+        [MaxLength(100)]
         [DisplayName("Department")]
         public string Department { get; set; }
 
-        [MaxLength(80)]
+        [MaxLength(200)]
         [DisplayName("Company")]
         public string CompanyName { get; set; }
 

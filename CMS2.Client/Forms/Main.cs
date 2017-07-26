@@ -534,17 +534,14 @@ namespace CMS2.Client
         }
         private void lstAssignedTo_Enter(object sender, EventArgs e)
         {
-            //TODO 1: change to revenue unit under bco only, where bco is in the app settings
             assignedTo = new AutoCompleteStringCollection();
-            if (lstOriginBco.SelectedIndex > -1)
-            {
-                foreach (var item in areas.Where(c => c.City.BranchCorpOfficeId == Guid.Parse(lstOriginBco.SelectedValue.ToString())).OrderBy(x => x.RevenueUnitName).Select(x => x.RevenueUnitName).ToList())
-                {
-                    assignedTo.Add(item);
-                }
-                lstAssignedTo.AutoCompleteDataSource = assignedTo;
-            }
 
+            // change to revenue unit under bco only, where bco is in the app settings
+            foreach (var item in areas.OrderBy(x => x.RevenueUnitName).Select(x => x.RevenueUnitName).ToList())
+            {
+                assignedTo.Add(item);
+            }
+            lstAssignedTo.AutoCompleteDataSource = assignedTo;
         }
         private void txtShipperAddress2_Enter(object sender, EventArgs e)
         {
@@ -806,7 +803,7 @@ namespace CMS2.Client
 
                 lstAssignedTo.DataSource = null;
                 lstAssignedTo.Refresh();
-                //areas = areaService.FilterActive().OrderBy(x => x.RevenueUnitName).ToList();
+                areas = areaService.FilterActive().OrderBy(x => x.RevenueUnitName).ToList();
                 var _areas = areas.Where(x => x.City.BranchCorpOfficeId == bcoId).ToList();
                 lstAssignedTo.DataSource = _areas;
                 lstAssignedTo.DisplayMember = "RevenueUnitName";
@@ -820,7 +817,7 @@ namespace CMS2.Client
                 lstAssignedTo.SelectedIndex = -1;
 
                 lstOriginCity.Refresh();
-                //lstOriginCity.Focus();
+                lstOriginCity.Focus();
             }
         }
         private void lstDestinationBco_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
@@ -855,7 +852,7 @@ namespace CMS2.Client
 
                 lstDestinationCity.SelectedIndex = -1;
                 lstDestinationCity.Refresh();
-                //lstDestinationCity.Focus();
+                lstDestinationCity.Focus();
             }
         }
         private void txtShipperEmail_Validating(object sender, CancelEventArgs e)
@@ -1303,10 +1300,7 @@ namespace CMS2.Client
         }
         private void AcceptancetxtAirwayBill_Enter(object sender, EventArgs e)
         {
-            //AirwayBill = new AutoCompleteStringCollection();
-            //string[] awbs = shipmentService.FilterActive().Select(x => x.AirwayBillNo).ToArray();
-            //AirwayBill.AddRange(awbs);
-            //AcceptancetxtAirwayBill.AutoCompleteCustomSource = AirwayBill;
+
         }
         private void EditAcceptance_Click(object sender, EventArgs e)
         {
@@ -1522,13 +1516,7 @@ namespace CMS2.Client
         }
         private void txtAwb_Enter(object sender, EventArgs e)
         {
-            //AirwayBill = new AutoCompleteStringCollection();
-            //List<string> awbs = shipmentService.GetAll().Select(x => x.AirwayBillNo).ToList();
-            //foreach (string item in awbs)
-            //{
-            //    AirwayBill.Add(item);
-            //}
-            //txtAwb.AutoCompleteCustomSource = AirwayBill;
+
         }
         private void txtAwb_KeyUp(object sender, KeyEventArgs e)
         {
@@ -2282,7 +2270,7 @@ namespace CMS2.Client
                 booking.Shipper = shipper;
                 txtShipperAccountNo.Text = shipper.AccountNo;
                 if (shipper.CompanyId != null)
-                { txtShipperCompany.Text = shipper.Company.CompanyName; }
+                { txtShipperCompany.Text = shipper.Company.CompanyName + " - " + shipper.Company.AccountNo; }
                 else
                 {
                     txtShipperCompany.Text = shipper.CompanyName;
@@ -2298,13 +2286,17 @@ namespace CMS2.Client
                     lstOriginBco.SelectedValue = shipper.City.BranchCorpOfficeId;
                     lstOriginCity.SelectedValue = shipper.City.CityId;
                 }
-                if (shipper.Area != null)
-                {
-                    lstAssignedTo.SelectedValue = shipper.AreaId;
-                }
                 txtShipperContactNo.Text = shipper.ContactNo;
                 txtShipperMobile.Text = shipper.Mobile;
-                txtShipperEmail.Text = shipper.Email;
+
+                if(shipper.Email == null || shipper.Email == "")
+                {
+                    txtShipperEmail.Text = "N/A";
+                }
+                else
+                {
+                    txtShipperEmail.Text = shipper.Email;
+                }
             }
             else
             {
@@ -2323,7 +2315,7 @@ namespace CMS2.Client
                 booking.Consignee = consignee;
                 txtConsigneeAccountNo.Text = consignee.AccountNo;
                 if (consignee.CompanyId != null)
-                { txtConsigneeCompany.Text = consignee.Company.CompanyName; }
+                { txtConsigneeCompany.Text = consignee.Company.CompanyName + " - " + consignee.Company.AccountNo; }
                 else
                 { txtConsigneeCompany.Text = consignee.CompanyName; }
 
@@ -2340,7 +2332,17 @@ namespace CMS2.Client
                 }
                 txtConsigneeContactNo.Text = consignee.ContactNo;
                 txtConsigneeMobile.Text = consignee.Mobile;
-                txtConsigneeEmail.Text = consignee.Email;
+
+                if(consignee.Email == null || consignee.Email == "")
+                {
+                    txtConsigneeEmail.Text = "N/A";
+                }
+                else
+                {
+                    txtConsigneeEmail.Text = consignee.Email;
+                }
+
+                 
             }
             else
             {
@@ -2534,13 +2536,13 @@ namespace CMS2.Client
             //    isValid = false;
             //    return isValid;
             //}
-            if (txtConsigneeEmail.Text.Trim() == "")
+            if (txtConsigneeEmail.Text == null || txtConsigneeEmail.Text.Trim() == "")
             {
                 txtConsigneeEmail.Focus();
                 isValid = false;
                 return isValid;
             }
-            if (txtShipperEmail.Text.Trim() == "")
+            if (txtShipperEmail.Text == null || txtShipperEmail.Text.Trim() == "")
             {
                 txtShipperEmail.Focus();
                 isValid = false;
@@ -2605,7 +2607,6 @@ namespace CMS2.Client
                 shipper.Address2 = txtShipperAddress2.Text.Trim();
                 shipper.Street = txtShipperStreet.Text.Trim();
                 shipper.Barangay = txtShipperBarangay.Text.Trim();
-
                 if (lstOriginCity.SelectedIndex >= 0)
                 {
                     shipper.CityId = Guid.Parse(lstOriginCity.SelectedValue.ToString());
@@ -2664,7 +2665,6 @@ namespace CMS2.Client
                 #endregion
 
                 #region CaptureBookingInput
-
                 booking.OriginAddress1 = txtShipperAddress1.Text.Trim();
                 booking.OriginAddress2 = txtShipperAddress2.Text.Trim();
                 booking.OriginStreet = txtShipperStreet.Text.Trim();
@@ -2678,10 +2678,10 @@ namespace CMS2.Client
                 booking.DateBooked = dateDateBooked.Value;
                 booking.Remarks = txtRemarks.Text;
                 booking.HasDailyBooking = chkHasDailyBooking.Checked;
-
                 if (lstAssignedTo.SelectedIndex > -1)
                 {
                     booking.AssignedToAreaId = Guid.Parse(lstAssignedTo.SelectedValue.ToString());
+                    booking.AssignedToArea = areas.Find(x => x.RevenueUnitId == booking.AssignedToAreaId);
                 }
 
                 booking.BookingStatusId = Guid.Parse(lstBookingStatus.SelectedValue.ToString());
@@ -2725,59 +2725,71 @@ namespace CMS2.Client
             int index = 1;
             int max = 2; // # of processes
 
-            #region NewClient
-            if (shipper.ClientId == null || shipper.ClientId == Guid.Empty)
+            try
             {
-                shipper.ClientId = Guid.NewGuid();
-                if (shipper.City == null)
-                    shipper.City = cities.FirstOrDefault(x => x.CityId == shipper.CityId);
-                if (shipper.CompanyId == null)
+                #region NewClient
+                if (shipper.ClientId == null || shipper.ClientId == Guid.Empty)
                 {
-                    // non-rep client account #
-                    shipper.AccountNo = clientService.GetNewAccountNo(shipper.City.BranchCorpOffice.BranchCorpOfficeCode, false);
+                    shipper.ClientId = Guid.NewGuid();
+                    if (shipper.City == null)
+                        shipper.City = cities.FirstOrDefault(x => x.CityId == shipper.CityId);
+                    if (shipper.CompanyId == null)
+                    {
+                        // non-rep client account #
+                        shipper.AccountNo = clientService.GetNewAccountNo(shipper.City.BranchCorpOffice.BranchCorpOfficeCode, false);
+                    }
+                    else
+                    {
+                        shipper.AccountNo = clientService.GetNewAccountNo(shipper.City.BranchCorpOffice.BranchCorpOfficeCode, false);
+                    }
+                    clientService.Add(shipper);
+                    booking.ShipperId = shipper.ClientId;
+                    booking.Shipper = shipper;
                 }
-                else
-                {
-                    shipper.AccountNo = clientService.GetNewAccountNo(shipper.City.BranchCorpOffice.BranchCorpOfficeCode, false);
-                }
-                clientService.Add(shipper);
-                booking.ShipperId = shipper.ClientId;
-            }
 
-            if (consignee.ClientId == null || consignee.ClientId == Guid.Empty)
+                if (consignee.ClientId == null || consignee.ClientId == Guid.Empty)
+                {
+                    consignee.ClientId = Guid.NewGuid();
+                    if (consignee.City == null)
+                        consignee.City = cities.FirstOrDefault(x => x.CityId == consignee.CityId);
+                    if (consignee.CompanyId == null)
+                    {
+                        // non-rep client account #
+                        consignee.AccountNo = clientService.GetNewAccountNo(consignee.City.BranchCorpOffice.BranchCorpOfficeCode, false); //"1" 
+                    }
+                    else
+                    {
+                        consignee.AccountNo = clientService.GetNewAccountNo(consignee.City.BranchCorpOffice.BranchCorpOfficeCode, false);//"1" +
+                    }
+                    //consignee.AccountNo = clientService.GetNewAccountNo(consignee.City.BranchCorpOffice.BranchCorpOfficeCode, false);
+
+                    clientService.Add(consignee);
+                    booking.ConsigneeId = consignee.ClientId;
+                    booking.Consignee = consignee;
+
+                }
+                percent = index * 100 / max;
+                _worker.ReportProgress(percent);
+                index++;
+
+                #endregion
+
+                #region SaveBooking
+                bookingService.AddEdit(booking);
+
+                percent = index * 100 / max;
+                _worker.ReportProgress(percent);
+                index++;
+                #endregion
+
+
+            }
+            catch (Exception ex)
             {
-                consignee.ClientId = Guid.NewGuid();
-                if (consignee.City == null)
-                    consignee.City = cities.FirstOrDefault(x => x.CityId == consignee.CityId);
-                if (consignee.CompanyId == null)
-                {
-                    // non-rep client account #
-                    consignee.AccountNo = clientService.GetNewAccountNo(consignee.City.BranchCorpOffice.BranchCorpOfficeCode, false); //"1" 
-                }
-                else
-                {
-                    consignee.AccountNo = clientService.GetNewAccountNo(consignee.City.BranchCorpOffice.BranchCorpOfficeCode, false);//"1" +
-                }
-                //consignee.AccountNo = clientService.GetNewAccountNo(consignee.City.BranchCorpOffice.BranchCorpOfficeCode, false);
-
-                clientService.Add(consignee);
-                booking.ConsigneeId = consignee.ClientId;
-
+                Log.WriteErrorLogs(ex);
+                MessageBox.Show("Unable to save booking.");
             }
-            percent = index * 100 / max;
-            _worker.ReportProgress(percent);
-            index++;
-
-            #endregion
-
-            #region SaveBooking
-            bookingService.AddEdit(booking);
-
-            percent = index * 100 / max;
-            _worker.ReportProgress(percent);
-            index++;
-            #endregion
-
+           
         }
         private void SelectedDestinationCity(Guid bcoId)
         {
@@ -3221,7 +3233,6 @@ namespace CMS2.Client
             {
                 if (shipment.Shipper != null)
                 {
-                    dateAcceptedDate.Value = shipment.DateAccepted;
                     AcceptancetxtShipperAccountNo.Text = shipment.Shipper.AccountNo;
                     AcceptancetxtShipperFullName.Text = shipment.Shipper.LastName + ", " + shipment.Shipper.FirstName;
                     if (shipment.Shipper.CompanyId != null)
@@ -3539,18 +3550,18 @@ namespace CMS2.Client
         {
             PaymentDetailsViewModel newPayment = new PaymentDetailsViewModel();
             newPayment.AwbSoa = AcceptancetxtAirwayBill.Text;
-
-            if (txtSumTotal.Value.ToString().Contains("₱"))
+            try
             {
                 newPayment.AmountPaid = decimal.Parse(txtSumTotal.Value.ToString().Replace("₱", ""));
             }
-            else
+            catch (Exception ex)
             {
                 newPayment.AmountPaid = decimal.Parse(txtSumTotal.Value.ToString().Replace("Php", ""));
             }
 
+
             NewPayment = newPayment;
-            pageViewMain.SelectedPage = this.PaymentPage;
+            ((RadPageView)BookingPage.Parent).SelectedPage = this.PaymentPage;
 
         }
         private void RefreshOptions()
@@ -3777,16 +3788,16 @@ namespace CMS2.Client
             dt.Columns.Add(new DataColumn("ActualWt", typeof(string)));
             dt.Columns.Add(new DataColumn("Dimensions", typeof(string)));
             dt.Columns.Add(new DataColumn("EVM", typeof(string)));
-            dt.Columns.Add(new DataColumn("ChargeableWt", typeof(string)));
+            
 
             for (int x = 0; x < shipmentModel.PackageDimensions.Count; x++)
             {
                 DataRow row = dt.NewRow();
-                row[0] = txtQuantity.Text;
-                row[1] = txtWeight.Text;
-                row[2] = Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString();
-                row[3] = txtTotalEvm.Text;
-                row[4] = txtSumChargeableWeight.Text;
+                row[0] = shipment.CommodityType.CommodityTypeName;
+                row[1] = txtQuantity.Text;
+                row[2] = txtWeight.Text;
+                row[3] = Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString();
+                row[4] = txtTotalEvm.Text;
                 dt.Rows.Add(row);
             }
 
@@ -4181,7 +4192,7 @@ namespace CMS2.Client
                         BranchAcceptanceViewModel isAirawayBillExist = _results.Find(x => x.AirwayBillNo == shipment.AirwayBillNo);
 
                         BranchAcceptance _brachAcceptance = _branchAcceptances.Find(x => x.Cargo == packagenumber.PackageNo);
-
+                        
                         if (_brachAcceptance != null)
                         {
                             if (isAirawayBillExist != null)

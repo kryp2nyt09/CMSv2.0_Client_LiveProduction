@@ -128,8 +128,8 @@ namespace CMS2.BusinessLogic
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                
+                throw;
+
             }
         }
 
@@ -195,7 +195,7 @@ namespace CMS2.BusinessLogic
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                throw;
             }
 
         }

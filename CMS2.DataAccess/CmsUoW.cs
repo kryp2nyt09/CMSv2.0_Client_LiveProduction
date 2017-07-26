@@ -7,6 +7,7 @@ using CMS2.DataAccess.Interfaces;
 using System.Windows.Forms;
 using System.Data.Entity.Validation;
 using CMS2.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace CMS2.DataAccess
 {
@@ -46,6 +47,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
+                throw new Exception();
             }
           
         }
@@ -80,10 +82,26 @@ namespace CMS2.DataAccess
             }
             catch (DbEntityValidationException ex)
             {
-                Console.WriteLine(ex);
-                MessageBox.Show(ex.InnerException.ToString());
+                Exception raise = ex;
+                foreach(var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach(var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),validationError.ErrorMessage);
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
             }
-           
+           catch(ValidationException e)
+            {
+                throw;
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
 
         protected virtual void Dispose(bool disposing)
