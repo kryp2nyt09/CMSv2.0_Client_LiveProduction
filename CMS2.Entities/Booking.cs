@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -58,21 +59,7 @@ namespace CMS2.Entities
 
         //private BookingStatus _status;
         [ForeignKey("BookingStatusId")]
-        public virtual BookingStatus BookingStatus { get; set; }
-        //{
-        //    get
-        //    {
-        //        return _status;
-        //    }
-        //    set
-        //    {
-        //        if (_status != value)
-        //        {
-        //            _status = value;
-        //            OnPropertyChanged(new PropertyChangedEventArgs("BookingStatus")); 
-        //        }
-        //    }
-        //}
+        public virtual BookingStatus BookingStatus { get; set; }        
 
         [DefaultValue(0)]
         public bool HasDailyBooking { get; set; }
@@ -90,18 +77,8 @@ namespace CMS2.Entities
         public Guid DestinationCityId { get; set; }
         [ForeignKey("DestinationCityId")]
         public virtual City DestinationCity { get; set; }
-        public Guid? AssignedToAreaId { get; set; }
+        public Guid AssignedToAreaId { get; set; }
         [ForeignKey("AssignedToAreaId")]
         public virtual RevenueUnit AssignedToArea { get; set; }
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //public void OnPropertyChanged(PropertyChangedEventArgs e)
-        //{
-        //    if (PropertyChanged != null)
-        //    {
-        //        PropertyChanged(this, e);
-        //    }
-        //}
     }
 }

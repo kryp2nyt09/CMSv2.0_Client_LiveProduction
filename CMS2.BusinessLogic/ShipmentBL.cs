@@ -23,6 +23,7 @@ namespace CMS2.BusinessLogic
         private ExpressRateBL expressRateService;
         private PackageDimensionBL packageDimensionService;
         private CommodityTypeBL commodityTypeService;
+        private CommodityBL commodityService;
         private ShipmentBasicFeeBL shipmentBasicFeeService;
         private CratingBL cratingService;
         private PackagingBL packagingService;
@@ -46,6 +47,7 @@ namespace CMS2.BusinessLogic
             expressRateService = new ExpressRateBL(_unitOfWork);
             packageDimensionService = new PackageDimensionBL(_unitOfWork);
             commodityTypeService = new CommodityTypeBL(_unitOfWork);
+            commodityService = new CommodityBL(_unitOfWork);
             shipmentBasicFeeService = new ShipmentBasicFeeBL(_unitOfWork);
             cratingService = new CratingBL(_unitOfWork);
             packagingService = new PackagingBL(_unitOfWork);
@@ -69,6 +71,7 @@ namespace CMS2.BusinessLogic
             fuelSurchargeService = new FuelSurchargeBL(unitOfWork);
             packageDimensionService = new PackageDimensionBL(unitOfWork);
             commodityTypeService = new CommodityTypeBL(unitOfWork);
+            commodityService = new CommodityBL(unitOfWork);
             shipmentBasicFeeService = new ShipmentBasicFeeBL(unitOfWork);
             cratingService = new CratingBL(unitOfWork);
             packagingService = new PackagingBL(unitOfWork);
@@ -106,15 +109,24 @@ namespace CMS2.BusinessLogic
                 ShipmentId = model.ShipmentId,
                 AirwayBillNo = model.AirwayBillNo,
                 OriginCityId = model.OriginCityId,
+                OriginCity = model.OriginCity,
                 DestinationCityId = model.DestinationCityId,
+                DestinationCity = model.DestinationCity,
                 ConsigneeId = model.ConsigneeId,
+                Consignee = model.Consignee,
                 ShipperId = model.ShipperId,
+                Shipper = model.Shipper,
                 DateAccepted = model.DateAccepted,
                 AcceptedById = model.AcceptedById,
+                AcceptedBy = model.AcceptedBy,
                 CommodityTypeId = model.CommodityTypeId,
+                CommodityType = model.CommodityType,
                 ServiceModeId = model.ServiceModeId,
+                ServiceMode = model.ServiceMode,
                 PaymentModeId = model.PaymentModeId,
+                PaymentMode = model.PaymentMode,
                 PaymentTermId = model.PaymentTermId,
+                PaymentTerm = model.PaymentTerm,
                 IsVatable = model.IsVatable,
                 Remarks = model.Remarks,
                 DeclaredValue = model.DeclaredValue,
@@ -136,37 +148,42 @@ namespace CMS2.BusinessLogic
                 RecordStatus = model.RecordStatus,
                 Notes = model.Notes,
                 BookingId = model.BookingId,
+                Booking = model.Booking,
                 OriginAddress = model.OriginAddress,
                 DestinationAddress = model.DestinationAddress,
                 Quantity = model.Quantity,
                 Weight = model.Weight,
                 PackageNumbers = model.PackageNumbers,
+                Deliveries = model.Deliveries,
                 ServiceTypeId = model.ServiceTypeId,
-                ShipModeId = model.ShipModeId,                
+                ServiceType = model.ServiceType,
+                ShipModeId = model.ShipModeId,
+                ShipMode = model.ShipMode,
                 GoodsDescriptionId = model.GoodsDescriptionId,
+                GoodsDescription = model.GoodsDescription,
                 HandlingFee = model.HandlingFee,
                 QuarantineFee = model.QuarantineFee,
                 Discount = model.Discount,
                 CommodityId = model.CommodityId,
+                Commodity = model.Commodity,
                 DeliveryFeeId = model.DeliveryFeeId,
                 DangerousFeeId = model.DangerousFeeId,
                 FreightCharge = model.FreightCharge,
                 TotalAmount = model.ShipmentTotal,
                 OriginBarangay = model.OriginBarangay,
                 DestinationBarangay = model.DestinationBarangay,
-                TransShipmentLegId = model.TransShipmentLegId    
+                TransShipmentLegId = model.TransShipmentLegId,
+
             };
 
-            entity.PackageDimensions = packageDimensionService.ModelsToEntities(model.PackageDimensions);
-
-            if (model.ShipperId != null)
-                entity.Shipper = model.Shipper;
-            if (model.ConsigneeId != null)
-                entity.Consignee = model.Consignee;
-            if (model.CommodityTypeId != null)
-                entity.CommodityType = model.CommodityType;
-            if (model.CommodityId != null)
-                entity.Commodity = model.Commodity;
+            entity.PackageDimensions = packageDimensionService.ModelsToEntities(model.PackageDimensions);// FilterActiveBy(x => x.ShipmentId == model.ShipmentId);
+            //entity.PackageDimensions = packageDimensionService.FilterActiveBy(x => x.ShipmentId == model.ShipmentId);
+            if (model.PeracFeeId != null)
+                entity.PeracFee = model.PeracFee;
+            if (model.DeliveryFeeId != null)
+                entity.DeliveryFee = model.DeliveryFee;
+            if (model.DangerousFeeId != null)
+                entity.DangerousFee = model.DangerousFee;
             if (model.FreightCollectChargeId != null)
                 entity.FreightCollectCharge = model.FreightCollectCharge;
             if (model.EvatId != null)
@@ -183,16 +200,12 @@ namespace CMS2.BusinessLogic
             {
                 entity.StatementOfAccount = soaService.GetById(Guid.Parse(model.StatementOfAccountId.ToString()));
             }
-            if (model.ServiceTypeId != null)
-                entity.ServiceType = model.ServiceType;
-            if (model.ShipModeId != null)
-                entity.ShipMode = model.ShipMode;
-            if (model.GoodsDescriptionId != null)
-                entity.GoodsDescription = model.GoodsDescription;
-            if (model.TransShipmentLegId != null  && model.TransShipmentLegId != Guid.Empty)
+
+            if (model.TransShipmentLegId != null && model.TransShipmentLegId != Guid.Empty)
             {
                 entity.TransShipmentLeg = model.TransShipmentLeg;
-            }else
+            }
+            else
             {
                 entity.TransShipmentLegId = null;
             }
@@ -270,7 +283,7 @@ namespace CMS2.BusinessLogic
                 Weight = entity.Weight,
                 PackageNumbers = entity.PackageNumbers,
                 ServiceTypeId = entity.ServiceTypeId,
-                ShipModeId = entity.ShipModeId,                      
+                ShipModeId = entity.ShipModeId,
                 GoodsDescriptionId = entity.GoodsDescriptionId,
                 HandlingFee = entity.HandlingFee,
                 QuarantineFee = entity.QuarantineFee,
@@ -278,7 +291,7 @@ namespace CMS2.BusinessLogic
                 CommodityId = entity.CommodityId,
                 DeliveryFeeId = entity.DeliveryFeeId,
                 DangerousFeeId = entity.DangerousFeeId
-                
+
             };
 
             model.ShipperCompanyAccountNo = "na";
@@ -300,8 +313,11 @@ namespace CMS2.BusinessLogic
                 model.TransShipmentLeg = entity.TransShipmentLeg;
             }
 
-            if (entity.CommodityType == null)
-                model.CommodityType = commodityTypeService.GetById(entity.CommodityTypeId);
+            if (entity.CommodityType != null)
+                model.CommodityType = entity.CommodityType;
+
+            if (entity.Commodity != null)
+                model.Commodity = entity.Commodity;
 
             if (entity.Deliveries != null)
                 model.Deliveries = entity.Deliveries;
@@ -377,7 +393,7 @@ namespace CMS2.BusinessLogic
 
             model.FreightCollectChargeId = null;
             model.FreightCollectCharge = null;
-            if (model.PaymentMode.PaymentModeCode.Equals("FC") || model.PaymentMode.PaymentModeCode.Equals("PP") || model.PaymentMode.PaymentModeCode.Equals("DP"))
+            if (model.PaymentMode.PaymentModeCode.Equals("FC") || model.PaymentMode.PaymentModeCode.Equals("PP"))
             {
                 ApplicableRate _applicableRate = applicableRateService.GetApplicableRate(model.CommodityTypeId, model.ServiceModeId, model.ServiceTypeId);
 
@@ -491,9 +507,9 @@ namespace CMS2.BusinessLogic
                     {
                         ShipmentBasicFee Fee = new ShipmentBasicFee();
                         model.DeliveryFee = Fee;
-                        model.DeliveryFeeId = _deliveryfee.ShipmentBasicFeeId;                                        
+                        model.DeliveryFeeId = _deliveryfee.ShipmentBasicFeeId;
                         defaultFee = _deliveryfee.Amount;
-                       
+
 
                         if (model.ChargeableWeight <= 5)
                         {
@@ -503,7 +519,7 @@ namespace CMS2.BusinessLogic
                         {
                             deliveryFee = model.ChargeableWeight * defaultFee;
                         }
-                        model.DeliveryFee.Amount = deliveryFee;                        
+                        model.DeliveryFee.Amount = deliveryFee;
                     }
 
                 }
@@ -681,7 +697,7 @@ namespace CMS2.BusinessLogic
 
             //if (_applicableRate != null)
             //{
-                matrix = rateMatrixService.GetMatrix(_applicableRate.ApplicableRateId);
+            matrix = rateMatrixService.GetMatrix(_applicableRate.ApplicableRateId);
             //}
             //else
             //{
@@ -689,7 +705,7 @@ namespace CMS2.BusinessLogic
             //    model.ServiceModeId);
             //}
 
-            
+
             ExpressRate rates = null;
 
             if (matrix != null)
@@ -719,7 +735,7 @@ namespace CMS2.BusinessLogic
                             model.TransShipmentLeg = transShipmentLegService.GetAll().FirstOrDefault();
                             model.TransShipmentLegId = model.TransShipmentLeg.TransShipmentLegId;
                         }
-                        
+
                         rate1 = expressRateService.GetExpressRatesByMatrix(matrix.RateMatrixId, model.DestinationCityId, model.TransShipmentLeg.CityId);
                         rate2 = expressRateService.GetExpressRatesByMatrix(matrix.RateMatrixId, model.OriginCityId, model.TransShipmentLeg.CityId);
 
@@ -742,7 +758,7 @@ namespace CMS2.BusinessLogic
                             expressRates.Add(rate2);
                         }
 
-                        
+
                         #endregion
                     }
                     else
@@ -754,7 +770,7 @@ namespace CMS2.BusinessLogic
                         }
                         else
                         {
-                            
+
                             ExpressRate rate1 = new ExpressRate();
                             ExpressRate rate2 = new ExpressRate();
 
@@ -766,7 +782,7 @@ namespace CMS2.BusinessLogic
 
                             rate1 = expressRateService.GetExpressRatesByMatrix(matrix.RateMatrixId, model.DestinationCityId, model.TransShipmentLeg.CityId);
                             rate2 = expressRateService.GetExpressRatesByMatrix(matrix.RateMatrixId, model.OriginCityId, model.TransShipmentLeg.CityId);
-                            
+
                             if (rate1 != null)
                             {
                                 expressRates.Add(rate1);
@@ -775,7 +791,7 @@ namespace CMS2.BusinessLogic
                             {
                                 expressRates.Add(rate2);
                             }
-                            
+
                         }
                     }
                 }
@@ -809,27 +825,27 @@ namespace CMS2.BusinessLogic
                     {
                         expressRateAmount = expressRate.C1to5Cost;
                         //model.WeightCharge = model.WeightCharge + (model.ChargeableWeight * expressRateAmount);
-                        model.WeightCharge += expressRateAmount;                        
+                        model.WeightCharge += expressRateAmount;
                     }
                     else if (model.ChargeableWeight >= 6 && model.ChargeableWeight < 49)
                     {
                         expressRateAmount = expressRate.C6to49Cost;
-                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;                        
+                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;
                     }
                     else if (model.ChargeableWeight >= 50 && model.ChargeableWeight < 249)
                     {
                         expressRateAmount = expressRate.C50to249Cost;
-                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;                        
+                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;
                     }
                     else if (model.ChargeableWeight >= 250 && model.ChargeableWeight < 999)
                     {
                         expressRateAmount = expressRate.C250to999Cost;
-                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;                       
+                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;
                     }
                     else if (model.ChargeableWeight >= 1000 && model.ChargeableWeight < 10000)
                     {
                         expressRateAmount = expressRate.C1000_10000Cost;
-                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;                        
+                        model.WeightCharge += model.ChargeableWeight * expressRateAmount;
                     }
                 }
             }
@@ -880,22 +896,27 @@ namespace CMS2.BusinessLogic
             }
             else
             {
-                var dimensions = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId);
-                foreach (var entityDimension in dimensions)
-                {
-                    entityDimension.ModifiedBy = model.ModifiedBy;
-                    entityDimension.ModifiedDate = model.ModifiedDate;
-                    entityDimension.RecordStatus = (int)RecordStatus.Deleted;
-                    packageDimensionService.Edit(entityDimension);
-                }
+                //var dimensions = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId);
+                //foreach (var entityDimension in dimensions)
+                //{
+                //    entityDimension.ModifiedBy = model.ModifiedBy;
+                //    entityDimension.ModifiedDate = model.ModifiedDate;
+                //    entityDimension.RecordStatus = (int)RecordStatus.Deleted;
+                //    packageDimensionService.Edit(entityDimension);
+                //}
                 foreach (var modelDimension in model.PackageDimensions)
                 {
-                    if (packageDimensionService.IsExist(x => x.ShipmentId == model.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height))
+                    //if (packageDimensionService.IsExist(x => x.ShipmentId == model.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height))
+                    if (packageDimensionService.IsExist(x => x.PackageDimensionId == modelDimension.PackageDimensionId))
                     {
-                        var dim = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height).FirstOrDefault();
-                        dim.ModifiedBy = model.ModifiedBy;
-                        dim.ModifiedDate = model.ModifiedDate;
-                        dim.RecordStatus = model.RecordStatus;
+                        //var dim = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId 
+                        //&& x.Length == modelDimension.Length 
+                        //&& x.Width == modelDimension.Width 
+                        //&& x.Height == modelDimension.Height).FirstOrDefault();
+                        var dim = packageDimensionService.FilterActiveBy(x => x.PackageDimensionId == modelDimension.PackageDimensionId).FirstOrDefault();
+                        dim.ModifiedBy = modelDimension.ModifiedBy;
+                        dim.ModifiedDate = modelDimension.ModifiedDate;
+                        dim.RecordStatus = modelDimension.RecordStatus;
                         packageDimensionService.Edit(dim);
                     }
                     else
@@ -907,10 +928,13 @@ namespace CMS2.BusinessLogic
                         newDim.Width = modelDimension.Width;
                         newDim.Height = modelDimension.Height;
                         newDim.CratingId = modelDimension.CratingId;
-                        newDim.PackagingId = modelDimension.PackagingId;
+                        newDim.Crating = modelDimension.Crating;
                         newDim.DrainingId = modelDimension.DrainingId;
-                        newDim.CreatedDate = model.ModifiedDate;
+                        newDim.DrainingFee = modelDimension.Draining;
+                        newDim.PackagingId = modelDimension.PackagingId;
+                        newDim.Packaging = modelDimension.Packaging;
                         newDim.CreatedBy = model.ModifiedBy;
+                        newDim.CreatedDate = model.ModifiedDate;
                         newDim.ModifiedBy = model.ModifiedBy;
                         newDim.ModifiedDate = model.ModifiedDate;
                         newDim.RecordStatus = model.RecordStatus;
@@ -918,7 +942,70 @@ namespace CMS2.BusinessLogic
                     }
                 }
 
-                Edit(this.ModelToEntity(model));
+                Shipment shipment = new Shipment();
+                List<PackageDimension> _dimensions = packageDimensionService.FilterActiveBy(x => x.ShipmentId == model.ShipmentId).ToList();
+                shipment = this.ModelToEntity(model);
+                shipment.PackageDimensions = _dimensions;                
+                this.Edit(shipment);
+
+                //Edit(this.ModelToEntity(shipment));
+            }
+        }
+
+        public void AddEdit(Shipment entity)
+        {
+            if (!IsExist(x => x.ShipmentId == entity.ShipmentId))
+            {
+                foreach (var item in entity.PackageDimensions)
+                {
+                    item.PackageDimensionId = Guid.NewGuid();
+                }
+                Add(entity);
+            }
+            else
+            {
+                var dimensions = packageDimensionService.FilterBy(x => x.ShipmentId == entity.ShipmentId);
+                foreach (var entityDimension in dimensions)
+                {
+                    entityDimension.ModifiedBy = entity.ModifiedBy;
+                    entityDimension.ModifiedDate = entity.ModifiedDate;
+                    entityDimension.RecordStatus = (int)RecordStatus.Deleted;
+                    packageDimensionService.Edit(entityDimension);
+                }
+                foreach (var modelDimension in entity.PackageDimensions)
+                {
+                    if (packageDimensionService.IsExist(x => x.ShipmentId == entity.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height))
+                    {
+                        var dim = packageDimensionService.FilterBy(x => x.ShipmentId == entity.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height).FirstOrDefault();
+                        dim.ModifiedBy = entity.ModifiedBy;
+                        dim.ModifiedDate = entity.ModifiedDate;
+                        dim.RecordStatus = entity.RecordStatus;
+                        packageDimensionService.Edit(dim);
+                    }
+                    else
+                    {
+                        PackageDimension newDim = new PackageDimension();
+                        newDim.PackageDimensionId = Guid.NewGuid();
+                        newDim.ShipmentId = entity.ShipmentId;
+                        newDim.Length = modelDimension.Length;
+                        newDim.Width = modelDimension.Width;
+                        newDim.Height = modelDimension.Height;
+                        newDim.CratingId = modelDimension.CratingId;
+                        newDim.Crating = modelDimension.Crating;
+                        newDim.PackagingId = modelDimension.PackagingId;
+                        newDim.Packaging = modelDimension.Packaging;
+                        newDim.DrainingId = modelDimension.DrainingId;
+                        newDim.DrainingFee = modelDimension.DrainingFee;
+                        newDim.CreatedDate = entity.ModifiedDate;
+                        newDim.CreatedBy = entity.ModifiedBy;
+                        newDim.ModifiedBy = entity.ModifiedBy;
+                        newDim.ModifiedDate = entity.ModifiedDate;
+                        newDim.RecordStatus = entity.RecordStatus;
+                        packageDimensionService.Add(newDim);
+                    }
+                }
+
+                Edit(entity);
             }
         }
 

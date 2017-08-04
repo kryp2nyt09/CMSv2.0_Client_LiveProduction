@@ -13,7 +13,8 @@ namespace CMS2.Entities
         [Required]
         public Guid ShipmentId { get; set; }
 
-        public virtual Shipment Shipment { get; set; }
+        [ForeignKey("ShipmentId")]
+        public Shipment Shipment { get; set; }
 
         [Required]
         [DefaultValue(0)]
@@ -29,12 +30,15 @@ namespace CMS2.Entities
 
         [DisplayName("Crating Fee")]
         public Guid? CratingId { get; set; }
+
         public Crating Crating { get; set; }
         [DisplayName("Draining Fee")]
         public Guid? DrainingId { get; set; }
+
         [ForeignKey("DrainingId")]
         public ShipmentBasicFee DrainingFee { get; set; }
         public Guid? PackagingId { get; set; }
+
         public Packaging Packaging { get; set; }
     }
 }

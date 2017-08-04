@@ -28,6 +28,7 @@ namespace CMS2.Client
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new Telerik.WinControls.UI.RadLabel();
             this.label2 = new Telerik.WinControls.UI.RadLabel();
@@ -190,6 +191,7 @@ namespace CMS2.Client
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(340, 170);
             this.MinimizeBox = false;

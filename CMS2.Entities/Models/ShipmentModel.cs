@@ -110,7 +110,7 @@ namespace CMS2.Entities.Models
         public ServiceType ServiceType { get; set; }
         public Guid ShipModeId { get; set; }
         public ShipMode ShipMode { get; set; }
-        public Guid TransShipmentLegId { get; set; }
+        public Guid? TransShipmentLegId { get; set; }
         public TransShipmentLeg TransShipmentLeg { get; set; }
         public Guid GoodsDescriptionId { get; set; }
         public GoodsDescription GoodsDescription { get; set; }

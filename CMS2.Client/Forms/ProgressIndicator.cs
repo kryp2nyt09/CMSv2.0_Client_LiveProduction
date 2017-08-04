@@ -6,6 +6,8 @@ namespace CMS2.Client
 {
     public partial class ProgressIndicator : Form
     {
+
+        public int Result { get; set; }
         public ProgressIndicator(string title, string progressText, DoWorkEventHandler worker)
         {
 
@@ -36,11 +38,21 @@ namespace CMS2.Client
         private void workerProgress_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar.Value = e.ProgressPercentage;
+            if (e.UserState != null && (string)e.UserState == "Error")
+            {
+                this.Result = 1;
+                btnCancel.PerformClick();
+            }
+            else
+            {
+                this.Result = 0;
+            }
         }
 
         private void workerProgress_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Close();
+
         }
     }
 }

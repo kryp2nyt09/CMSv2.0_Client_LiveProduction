@@ -71,7 +71,7 @@ namespace CMS2.Entities
         [DisplayName("Department")]
         public string Department { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength(100)]
         [DisplayName("Company")]
         public string CompanyName { get; set; }
 

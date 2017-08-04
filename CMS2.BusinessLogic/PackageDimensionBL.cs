@@ -35,16 +35,23 @@ namespace CMS2.BusinessLogic
             PackageDimension entity = new PackageDimension();
             entity.PackageDimensionId = model.PackageDimensionId;
             entity.ShipmentId = model.ShipmentId;
+            entity.Shipment = model.Shipment;
             entity.Length = model.Length;
             entity.Width = model.Width;
             entity.Height = model.Height;
             entity.CratingId = model.CratingId;
+            entity.Crating = model.Crating;
             entity.DrainingId = model.DrainingId;
+            entity.DrainingFee = model.Draining;
+            entity.PackagingId = model.PackagingId;
+            entity.Packaging = model.Packaging;
             entity.CreatedBy = model.CreatedBy;
             entity.CreatedDate = model.CreatedDate;
             entity.ModifiedBy = model.ModifiedBy;
             entity.ModifiedDate = model.ModifiedDate;
             entity.RecordStatus = model.RecordStatus;
+         
+            
             return entity;
         }
 
@@ -63,16 +70,22 @@ namespace CMS2.BusinessLogic
             PackageDimensionModel model = new PackageDimensionModel();
             model.PackageDimensionId = entity.PackageDimensionId;
             model.ShipmentId = entity.ShipmentId;
+            model.Shipment = entity.Shipment;
             model.Length = entity.Length;
             model.Width = entity.Width;
             model.Height = entity.Height;
             model.CratingId = entity.CratingId;
+            model.Crating = entity.Crating;
             model.DrainingId = entity.DrainingId;
+            model.Draining = entity.DrainingFee;
+            model.PackagingId = entity.PackagingId;
+            model.Packaging = entity.Packaging;
             model.CreatedBy = entity.CreatedBy;
             model.CreatedDate = entity.CreatedDate;
             model.ModifiedBy = entity.ModifiedBy;
             model.ModifiedDate = entity.ModifiedDate;
             model.RecordStatus = entity.RecordStatus;
+           
             return model;
         }
 

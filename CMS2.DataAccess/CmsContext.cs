@@ -199,6 +199,8 @@ namespace CMS2.DataAccess
             modelBuilder.Entity<PaymentTurnover>().Property(x => x.ReceivedCheckAmount).HasPrecision(9, 2);
             modelBuilder.Entity<PaymentTurnover>().HasRequired(x => x.CollectedBy).WithMany().WillCascadeOnDelete(false);
 
+           //modelBuilder.Entity<PackageDimension>().HasRequired(x => x.Shipment).WithMany().WillCascadeOnDelete( false);
+
             modelBuilder.Entity<Province>().HasMany(e => e.BranchCorpOffices).WithRequired(e => e.Province).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Region>().HasMany(e => e.Provinces).WithRequired(e => e.Region).WillCascadeOnDelete(false);
@@ -225,6 +227,17 @@ namespace CMS2.DataAccess
             modelBuilder.Entity<Shipment>().HasRequired(x => x.OriginCity).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<Shipment>().HasRequired(x => x.DestinationCity).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<Shipment>().HasRequired(x => x.Commodity).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasRequired(x => x.ServiceMode).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasRequired(x=>x.ServiceType).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasRequired(x => x.GoodsDescription).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasRequired(x => x.ShipMode).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasRequired(x => x.PaymentTerm).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasRequired(x => x.PaymentMode).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasRequired(x => x.CommodityType).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasMany(x => x.PackageDimensions).WithRequired(x => x.Shipment).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasMany(x => x.PackageNumbers).WithRequired(x => x.Shipment).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Shipment>().HasMany(x => x.Deliveries).WithRequired(x => x.Shipment).WillCascadeOnDelete(false);
+
 
             modelBuilder.Entity<ShipmentAdjustment>().Property(x => x.AdjustmentAmount).HasPrecision(9, 2);
 
