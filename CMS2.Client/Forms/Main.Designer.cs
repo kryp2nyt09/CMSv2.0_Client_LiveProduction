@@ -1448,7 +1448,7 @@
             this.pageViewMain.Font = new System.Drawing.Font("Tahoma", 9F);
             this.pageViewMain.Location = new System.Drawing.Point(0, 0);
             this.pageViewMain.Name = "pageViewMain";
-            this.pageViewMain.SelectedPage = this.AcceptancePage;
+            this.pageViewMain.SelectedPage = this.PaymentSummaryPage;
             this.pageViewMain.Size = new System.Drawing.Size(1258, 683);
             this.pageViewMain.TabIndex = 0;
             this.pageViewMain.Text = "Manifest";
@@ -2591,7 +2591,6 @@
             this.lstOriginBco.ThemeName = "Office2010Black";
             this.lstOriginBco.SelectedIndexChanged += new Telerik.WinControls.UI.Data.PositionChangedEventHandler(this.lstOriginBco_SelectedIndexChanged);
             this.lstOriginBco.Enter += new System.EventHandler(this.lstOriginBco_Enter);
-            this.lstOriginBco.Validated += new System.EventHandler(this.lstOriginBco_Validated);
             // 
             // txtShipperContactNo
             // 
@@ -3693,7 +3692,7 @@
             this.lstCommodityType.Size = new System.Drawing.Size(252, 20);
             this.lstCommodityType.TabIndex = 4;
             this.lstCommodityType.ThemeName = "Office2010Black";
-            this.lstCommodityType.SelectedIndexChanged += new Telerik.WinControls.UI.Data.PositionChangedEventHandler(this.lstCommodityType_SelectedIndexChanged);
+            this.lstCommodityType.SelectedValueChanged += new System.EventHandler(this.lstCommodityType_SelectedValueChanged);
             this.lstCommodityType.Enter += new System.EventHandler(this.lstCommodityType_Enter);
             this.lstCommodityType.Validated += new System.EventHandler(this.lstCommodityType_Validated);
             // 
@@ -5438,7 +5437,7 @@
             this.label73.AutoSize = true;
             this.label73.Location = new System.Drawing.Point(477, 23);
             this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(70, 13);
+            this.label73.Size = new System.Drawing.Size(82, 14);
             this.label73.TabIndex = 94;
             this.label73.Text = "Service Type:";
             // 
@@ -5480,7 +5479,7 @@
             this.label45.AutoSize = true;
             this.label45.Location = new System.Drawing.Point(630, 23);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(66, 13);
+            this.label45.Size = new System.Drawing.Size(68, 14);
             this.label45.TabIndex = 90;
             this.label45.Text = "Ship Mode:";
             // 
@@ -5500,7 +5499,7 @@
             this.label44.AutoSize = true;
             this.label44.Location = new System.Drawing.Point(321, 23);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(86, 13);
+            this.label44.Size = new System.Drawing.Size(93, 14);
             this.label44.TabIndex = 88;
             this.label44.Text = "Payment Mode:";
             // 
@@ -5530,7 +5529,7 @@
             this.label37.AutoSize = true;
             this.label37.Location = new System.Drawing.Point(168, 23);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(78, 13);
+            this.label37.Size = new System.Drawing.Size(84, 14);
             this.label37.TabIndex = 86;
             this.label37.Text = "Service Mode:";
             // 
@@ -5540,7 +5539,7 @@
             this.label39.AutoSize = true;
             this.label39.Location = new System.Drawing.Point(9, 23);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(96, 13);
+            this.label39.Size = new System.Drawing.Size(99, 14);
             this.label39.TabIndex = 85;
             this.label39.Text = "Destination BCO:";
             // 
@@ -5648,7 +5647,7 @@
             // txtTotalCash
             // 
             this.txtTotalCash.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCash.Location = new System.Drawing.Point(145, 3);
+            this.txtTotalCash.Location = new System.Drawing.Point(132, 3);
             this.txtTotalCash.Name = "txtTotalCash";
             this.txtTotalCash.ReadOnly = true;
             this.txtTotalCash.Size = new System.Drawing.Size(145, 20);
@@ -5660,7 +5659,7 @@
             // txtTotalPending
             // 
             this.txtTotalPending.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalPending.Location = new System.Drawing.Point(145, 133);
+            this.txtTotalPending.Location = new System.Drawing.Point(132, 133);
             this.txtTotalPending.Name = "txtTotalPending";
             this.txtTotalPending.ReadOnly = true;
             this.txtTotalPending.Size = new System.Drawing.Size(145, 20);
@@ -5673,7 +5672,7 @@
             // txtTotalPdc
             // 
             this.txtTotalPdc.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalPdc.Location = new System.Drawing.Point(145, 107);
+            this.txtTotalPdc.Location = new System.Drawing.Point(132, 107);
             this.txtTotalPdc.Name = "txtTotalPdc";
             this.txtTotalPdc.ReadOnly = true;
             this.txtTotalPdc.Size = new System.Drawing.Size(145, 20);
@@ -5688,7 +5687,7 @@
             this.label42.AutoSize = true;
             this.label42.Location = new System.Drawing.Point(3, 110);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(61, 14);
+            this.label42.Size = new System.Drawing.Size(55, 13);
             this.label42.TabIndex = 2;
             this.label42.Text = "Total PDC";
             // 
@@ -5698,7 +5697,7 @@
             this.label47.AutoSize = true;
             this.label47.Location = new System.Drawing.Point(3, 84);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(113, 14);
+            this.label47.Size = new System.Drawing.Size(101, 13);
             this.label47.TabIndex = 1;
             this.label47.Text = "Total Tax WithHeld";
             // 
@@ -5708,14 +5707,14 @@
             this.label62.AutoSize = true;
             this.label62.Location = new System.Drawing.Point(3, 58);
             this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(91, 14);
+            this.label62.Size = new System.Drawing.Size(86, 13);
             this.label62.TabIndex = 10;
             this.label62.Text = "Total Collection";
             // 
             // txtRemarksPaymentSummary
             // 
             this.txtRemarksPaymentSummary.AutoSize = false;
-            this.txtRemarksPaymentSummary.Location = new System.Drawing.Point(145, 263);
+            this.txtRemarksPaymentSummary.Location = new System.Drawing.Point(132, 263);
             this.txtRemarksPaymentSummary.Multiline = true;
             this.txtRemarksPaymentSummary.Name = "txtRemarksPaymentSummary";
             this.txtRemarksPaymentSummary.Size = new System.Drawing.Size(145, 44);
@@ -5725,7 +5724,7 @@
             // 
             // txtTotalCheckReceived
             // 
-            this.txtTotalCheckReceived.Location = new System.Drawing.Point(145, 185);
+            this.txtTotalCheckReceived.Location = new System.Drawing.Point(132, 185);
             this.txtTotalCheckReceived.Name = "txtTotalCheckReceived";
             this.txtTotalCheckReceived.ReadOnly = true;
             this.txtTotalCheckReceived.Size = new System.Drawing.Size(145, 20);
@@ -5736,7 +5735,7 @@
             // 
             // txtDifference
             // 
-            this.txtDifference.Location = new System.Drawing.Point(145, 237);
+            this.txtDifference.Location = new System.Drawing.Point(132, 237);
             this.txtDifference.Name = "txtDifference";
             this.txtDifference.ReadOnly = true;
             this.txtDifference.Size = new System.Drawing.Size(145, 20);
@@ -5751,13 +5750,13 @@
             this.label63.AutoSize = true;
             this.label63.Location = new System.Drawing.Point(3, 32);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(72, 14);
+            this.label63.Size = new System.Drawing.Size(65, 13);
             this.label63.TabIndex = 0;
             this.label63.Text = "Total Check";
             // 
             // txtTotalAmntReceived
             // 
-            this.txtTotalAmntReceived.Location = new System.Drawing.Point(145, 211);
+            this.txtTotalAmntReceived.Location = new System.Drawing.Point(132, 211);
             this.txtTotalAmntReceived.Name = "txtTotalAmntReceived";
             this.txtTotalAmntReceived.ReadOnly = true;
             this.txtTotalAmntReceived.Size = new System.Drawing.Size(145, 20);
@@ -5772,7 +5771,7 @@
             this.label64.AutoSize = true;
             this.label64.Location = new System.Drawing.Point(3, 188);
             this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(125, 14);
+            this.label64.Size = new System.Drawing.Size(113, 13);
             this.label64.TabIndex = 28;
             this.label64.Text = "Total Check Received";
             // 
@@ -5782,7 +5781,7 @@
             this.label65.AutoSize = true;
             this.label65.Location = new System.Drawing.Point(3, 6);
             this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(64, 14);
+            this.label65.Size = new System.Drawing.Size(59, 13);
             this.label65.TabIndex = 24;
             this.label65.Text = "Total Cash";
             // 
@@ -5792,7 +5791,7 @@
             this.label66.AutoSize = true;
             this.label66.Location = new System.Drawing.Point(3, 136);
             this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(83, 14);
+            this.label66.Size = new System.Drawing.Size(77, 13);
             this.label66.TabIndex = 27;
             this.label66.Text = "Total Pending";
             this.label66.Visible = false;
@@ -5800,7 +5799,7 @@
             // txtTotalCashReceived
             // 
             this.txtTotalCashReceived.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCashReceived.Location = new System.Drawing.Point(145, 159);
+            this.txtTotalCashReceived.Location = new System.Drawing.Point(132, 159);
             this.txtTotalCashReceived.Name = "txtTotalCashReceived";
             this.txtTotalCashReceived.ReadOnly = true;
             this.txtTotalCashReceived.Size = new System.Drawing.Size(145, 20);
@@ -5815,7 +5814,7 @@
             this.label69.AutoSize = true;
             this.label69.Location = new System.Drawing.Point(3, 278);
             this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(52, 14);
+            this.label69.Size = new System.Drawing.Size(50, 13);
             this.label69.TabIndex = 3;
             this.label69.Text = "Remarks";
             // 
@@ -5825,7 +5824,7 @@
             this.label70.AutoSize = true;
             this.label70.Location = new System.Drawing.Point(3, 240);
             this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(63, 14);
+            this.label70.Size = new System.Drawing.Size(60, 13);
             this.label70.TabIndex = 1;
             this.label70.Text = "Difference";
             // 
@@ -5835,7 +5834,7 @@
             this.label71.AutoSize = true;
             this.label71.Location = new System.Drawing.Point(3, 214);
             this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(136, 14);
+            this.label71.Size = new System.Drawing.Size(123, 13);
             this.label71.TabIndex = 26;
             this.label71.Text = "Total Amount Received";
             // 
@@ -5845,14 +5844,14 @@
             this.label72.AutoSize = true;
             this.label72.Location = new System.Drawing.Point(3, 162);
             this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(117, 14);
+            this.label72.Size = new System.Drawing.Size(107, 13);
             this.label72.TabIndex = 30;
             this.label72.Text = "Total Cash Received";
             // 
             // txtTotalTax
             // 
             this.txtTotalTax.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalTax.Location = new System.Drawing.Point(145, 81);
+            this.txtTotalTax.Location = new System.Drawing.Point(132, 81);
             this.txtTotalTax.Name = "txtTotalTax";
             this.txtTotalTax.ReadOnly = true;
             this.txtTotalTax.Size = new System.Drawing.Size(145, 20);
@@ -5864,7 +5863,7 @@
             // txtTotalCheck
             // 
             this.txtTotalCheck.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCheck.Location = new System.Drawing.Point(145, 29);
+            this.txtTotalCheck.Location = new System.Drawing.Point(132, 29);
             this.txtTotalCheck.Name = "txtTotalCheck";
             this.txtTotalCheck.ReadOnly = true;
             this.txtTotalCheck.Size = new System.Drawing.Size(145, 20);
@@ -5876,7 +5875,7 @@
             // txtTotalCollection
             // 
             this.txtTotalCollection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCollection.Location = new System.Drawing.Point(145, 55);
+            this.txtTotalCollection.Location = new System.Drawing.Point(132, 55);
             this.txtTotalCollection.Name = "txtTotalCollection";
             this.txtTotalCollection.ReadOnly = true;
             this.txtTotalCollection.Size = new System.Drawing.Size(145, 20);
@@ -6175,61 +6174,73 @@
             gridViewTextBoxColumn39.MinWidth = 30;
             gridViewTextBoxColumn39.Name = "No";
             gridViewTextBoxColumn39.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Left;
+            gridViewTextBoxColumn39.ReadOnly = true;
             gridViewTextBoxColumn39.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn39.Width = 30;
             gridViewTextBoxColumn40.EnableExpressionEditor = false;
             gridViewTextBoxColumn40.FieldName = "Client.FullName";
             gridViewTextBoxColumn40.HeaderText = "Client";
             gridViewTextBoxColumn40.Name = "ConsigneeName";
+            gridViewTextBoxColumn40.ReadOnly = true;
             gridViewTextBoxColumn40.Width = 70;
             gridViewTextBoxColumn41.EnableExpressionEditor = false;
             gridViewTextBoxColumn41.FieldName = "AirwayBillNo";
             gridViewTextBoxColumn41.HeaderText = "AWB";
             gridViewTextBoxColumn41.Name = "AirwayBillNo";
+            gridViewTextBoxColumn41.ReadOnly = true;
             gridViewTextBoxColumn41.Width = 70;
             gridViewTextBoxColumn42.EnableExpressionEditor = false;
             gridViewTextBoxColumn42.FieldName = "PaymentTypeName";
             gridViewTextBoxColumn42.HeaderText = "Payment Type";
             gridViewTextBoxColumn42.Name = "PaymentType";
+            gridViewTextBoxColumn42.ReadOnly = true;
             gridViewTextBoxColumn42.Width = 70;
             gridViewDecimalColumn7.EnableExpressionEditor = false;
             gridViewDecimalColumn7.FieldName = "AmountDue";
             gridViewDecimalColumn7.HeaderText = "Amount Due";
             gridViewDecimalColumn7.Name = "AmountDue";
+            gridViewDecimalColumn7.ReadOnly = true;
             gridViewDecimalColumn7.Width = 70;
             gridViewDecimalColumn8.EnableExpressionEditor = false;
             gridViewDecimalColumn8.FieldName = "AmountPaid";
             gridViewDecimalColumn8.HeaderText = "Amount Paid";
             gridViewDecimalColumn8.Name = "AmountPaid";
+            gridViewDecimalColumn8.ReadOnly = true;
             gridViewDecimalColumn8.Width = 70;
             gridViewDecimalColumn9.EnableExpressionEditor = false;
             gridViewDecimalColumn9.FieldName = "TaxWithheld";
             gridViewDecimalColumn9.HeaderText = "Tax";
             gridViewDecimalColumn9.Name = "Tax";
+            gridViewDecimalColumn9.ReadOnly = true;
             gridViewDecimalColumn9.Width = 70;
             gridViewTextBoxColumn43.EnableExpressionEditor = false;
             gridViewTextBoxColumn43.FieldName = "OrNo";
             gridViewTextBoxColumn43.HeaderText = "OR #";
             gridViewTextBoxColumn43.Name = "ORNo";
+            gridViewTextBoxColumn43.ReadOnly = true;
             gridViewTextBoxColumn43.Width = 70;
             gridViewTextBoxColumn44.EnableExpressionEditor = false;
             gridViewTextBoxColumn44.FieldName = "PrNo";
             gridViewTextBoxColumn44.HeaderText = "PR #";
             gridViewTextBoxColumn44.Name = "PRNo";
+            gridViewTextBoxColumn44.ReadOnly = true;
             gridViewTextBoxColumn44.Width = 70;
             gridViewTextBoxColumn45.EnableExpressionEditor = false;
             gridViewTextBoxColumn45.FieldName = "PaymentSummaryStatus.PaymentSummaryStatusName";
             gridViewTextBoxColumn45.HeaderText = "Status";
             gridViewTextBoxColumn45.Name = "Status";
+            gridViewTextBoxColumn45.ReadOnly = true;
             gridViewTextBoxColumn45.Width = 70;
             gridViewTextBoxColumn46.EnableExpressionEditor = false;
             gridViewTextBoxColumn46.FieldName = "CollectedBy.FullName";
             gridViewTextBoxColumn46.HeaderText = "Posted By";
             gridViewTextBoxColumn46.Name = "ReceivedBy";
+            gridViewTextBoxColumn46.ReadOnly = true;
             gridViewTextBoxColumn47.EnableExpressionEditor = false;
             gridViewTextBoxColumn47.FieldName = "ValidatedBy";
             gridViewTextBoxColumn47.HeaderText = "Validated By";
             gridViewTextBoxColumn47.Name = "ValidatedBy";
+            gridViewTextBoxColumn47.ReadOnly = true;
             gridViewTextBoxColumn47.Width = 70;
             gridViewCheckBoxColumn2.AllowSort = false;
             gridViewCheckBoxColumn2.EditMode = Telerik.WinControls.UI.EditMode.OnValueChange;
@@ -6242,6 +6253,7 @@
             gridViewCheckBoxColumn2.MinWidth = 20;
             gridViewCheckBoxColumn2.Name = "Validate";
             gridViewCheckBoxColumn2.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
+            gridViewCheckBoxColumn2.ReadOnly = true;
             gridViewCheckBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
             gridViewCheckBoxColumn2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             gridViewCheckBoxColumn2.Width = 74;
@@ -6250,11 +6262,13 @@
             gridViewTextBoxColumn48.HeaderText = "Revenue Type";
             gridViewTextBoxColumn48.IsVisible = false;
             gridViewTextBoxColumn48.Name = "RevenueUnitType";
+            gridViewTextBoxColumn48.ReadOnly = true;
             gridViewTextBoxColumn49.EnableExpressionEditor = false;
             gridViewTextBoxColumn49.FieldName = "AcceptedArea.RevenueUnitName";
             gridViewTextBoxColumn49.HeaderText = "RevenueUnitName";
             gridViewTextBoxColumn49.IsVisible = false;
             gridViewTextBoxColumn49.Name = "RevenueUnitName";
+            gridViewTextBoxColumn49.ReadOnly = true;
             this.gridPrepaid.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn39,
             gridViewTextBoxColumn40,
@@ -6547,7 +6561,6 @@
             // 
             this.radPageViewPage7.Controls.Add(this.radPanel14);
             this.radPageViewPage7.Controls.Add(this.radPanel13);
-            this.radPageViewPage7.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage7.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage7.Name = "radPageViewPage7";
             this.radPageViewPage7.Size = new System.Drawing.Size(1086, 607);
@@ -6835,7 +6848,7 @@
             this.label76.AutoSize = true;
             this.label76.Location = new System.Drawing.Point(10, 58);
             this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(34, 13);
+            this.label76.Size = new System.Drawing.Size(37, 14);
             this.label76.TabIndex = 72;
             this.label76.Text = "Date:";
             // 
@@ -6867,7 +6880,7 @@
             this.label126.AutoSize = true;
             this.label126.Location = new System.Drawing.Point(322, 63);
             this.label126.Name = "label126";
-            this.label126.Size = new System.Drawing.Size(76, 13);
+            this.label126.Size = new System.Drawing.Size(81, 14);
             this.label126.TabIndex = 82;
             this.label126.Text = "RevenueUnit:";
             // 
@@ -6877,7 +6890,7 @@
             this.label96.AutoSize = true;
             this.label96.Location = new System.Drawing.Point(192, 63);
             this.label96.Name = "label96";
-            this.label96.Size = new System.Drawing.Size(101, 13);
+            this.label96.Size = new System.Drawing.Size(113, 14);
             this.label96.TabIndex = 81;
             this.label96.Text = "RevenueUnit Type:";
             // 
@@ -6885,7 +6898,6 @@
             // 
             this.radPageViewPage8.Controls.Add(this.gridBranchAcceptance);
             this.radPageViewPage8.Controls.Add(this.radPanel15);
-            this.radPageViewPage8.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage8.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage8.Name = "radPageViewPage8";
             this.radPageViewPage8.Size = new System.Drawing.Size(1086, 607);
@@ -7034,7 +7046,7 @@
             this.label100.AutoSize = true;
             this.label100.Location = new System.Drawing.Point(186, 60);
             this.label100.Name = "label100";
-            this.label100.Size = new System.Drawing.Size(46, 13);
+            this.label100.Size = new System.Drawing.Size(48, 14);
             this.label100.TabIndex = 82;
             this.label100.Text = "Branch:";
             // 
@@ -7053,7 +7065,7 @@
             this.label97.AutoSize = true;
             this.label97.Location = new System.Drawing.Point(362, 60);
             this.label97.Name = "label97";
-            this.label97.Size = new System.Drawing.Size(40, 13);
+            this.label97.Size = new System.Drawing.Size(42, 14);
             this.label97.TabIndex = 80;
             this.label97.Text = "Driver:";
             // 
@@ -7086,7 +7098,7 @@
             this.label48.AutoSize = true;
             this.label48.Location = new System.Drawing.Point(10, 60);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(34, 13);
+            this.label48.Size = new System.Drawing.Size(37, 14);
             this.label48.TabIndex = 76;
             this.label48.Text = "Date:";
             // 
@@ -7114,7 +7126,7 @@
             this.label77.AutoSize = true;
             this.label77.Location = new System.Drawing.Point(503, 60);
             this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(36, 13);
+            this.label77.Size = new System.Drawing.Size(38, 14);
             this.label77.TabIndex = 69;
             this.label77.Text = "Batch";
             // 
@@ -7144,7 +7156,6 @@
             // 
             this.radPageViewPage9.Controls.Add(this.gridBundle);
             this.radPageViewPage9.Controls.Add(this.radPanel16);
-            this.radPageViewPage9.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage9.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage9.Name = "radPageViewPage9";
             this.radPageViewPage9.Size = new System.Drawing.Size(1086, 607);
@@ -7336,7 +7347,7 @@
             this.label113.AutoSize = true;
             this.label113.Location = new System.Drawing.Point(186, 60);
             this.label113.Name = "label113";
-            this.label113.Size = new System.Drawing.Size(96, 13);
+            this.label113.Size = new System.Drawing.Size(99, 14);
             this.label113.TabIndex = 92;
             this.label113.Text = "Destination BCO:";
             // 
@@ -7346,7 +7357,7 @@
             this.label101.AutoSize = true;
             this.label101.Location = new System.Drawing.Point(351, 60);
             this.label101.Name = "label101";
-            this.label101.Size = new System.Drawing.Size(51, 13);
+            this.label101.Size = new System.Drawing.Size(55, 14);
             this.label101.TabIndex = 89;
             this.label101.Text = "Sack No:";
             // 
@@ -7379,7 +7390,7 @@
             this.label24.AutoSize = true;
             this.label24.Location = new System.Drawing.Point(10, 60);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(34, 13);
+            this.label24.Size = new System.Drawing.Size(37, 14);
             this.label24.TabIndex = 84;
             this.label24.Text = "Date:";
             // 
@@ -7418,7 +7429,6 @@
             // 
             this.radPageViewPage10.Controls.Add(this.gridUnbundle);
             this.radPageViewPage10.Controls.Add(this.radPanel17);
-            this.radPageViewPage10.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage10.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage10.Name = "radPageViewPage10";
             this.radPageViewPage10.Size = new System.Drawing.Size(1086, 607);
@@ -7564,7 +7574,7 @@
             this.label127.AutoSize = true;
             this.label127.Location = new System.Drawing.Point(355, 60);
             this.label127.Name = "label127";
-            this.label127.Size = new System.Drawing.Size(51, 13);
+            this.label127.Size = new System.Drawing.Size(55, 14);
             this.label127.TabIndex = 108;
             this.label127.Text = "Sack No:";
             // 
@@ -7596,7 +7606,7 @@
             this.label34.AutoSize = true;
             this.label34.Location = new System.Drawing.Point(186, 60);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(69, 13);
+            this.label34.Size = new System.Drawing.Size(69, 14);
             this.label34.TabIndex = 86;
             this.label34.Text = "Origin BCO:";
             // 
@@ -7628,7 +7638,7 @@
             this.label51.AutoSize = true;
             this.label51.Location = new System.Drawing.Point(10, 60);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(34, 13);
+            this.label51.Size = new System.Drawing.Size(37, 14);
             this.label51.TabIndex = 84;
             this.label51.Text = "Date:";
             // 
@@ -7658,7 +7668,6 @@
             // 
             this.radPageViewPage11.Controls.Add(this.gridGatewayTransmital);
             this.radPageViewPage11.Controls.Add(this.radPanel18);
-            this.radPageViewPage11.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage11.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage11.Name = "radPageViewPage11";
             this.radPageViewPage11.Size = new System.Drawing.Size(1086, 607);
@@ -7851,7 +7860,7 @@
             this.label129.AutoSize = true;
             this.label129.Location = new System.Drawing.Point(368, 60);
             this.label129.Name = "label129";
-            this.label129.Size = new System.Drawing.Size(40, 13);
+            this.label129.Size = new System.Drawing.Size(42, 14);
             this.label129.TabIndex = 97;
             this.label129.Text = "Driver:";
             // 
@@ -7861,7 +7870,7 @@
             this.label128.AutoSize = true;
             this.label128.Location = new System.Drawing.Point(707, 60);
             this.label128.Name = "label128";
-            this.label128.Size = new System.Drawing.Size(93, 13);
+            this.label128.Size = new System.Drawing.Size(104, 14);
             this.label128.TabIndex = 96;
             this.label128.Text = "Commodity Type:";
             // 
@@ -7912,7 +7921,7 @@
             this.label59.AutoSize = true;
             this.label59.Location = new System.Drawing.Point(186, 60);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(96, 13);
+            this.label59.Size = new System.Drawing.Size(99, 14);
             this.label59.TabIndex = 92;
             this.label59.Text = "BCO Destination:";
             // 
@@ -7922,7 +7931,7 @@
             this.label58.AutoSize = true;
             this.label58.Location = new System.Drawing.Point(589, 60);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(39, 13);
+            this.label58.Size = new System.Drawing.Size(42, 14);
             this.label58.TabIndex = 91;
             this.label58.Text = "Batch:";
             // 
@@ -7951,7 +7960,7 @@
             this.label55.AutoSize = true;
             this.label55.Location = new System.Drawing.Point(834, 60);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(72, 13);
+            this.label55.Size = new System.Drawing.Size(78, 14);
             this.label55.TabIndex = 84;
             this.label55.Text = "Master AWB:";
             // 
@@ -7972,7 +7981,7 @@
             this.label35.AutoSize = true;
             this.label35.Location = new System.Drawing.Point(467, 60);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(54, 13);
+            this.label35.Size = new System.Drawing.Size(59, 14);
             this.label35.TabIndex = 81;
             this.label35.Text = "Gateway:";
             // 
@@ -8004,7 +8013,7 @@
             this.label54.AutoSize = true;
             this.label54.Location = new System.Drawing.Point(10, 60);
             this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(34, 13);
+            this.label54.Size = new System.Drawing.Size(37, 14);
             this.label54.TabIndex = 79;
             this.label54.Text = "Date:";
             // 
@@ -8034,7 +8043,6 @@
             // 
             this.radPageViewPage12.Controls.Add(this.gridGatewayOutbound);
             this.radPageViewPage12.Controls.Add(this.radPanel19);
-            this.radPageViewPage12.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage12.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage12.Name = "radPageViewPage12";
             this.radPageViewPage12.Size = new System.Drawing.Size(1086, 607);
@@ -8219,7 +8227,7 @@
             this.label132.AutoSize = true;
             this.label132.Location = new System.Drawing.Point(819, 60);
             this.label132.Name = "label132";
-            this.label132.Size = new System.Drawing.Size(72, 13);
+            this.label132.Size = new System.Drawing.Size(78, 14);
             this.label132.TabIndex = 106;
             this.label132.Text = "Master AWB:";
             // 
@@ -8229,7 +8237,7 @@
             this.label130.AutoSize = true;
             this.label130.Location = new System.Drawing.Point(350, 60);
             this.label130.Name = "label130";
-            this.label130.Size = new System.Drawing.Size(40, 13);
+            this.label130.Size = new System.Drawing.Size(42, 14);
             this.label130.TabIndex = 105;
             this.label130.Text = "Driver:";
             // 
@@ -8239,7 +8247,7 @@
             this.label131.AutoSize = true;
             this.label131.Location = new System.Drawing.Point(695, 60);
             this.label131.Name = "label131";
-            this.label131.Size = new System.Drawing.Size(93, 13);
+            this.label131.Size = new System.Drawing.Size(104, 14);
             this.label131.TabIndex = 104;
             this.label131.Text = "Commodity Type:";
             // 
@@ -8291,7 +8299,7 @@
             this.label78.AutoSize = true;
             this.label78.Location = new System.Drawing.Point(570, 60);
             this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(39, 13);
+            this.label78.Size = new System.Drawing.Size(42, 14);
             this.label78.TabIndex = 95;
             this.label78.Text = "Batch:";
             // 
@@ -8311,7 +8319,7 @@
             this.label79.AutoSize = true;
             this.label79.Location = new System.Drawing.Point(186, 60);
             this.label79.Name = "label79";
-            this.label79.Size = new System.Drawing.Size(96, 13);
+            this.label79.Size = new System.Drawing.Size(99, 14);
             this.label79.TabIndex = 92;
             this.label79.Text = "Destination BCO:";
             // 
@@ -8321,7 +8329,7 @@
             this.label60.AutoSize = true;
             this.label60.Location = new System.Drawing.Point(447, 60);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(54, 13);
+            this.label60.Size = new System.Drawing.Size(59, 14);
             this.label60.TabIndex = 85;
             this.label60.Text = "Gateway:";
             // 
@@ -8343,7 +8351,7 @@
             this.label61.AutoSize = true;
             this.label61.Location = new System.Drawing.Point(10, 60);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(34, 13);
+            this.label61.Size = new System.Drawing.Size(37, 14);
             this.label61.TabIndex = 83;
             this.label61.Text = "Date:";
             // 
@@ -8373,7 +8381,6 @@
             // 
             this.radPageViewPage13.Controls.Add(this.gridGatewayInbound);
             this.radPageViewPage13.Controls.Add(this.radPanel20);
-            this.radPageViewPage13.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage13.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage13.Name = "radPageViewPage13";
             this.radPageViewPage13.Size = new System.Drawing.Size(1086, 607);
@@ -8514,7 +8521,7 @@
             this.label142.AutoSize = true;
             this.label142.Location = new System.Drawing.Point(624, 60);
             this.label142.Name = "label142";
-            this.label142.Size = new System.Drawing.Size(84, 13);
+            this.label142.Size = new System.Drawing.Size(87, 14);
             this.label142.TabIndex = 107;
             this.label142.Text = "Flight Number:";
             // 
@@ -8545,7 +8552,7 @@
             this.label93.AutoSize = true;
             this.label93.Location = new System.Drawing.Point(749, 60);
             this.label93.Name = "label93";
-            this.label93.Size = new System.Drawing.Size(72, 13);
+            this.label93.Size = new System.Drawing.Size(78, 14);
             this.label93.TabIndex = 105;
             this.label93.Text = "Master AWB:";
             // 
@@ -8576,7 +8583,7 @@
             this.label92.AutoSize = true;
             this.label92.Location = new System.Drawing.Point(473, 60);
             this.label92.Name = "label92";
-            this.label92.Size = new System.Drawing.Size(93, 13);
+            this.label92.Size = new System.Drawing.Size(104, 14);
             this.label92.TabIndex = 102;
             this.label92.Text = "Commodity Type:";
             // 
@@ -8586,7 +8593,7 @@
             this.label89.AutoSize = true;
             this.label89.Location = new System.Drawing.Point(313, 60);
             this.label89.Name = "label89";
-            this.label89.Size = new System.Drawing.Size(69, 13);
+            this.label89.Size = new System.Drawing.Size(69, 14);
             this.label89.TabIndex = 101;
             this.label89.Text = "Origin BCO:";
             // 
@@ -8606,7 +8613,7 @@
             this.label85.AutoSize = true;
             this.label85.Location = new System.Drawing.Point(186, 60);
             this.label85.Name = "label85";
-            this.label85.Size = new System.Drawing.Size(54, 13);
+            this.label85.Size = new System.Drawing.Size(59, 14);
             this.label85.TabIndex = 97;
             this.label85.Text = "Gateway:";
             // 
@@ -8638,7 +8645,7 @@
             this.label88.AutoSize = true;
             this.label88.Location = new System.Drawing.Point(10, 60);
             this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(34, 13);
+            this.label88.Size = new System.Drawing.Size(37, 14);
             this.label88.TabIndex = 95;
             this.label88.Text = "Date:";
             // 
@@ -8668,7 +8675,6 @@
             // 
             this.radPageViewPage14.Controls.Add(this.gridCargoTransfer);
             this.radPageViewPage14.Controls.Add(this.radPanel21);
-            this.radPageViewPage14.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage14.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage14.Name = "radPageViewPage14";
             this.radPageViewPage14.Size = new System.Drawing.Size(1086, 607);
@@ -8805,7 +8811,7 @@
             this.label137.AutoSize = true;
             this.label137.Location = new System.Drawing.Point(729, 55);
             this.label137.Name = "label137";
-            this.label137.Size = new System.Drawing.Size(39, 13);
+            this.label137.Size = new System.Drawing.Size(42, 14);
             this.label137.TabIndex = 101;
             this.label137.Text = "Batch:";
             // 
@@ -8824,7 +8830,7 @@
             this.label136.AutoSize = true;
             this.label136.Location = new System.Drawing.Point(611, 55);
             this.label136.Name = "label136";
-            this.label136.Size = new System.Drawing.Size(45, 13);
+            this.label136.Size = new System.Drawing.Size(51, 14);
             this.label136.TabIndex = 99;
             this.label136.Text = "Plate #:";
             // 
@@ -8843,7 +8849,7 @@
             this.label135.AutoSize = true;
             this.label135.Location = new System.Drawing.Point(490, 56);
             this.label135.Name = "label135";
-            this.label135.Size = new System.Drawing.Size(79, 13);
+            this.label135.Size = new System.Drawing.Size(85, 14);
             this.label135.TabIndex = 97;
             this.label135.Text = "Revenue Unit:";
             // 
@@ -8862,7 +8868,7 @@
             this.label134.AutoSize = true;
             this.label134.Location = new System.Drawing.Point(341, 56);
             this.label134.Name = "label134";
-            this.label134.Size = new System.Drawing.Size(79, 13);
+            this.label134.Size = new System.Drawing.Size(91, 14);
             this.label134.TabIndex = 95;
             this.label134.Text = "Revenue Type:";
             // 
@@ -8881,7 +8887,7 @@
             this.label133.AutoSize = true;
             this.label133.Location = new System.Drawing.Point(190, 56);
             this.label133.Name = "label133";
-            this.label133.Size = new System.Drawing.Size(96, 13);
+            this.label133.Size = new System.Drawing.Size(99, 14);
             this.label133.TabIndex = 93;
             this.label133.Text = "Destination BCO:";
             // 
@@ -8934,7 +8940,7 @@
             this.label50.AutoSize = true;
             this.label50.Location = new System.Drawing.Point(10, 53);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(34, 13);
+            this.label50.Size = new System.Drawing.Size(37, 14);
             this.label50.TabIndex = 84;
             this.label50.Text = "Date:";
             // 
@@ -8964,7 +8970,6 @@
             // 
             this.radPageViewPage15.Controls.Add(this.gridSegregation);
             this.radPageViewPage15.Controls.Add(this.radPanel22);
-            this.radPageViewPage15.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage15.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage15.Name = "radPageViewPage15";
             this.radPageViewPage15.Size = new System.Drawing.Size(1086, 607);
@@ -9124,7 +9129,7 @@
             this.label83.AutoSize = true;
             this.label83.Location = new System.Drawing.Point(472, 56);
             this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(45, 13);
+            this.label83.Size = new System.Drawing.Size(51, 14);
             this.label83.TabIndex = 111;
             this.label83.Text = "Plate #:";
             // 
@@ -9145,7 +9150,7 @@
             this.label36.AutoSize = true;
             this.label36.Location = new System.Drawing.Point(589, 56);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(39, 13);
+            this.label36.Size = new System.Drawing.Size(42, 14);
             this.label36.TabIndex = 108;
             this.label36.Text = "Batch:";
             // 
@@ -9175,7 +9180,7 @@
             this.label56.AutoSize = true;
             this.label56.Location = new System.Drawing.Point(186, 56);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(69, 13);
+            this.label56.Size = new System.Drawing.Size(69, 14);
             this.label56.TabIndex = 105;
             this.label56.Text = "Origin BCO:";
             // 
@@ -9185,7 +9190,7 @@
             this.label57.AutoSize = true;
             this.label57.Location = new System.Drawing.Point(350, 56);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(37, 13);
+            this.label57.Size = new System.Drawing.Size(38, 14);
             this.label57.TabIndex = 104;
             this.label57.Text = "Driver";
             // 
@@ -9207,7 +9212,7 @@
             this.label80.AutoSize = true;
             this.label80.Location = new System.Drawing.Point(10, 60);
             this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(34, 13);
+            this.label80.Size = new System.Drawing.Size(37, 14);
             this.label80.TabIndex = 102;
             this.label80.Text = "Date:";
             // 
@@ -9237,7 +9242,6 @@
             // 
             this.radPageViewPage16.Controls.Add(this.gridDailyTrip);
             this.radPageViewPage16.Controls.Add(this.radPanel23);
-            this.radPageViewPage16.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage16.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage16.Name = "radPageViewPage16";
             this.radPageViewPage16.Size = new System.Drawing.Size(1086, 607);
@@ -9395,7 +9399,7 @@
             this.label143.AutoSize = true;
             this.label143.Location = new System.Drawing.Point(353, 60);
             this.label143.Name = "label143";
-            this.label143.Size = new System.Drawing.Size(39, 13);
+            this.label143.Size = new System.Drawing.Size(42, 14);
             this.label143.TabIndex = 96;
             this.label143.Text = "Batch:";
             // 
@@ -9426,7 +9430,7 @@
             this.label124.AutoSize = true;
             this.label124.Location = new System.Drawing.Point(515, 60);
             this.label124.Name = "label124";
-            this.label124.Size = new System.Drawing.Size(86, 13);
+            this.label124.Size = new System.Drawing.Size(93, 14);
             this.label124.TabIndex = 94;
             this.label124.Text = "Payment Mode:";
             // 
@@ -9459,7 +9463,7 @@
             this.label109.AutoSize = true;
             this.label109.Location = new System.Drawing.Point(10, 60);
             this.label109.Name = "label109";
-            this.label109.Size = new System.Drawing.Size(34, 13);
+            this.label109.Size = new System.Drawing.Size(37, 14);
             this.label109.TabIndex = 90;
             this.label109.Text = "Date:";
             // 
@@ -9479,7 +9483,7 @@
             this.label123.AutoSize = true;
             this.label123.Location = new System.Drawing.Point(187, 60);
             this.label123.Name = "label123";
-            this.label123.Size = new System.Drawing.Size(33, 13);
+            this.label123.Size = new System.Drawing.Size(36, 14);
             this.label123.TabIndex = 85;
             this.label123.Text = "Area:";
             // 
@@ -9509,7 +9513,6 @@
             // 
             this.radPageViewPage17.Controls.Add(this.gridHoldCargo);
             this.radPageViewPage17.Controls.Add(this.radPanel24);
-            this.radPageViewPage17.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage17.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage17.Name = "radPageViewPage17";
             this.radPageViewPage17.Size = new System.Drawing.Size(1086, 607);
@@ -9692,7 +9695,7 @@
             this.label146.AutoSize = true;
             this.label146.Location = new System.Drawing.Point(805, 60);
             this.label146.Name = "label146";
-            this.label146.Size = new System.Drawing.Size(48, 13);
+            this.label146.Size = new System.Drawing.Size(50, 14);
             this.label146.TabIndex = 94;
             this.label146.Text = "Reason:";
             // 
@@ -9702,7 +9705,7 @@
             this.label144.AutoSize = true;
             this.label144.Location = new System.Drawing.Point(528, 60);
             this.label144.Name = "label144";
-            this.label144.Size = new System.Drawing.Size(79, 13);
+            this.label144.Size = new System.Drawing.Size(85, 14);
             this.label144.TabIndex = 93;
             this.label144.Text = "Revenue Unit:";
             // 
@@ -9712,7 +9715,7 @@
             this.label145.AutoSize = true;
             this.label145.Location = new System.Drawing.Point(377, 60);
             this.label145.Name = "label145";
-            this.label145.Size = new System.Drawing.Size(79, 13);
+            this.label145.Size = new System.Drawing.Size(91, 14);
             this.label145.TabIndex = 92;
             this.label145.Text = "Revenue Type:";
             // 
@@ -9752,7 +9755,7 @@
             this.label43.AutoSize = true;
             this.label43.Location = new System.Drawing.Point(184, 80);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(11, 13);
+            this.label43.Size = new System.Drawing.Size(11, 14);
             this.label43.TabIndex = 88;
             this.label43.Text = "-";
             // 
@@ -9797,7 +9800,7 @@
             this.label40.AutoSize = true;
             this.label40.Location = new System.Drawing.Point(10, 60);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(34, 13);
+            this.label40.Size = new System.Drawing.Size(37, 14);
             this.label40.TabIndex = 84;
             this.label40.Text = "Date:";
             // 
@@ -9816,7 +9819,7 @@
             this.label41.AutoSize = true;
             this.label41.Location = new System.Drawing.Point(686, 60);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(42, 13);
+            this.label41.Size = new System.Drawing.Size(46, 14);
             this.label41.TabIndex = 80;
             this.label41.Text = "Status:";
             // 
@@ -9846,7 +9849,6 @@
             // 
             this.radPageViewPage18.Controls.Add(this.gridDeliveryStatus);
             this.radPageViewPage18.Controls.Add(this.radPanel25);
-            this.radPageViewPage18.ItemSize = new System.Drawing.SizeF(126F, 30F);
             this.radPageViewPage18.Location = new System.Drawing.Point(136, 12);
             this.radPageViewPage18.Name = "radPageViewPage18";
             this.radPageViewPage18.Size = new System.Drawing.Size(1086, 607);
@@ -10021,7 +10023,7 @@
             this.label140.AutoSize = true;
             this.label140.Location = new System.Drawing.Point(518, 60);
             this.label140.Name = "label140";
-            this.label140.Size = new System.Drawing.Size(73, 13);
+            this.label140.Size = new System.Drawing.Size(78, 14);
             this.label140.TabIndex = 95;
             this.label140.Text = "Delivered By:";
             // 
@@ -10031,7 +10033,7 @@
             this.label141.AutoSize = true;
             this.label141.Location = new System.Drawing.Point(683, 60);
             this.label141.Name = "label141";
-            this.label141.Size = new System.Drawing.Size(42, 13);
+            this.label141.Size = new System.Drawing.Size(46, 14);
             this.label141.TabIndex = 93;
             this.label141.Text = "Status:";
             // 
@@ -10051,7 +10053,7 @@
             this.label138.AutoSize = true;
             this.label138.Location = new System.Drawing.Point(349, 60);
             this.label138.Name = "label138";
-            this.label138.Size = new System.Drawing.Size(79, 13);
+            this.label138.Size = new System.Drawing.Size(85, 14);
             this.label138.TabIndex = 91;
             this.label138.Text = "Revenue Unit:";
             // 
@@ -10061,7 +10063,7 @@
             this.label139.AutoSize = true;
             this.label139.Location = new System.Drawing.Point(187, 60);
             this.label139.Name = "label139";
-            this.label139.Size = new System.Drawing.Size(82, 13);
+            this.label139.Size = new System.Drawing.Size(95, 14);
             this.label139.TabIndex = 89;
             this.label139.Text = "Revenue Type :";
             // 
@@ -10115,7 +10117,7 @@
             this.label117.AutoSize = true;
             this.label117.Location = new System.Drawing.Point(10, 60);
             this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(34, 13);
+            this.label117.Size = new System.Drawing.Size(37, 14);
             this.label117.TabIndex = 81;
             this.label117.Text = "Date:";
             // 
@@ -10175,7 +10177,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CMS v2.1";
+            this.Text = "CMS v2.1.1";
             this.ThemeName = "Office2010Black";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
