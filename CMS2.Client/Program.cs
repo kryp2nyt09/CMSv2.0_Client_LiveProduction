@@ -41,10 +41,10 @@ namespace CMS2.Client
 
         private static void CheckForUpdate()
         {
-            using (System.Net.HttpClient hh = new System.Net.HttpClient())
-            {
+            //using (System.Net.HttpClient hh = new System.Net.HttpClient())
+            //{
                 
-            }
+            //}
         }
     }
 }
