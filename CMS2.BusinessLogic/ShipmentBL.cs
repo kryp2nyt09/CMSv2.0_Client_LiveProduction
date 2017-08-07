@@ -335,7 +335,7 @@ namespace CMS2.BusinessLogic
             int _index = 0;
             foreach (var item in model.PackageDimensions.Where(x => x.RecordStatus == (int)RecordStatus.Active).ToList())
             {
-                item.Index = _index;
+                item.No = _index;
                 if (item.CommodityTypeId == null)
                     item.CommodityTypeId = model.CommodityTypeId;
                 if (item.DrainingId != null)
@@ -910,24 +910,29 @@ namespace CMS2.BusinessLogic
                     }
                     else
                     {
-                        PackageDimension newDim = new PackageDimension();
-                        newDim.PackageDimensionId = Guid.NewGuid();
-                        newDim.ShipmentId = model.ShipmentId;
-                        newDim.Length = modelDimension.Length;
-                        newDim.Width = modelDimension.Width;
-                        newDim.Height = modelDimension.Height;
-                        newDim.CratingId = modelDimension.CratingId;
-                        newDim.Crating = modelDimension.Crating;
-                        newDim.DrainingId = modelDimension.DrainingId;
-                        newDim.DrainingFee = modelDimension.Draining;
-                        newDim.PackagingId = modelDimension.PackagingId;
-                        newDim.Packaging = modelDimension.Packaging;
-                        newDim.CreatedBy = model.ModifiedBy;
-                        newDim.CreatedDate = model.ModifiedDate;
-                        newDim.ModifiedBy = model.ModifiedBy;
-                        newDim.ModifiedDate = model.ModifiedDate;
-                        newDim.RecordStatus = model.RecordStatus;
-                        packageDimensionService.Add(newDim);
+                        if (modelDimension.RecordStatus == (int)RecordStatus.Active)
+                        {
+                            PackageDimension newDim = new PackageDimension();
+                            newDim.PackageDimensionId = Guid.NewGuid();
+                            newDim.ShipmentId = model.ShipmentId;
+                            newDim.Length = modelDimension.Length;
+                            newDim.Width = modelDimension.Width;
+                            newDim.Height = modelDimension.Height;
+                            newDim.CratingId = modelDimension.CratingId;
+                            newDim.Crating = modelDimension.Crating;
+                            newDim.DrainingId = modelDimension.DrainingId;
+                            newDim.DrainingFee = modelDimension.Draining;
+                            newDim.PackagingId = modelDimension.PackagingId;
+                            newDim.Packaging = modelDimension.Packaging;
+                            newDim.CreatedBy = model.ModifiedBy;
+                            newDim.CreatedDate = model.ModifiedDate;
+                            newDim.ModifiedBy = model.ModifiedBy;
+                            newDim.ModifiedDate = model.ModifiedDate;
+                            newDim.RecordStatus = model.RecordStatus;
+                            packageDimensionService.Add(newDim);
+                            modelDimension.PackageDimensionId = newDim.PackageDimensionId;
+                        }                       
+                        
                     }
                 }
 

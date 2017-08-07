@@ -1359,9 +1359,8 @@ namespace CMS2.Client
         {
 
             int index = Convert.ToInt32(e.Rows[0].Cells["No"].Value) - 1; ;
-            PackageDimensionModel item = shipment.PackageDimensions.FirstOrDefault(x => x.Index == index);
+            PackageDimensionModel item = shipment.PackageDimensions.FirstOrDefault(x => x.No == index);
             item.RecordStatus =(int) RecordStatus.Deleted;
-
             RefreshGridPackages();
         }
         private void AcceptancetxtAirwayBill_Enter(object sender, EventArgs e)
@@ -2057,19 +2056,19 @@ namespace CMS2.Client
             dt.Columns.Add(new DataColumn("Draining", typeof(string)));
 
             dt.BeginLoadData();
-
+            int count = 1;
             foreach (PackageDimensionModel item in list.PackageDimensions.Where(x=>x.RecordStatus == (int) RecordStatus.Active))
             {
                 totalEvm = totalEvm + item.Evm;
                 DataRow row = dt.NewRow();
-                row["No"] = item.Index + 1;
+                row["No"] = count;
                 row["Length"] = item.LengthString;
                 row["Width"] = item.WidthString;
                 row["Height"] = item.HeightString;
                 row["Crating"] = item.CratingFeeString;
                 row["Packaging"] = item.PackagingFeeString;
                 row["Draining"] = item.DrainingFeeString;
-
+                count++;
                 dt.Rows.Add(row);
             }
 
@@ -3608,14 +3607,14 @@ namespace CMS2.Client
             int index = 0;
             for (index = 0; index < shipment.PackageDimensions.Count; index++)
             {
-                var temp = shipment.PackageDimensions.Find(x => x.Index == index);
+                var temp = shipment.PackageDimensions.Find(x => x.No == index);
                 if (temp == null)
                 {
                     break;
                 }
             }
             packageDimensionModel = new PackageDimensionModel();
-            packageDimensionModel.Index = index;
+            packageDimensionModel.No = index;
             packageDimensionModel.Length = length;
             packageDimensionModel.Width = width;
             packageDimensionModel.Height = height;
@@ -3896,12 +3895,12 @@ namespace CMS2.Client
 
             if (shipment.CommodityId != null)
             {
-                CommodityName = commodityService.FilterActive().Find(x => x.CommodityId == shipment.CommodityId).CommodityName;
+                CommodityName =commodities.Find(x => x.CommodityId == shipment.CommodityId).CommodityName;
             }
           
 
             DataRow row = dt.NewRow();
-            row[0] = shipment.Commodity.CommodityName;
+            row[0] = CommodityName;
             //row[0] = CommodityName;
             row[1] = txtQuantity.Text;
             row[2] = txtWeight.Text;
