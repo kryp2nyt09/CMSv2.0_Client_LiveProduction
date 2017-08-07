@@ -23,7 +23,7 @@ namespace CMS2.Client
             CheckForUpdate();
 
             bool xBool = Convert.ToBoolean(ConfigurationManager.AppSettings["isSync"]);
-            if (!xBool)
+            if (xBool)
             {
                 Extract_Database extract = new Extract_Database();
                 Application.Run(extract);
@@ -41,9 +41,9 @@ namespace CMS2.Client
 
         private static void CheckForUpdate()
         {
-            //using (System.Net.HttpClient hh = new System.Net.HttpClient())
+            //using (System.Net.WebClient client = new System.Net.WebClient())
             //{
-                
+            //    client.DownloadFile(@"C:\inetpub\wwwroot\CMSUpdate","version.xml");
             //}
         }
     }

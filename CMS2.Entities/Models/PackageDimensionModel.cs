@@ -8,7 +8,7 @@ namespace CMS2.Entities.Models
         public Guid ShipmentId { get; set; }
         public Shipment Shipment { get; set; }
         public Guid CommodityTypeId { get; set; }
-        public int Index { get; set; }
+        public int No { get; set; }
         public decimal Length { get; set; }
         public decimal Width { get; set; }
         public decimal Height { get; set; }

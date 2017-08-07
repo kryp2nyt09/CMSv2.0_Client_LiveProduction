@@ -2637,7 +2637,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>APCargo</td><td>0</td><td/><td>1168386263</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>APCargo</td><td>0</td><td/><td>1009086958</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-182138192</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-182138192</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>228890825</td></row>
@@ -3750,8 +3750,8 @@
 		<row><td>ID_STRING14</td><td>1033</td><td>AP CARGO  Synchronization</td><td>0</td><td/><td>-1599744566</td></row>
 		<row><td>ID_STRING15</td><td>1033</td><td>Synchronization Service</td><td>0</td><td/><td>967160269</td></row>
 		<row><td>ID_STRING16</td><td>1033</td><td>This is a service that replicate data from server to local database.</td><td>0</td><td/><td>967143917</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.APCargo.com</td><td>0</td><td/><td>1168386263</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>APCargo</td><td>0</td><td/><td>1168386263</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.APCargo.com</td><td>0</td><td/><td>1009086958</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>APCargo</td><td>0</td><td/><td>1009086958</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-182131888</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>!DB_DeploymentFiles</td><td>0</td><td/><td>228856362</td></row>
 		<row><td>ID_STRING6</td><td>1033</td><td>[~];</td><td>0</td><td/><td>228909578</td></row>
@@ -4403,7 +4403,7 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>SERIALNUMVALSUCCESSRETVAL</td><td>1</td><td/></row>
 		<row><td>SHOWLAUNCHPROGRAM</td><td>0</td><td/></row>
 		<row><td>SHOWLAUNCHREADME</td><td>0</td><td/></row>
-		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION45FULL;ISACTIONPROP1</td><td/></row>
+		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION45FULL;ISACTIONPROP2</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
 		<row><td>UpgradeCode</td><td>{E985E0C0-5606-4E09-A944-3C9C39B08932}</td><td/></row>
@@ -4679,7 +4679,7 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<col def="s72">ActionProperty</col>
 		<col def="S72">ISDisplayName</col>
 		<row><td>{00000000-0000-0000-0000-000000000000}</td><td>***ALL_VERSIONS***</td><td></td><td></td><td>2</td><td/><td>ISFOUNDNEWERPRODUCTVERSION</td><td>ISPreventDowngrade</td></row>
-		<row><td>{E985E0C0-5606-4E09-A944-3C9C39B08932}</td><td>1.00.0000</td><td>2.10.0001</td><td></td><td>768</td><td/><td>ISACTIONPROP1</td><td>NewUpgradeEntry1</td></row>
+		<row><td>{E985E0C0-5606-4E09-A944-3C9C39B08932}</td><td>2.0.0001</td><td>2.10.0001</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP2</td><td>NewUpgradeEntry</td></row>
 	</table>
 
 	<table name="Verb">
