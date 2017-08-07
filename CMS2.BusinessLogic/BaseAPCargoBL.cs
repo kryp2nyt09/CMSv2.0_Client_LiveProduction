@@ -7,7 +7,6 @@ using CMS2.DataAccess;
 using CMS2.DataAccess.Interfaces;
 using CMS2.Entities;
 using System.Windows.Forms;
-using System.Data.Entity.Validation;
 
 namespace CMS2.BusinessLogic
 {

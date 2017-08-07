@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using CMS2.BusinessLogic.ReportModels;
-using CMS2.BusinessLogic.Helpers;
 using CMS2.Common;
 using CMS2.Common.Enums;
 using CMS2.DataAccess.Interfaces;
 using CMS2.Entities.Models;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
+//using CrystalDecisions.CrystalReports.Engine;
+//using CrystalDecisions.Shared;
 using CMS2.Entities;
 
 namespace CMS2.BusinessLogic
@@ -65,10 +63,10 @@ namespace CMS2.BusinessLogic
                 model.ModifiedBy = entity.ModifiedBy;
                 model.ModifiedDate = entity.ModifiedDate;
                 model.RecordStatus = entity.RecordStatus;
-                if (model.CompanyId != null || model.CompanyId == Guid.Empty)
-                { model.CompanyAccountNoBarcode = BarcodeGenerator.GetBarcode(model.Company.AccountNo); }
+                //if (model.CompanyId != null || model.CompanyId == Guid.Empty)
+                //{ model.CompanyAccountNoBarcode = BarcodeGenerator.GetBarcode(model.Company.AccountNo); }
 
-                model.StatementOfAccountNoBarcode = BarcodeGenerator.GetBarcode(model.StatementOfAccountNo);
+                //model.StatementOfAccountNoBarcode = BarcodeGenerator.GetBarcode(model.StatementOfAccountNo);
             }
 
             return model;
@@ -402,7 +400,7 @@ namespace CMS2.BusinessLogic
                 {
                     base.Edit(entity);
                     //model.StatementOfAccountNo = entity.StatementOfAccountNo;
-                    model.StatementOfAccountNoBarcode = BarcodeGenerator.GetBarcode(model.StatementOfAccountNo);
+                    //model.StatementOfAccountNoBarcode = BarcodeGenerator.GetBarcode(model.StatementOfAccountNo);
                     model.ModifiedDate = entity.ModifiedDate;
                     Logs.AppLogs(LogPath, "SOA BL - Finalize", "Successfull");
                 }
@@ -415,119 +413,119 @@ namespace CMS2.BusinessLogic
             return model;
         }
 
-        public void CreateSavePdfFile(StatementOfAccountModel model)
-        {
-            Logs.AppLogs(LogPath, "SOA BL - Create and Save Pdf File");
-            // create PDF and save to file system
-            if (model != null)
-            {
-                model = ComputeSoa(model);
-            }
-            string reportTemplatePath = "";
-            string soaTemplateFile = "";
-            string soaReportPath = "";
-            //string branchName = model.Company.Area.Branch.BranchName;
-            string bcoName = model.Company.City.BranchCorpOffice.BranchCorpOfficeName;
-            string soaDate = model.StatementOfAccountDate.ToString("yyyyMMdd");
-            string soaFileName = soaDate + "_" + model.StatementOfAccountNo + "_" + model.Company.AccountNo;
+        //public void CreateSavePdfFile(StatementOfAccountModel model)
+        //{
+        //    Logs.AppLogs(LogPath, "SOA BL - Create and Save Pdf File");
+        //    // create PDF and save to file system
+        //    if (model != null)
+        //    {
+        //        model = ComputeSoa(model);
+        //    }
+        //    string reportTemplatePath = "";
+        //    string soaTemplateFile = "";
+        //    string soaReportPath = "";
+        //    //string branchName = model.Company.Area.Branch.BranchName;
+        //    string bcoName = model.Company.City.BranchCorpOffice.BranchCorpOfficeName;
+        //    string soaDate = model.StatementOfAccountDate.ToString("yyyyMMdd");
+        //    string soaFileName = soaDate + "_" + model.StatementOfAccountNo + "_" + model.Company.AccountNo;
 
-            if (ApplicationSetting != null)
-            {
-                reportTemplatePath = ApplicationSetting.SingleOrDefault(x => x.SettingName.Equals("SOAReportTemplatePath")).SettingValue;
-                soaTemplateFile = ApplicationSetting.SingleOrDefault(x => x.SettingName.Equals("SOATemplateFilename")).SettingValue;
-                soaReportPath = ApplicationSetting.SingleOrDefault(x => x.SettingName.Equals("SOAReportPath")).SettingValue + soaDate + "\\" + bcoName + "\\";
+        //    if (ApplicationSetting != null)
+        //    {
+        //        reportTemplatePath = ApplicationSetting.SingleOrDefault(x => x.SettingName.Equals("SOAReportTemplatePath")).SettingValue;
+        //        soaTemplateFile = ApplicationSetting.SingleOrDefault(x => x.SettingName.Equals("SOATemplateFilename")).SettingValue;
+        //        soaReportPath = ApplicationSetting.SingleOrDefault(x => x.SettingName.Equals("SOAReportPath")).SettingValue + soaDate + "\\" + bcoName + "\\";
 
-                string soaReportFile = soaFileName + ".pdf";
+        //        string soaReportFile = soaFileName + ".pdf";
 
-                if (!Directory.Exists(soaReportPath))
-                {
-                    Directory.CreateDirectory(soaReportPath);
-                }
+        //        if (!Directory.Exists(soaReportPath))
+        //        {
+        //            Directory.CreateDirectory(soaReportPath);
+        //        }
 
-                // transfer model to dataset for crystal reports
-                StatementOfAccountDataSet soaDs = new StatementOfAccountDataSet();
-                // fill SOA Details
-                // TODO check the assignment of data. Must not add.
-                DataRow dr = soaDs.Tables["StatementOfAccount"].NewRow();
-                dr["SoaNo"] = model.StatementOfAccountNo;
-                dr["SoaDateString"] = model.StatementOfAccountDateString;
-                dr["SoaDueDate"] = model.SoaDueDateString;
-                dr["SoaBillingPeriod"] = model.StatementOfAccountPeriod;
-                dr["AccountNo"] = model.Company.AccountNo;
-                dr["AccountNoBarcode"] = model.StatementOfAccountNoBarcode;
-                dr["CompanyName"] = model.Company.CompanyName;
-                dr["CompanyAddress"] = model.Company.BillingAddress1;
-                dr["SoaAmountDue"] = model.TotalSoaAmountString;
-                dr["TotalCurrentBalance"] = model.TotalCurrentChargesString;
-                dr["TotalPreviousBalance"] = model.TotalPreviousBalanceString;
-                dr["TotalPreviousSurcharges"] = model.TotalPreviousSurchargeString;
-                dr["TotalFreightCharges"] = model.TotalCurrentSubTotalString;
-                dr["TotalVatAmount"] = model.TotalCurrentVatAmountString;
-                dr["TotalCurrentAmountDue"] = model.TotalCurrentTotalString;
-                dr["TotalPreviousAmountDue"] = model.TotalPreviousAmountDueString;
-                dr["TotalPreviousAdjustments"] = model.TotalPreviousAdjustmentsString;
-                dr["TotalPreviousPayments"] = model.TotalPreviousPaymentsString;
-                soaDs.Tables["StatementOfAccount"].Rows.Add(dr);
+        //        // transfer model to dataset for crystal reports
+        //        StatementOfAccountDataSet soaDs = new StatementOfAccountDataSet();
+        //        // fill SOA Details
+        //        // TODO check the assignment of data. Must not add.
+        //        DataRow dr = soaDs.Tables["StatementOfAccount"].NewRow();
+        //        dr["SoaNo"] = model.StatementOfAccountNo;
+        //        dr["SoaDateString"] = model.StatementOfAccountDateString;
+        //        dr["SoaDueDate"] = model.SoaDueDateString;
+        //        dr["SoaBillingPeriod"] = model.StatementOfAccountPeriod;
+        //        dr["AccountNo"] = model.Company.AccountNo;
+        //        dr["AccountNoBarcode"] = model.StatementOfAccountNoBarcode;
+        //        dr["CompanyName"] = model.Company.CompanyName;
+        //        dr["CompanyAddress"] = model.Company.BillingAddress1;
+        //        dr["SoaAmountDue"] = model.TotalSoaAmountString;
+        //        dr["TotalCurrentBalance"] = model.TotalCurrentChargesString;
+        //        dr["TotalPreviousBalance"] = model.TotalPreviousBalanceString;
+        //        dr["TotalPreviousSurcharges"] = model.TotalPreviousSurchargeString;
+        //        dr["TotalFreightCharges"] = model.TotalCurrentSubTotalString;
+        //        dr["TotalVatAmount"] = model.TotalCurrentVatAmountString;
+        //        dr["TotalCurrentAmountDue"] = model.TotalCurrentTotalString;
+        //        dr["TotalPreviousAmountDue"] = model.TotalPreviousAmountDueString;
+        //        dr["TotalPreviousAdjustments"] = model.TotalPreviousAdjustmentsString;
+        //        dr["TotalPreviousPayments"] = model.TotalPreviousPaymentsString;
+        //        soaDs.Tables["StatementOfAccount"].Rows.Add(dr);
 
-                // fill current Shipments
-                foreach (var item in model.CurrentShipments)
-                {
-                    dr = soaDs.Tables["CurrentShipments"].NewRow();
-                    dr["DateAccepted"] = item.DateAcceptedString;
-                    dr["AirwayBillNo"] = item.AirwayBillNo;
-                    dr["Origin"] = item.OriginCity.CityCode;
-                    dr["Destination"] = item.DestinationCity.CityCode;
-                    dr["FreightCharges"] = item.ShipmentSubTotalString;
-                    dr["VatAmount"] = item.ShipmentVatAmountString;
-                    dr["AmountDue"] = item.ShipmentTotalString;
-                    soaDs.Tables["CurrentShipments"].Rows.Add(dr);
-                }
+        //        // fill current Shipments
+        //        foreach (var item in model.CurrentShipments)
+        //        {
+        //            dr = soaDs.Tables["CurrentShipments"].NewRow();
+        //            dr["DateAccepted"] = item.DateAcceptedString;
+        //            dr["AirwayBillNo"] = item.AirwayBillNo;
+        //            dr["Origin"] = item.OriginCity.CityCode;
+        //            dr["Destination"] = item.DestinationCity.CityCode;
+        //            dr["FreightCharges"] = item.ShipmentSubTotalString;
+        //            dr["VatAmount"] = item.ShipmentVatAmountString;
+        //            dr["AmountDue"] = item.ShipmentTotalString;
+        //            soaDs.Tables["CurrentShipments"].Rows.Add(dr);
+        //        }
 
-                // fill previous Shipments
-                foreach (var item in model.PreviousShipments)
-                {
-                    dr = soaDs.Tables["PreviousShipments"].NewRow();
-                    dr["SoaDate"] = item.StatementOfAccount.StatementOfAccountDateString;
-                    dr["SoaNo"] = item.StatementOfAccount.StatementOfAccountNo;
-                    dr["AwbNo"] = item.AirwayBillNo;
-                    dr["PreviousAmountDue"] = item.PreviousAmountDueString;
-                    dr["PreviousPayment"] = item.PreviousPaymentsString;
-                    dr["PreviousAdjustment"] = item.PreviousAdjustmentsString;
-                    dr["PreviousBalance"] = item.PreviousBalanceString;
-                    dr["Surcharge"] = item.SurchargeString;
-                    soaDs.Tables["PreviousShipments"].Rows.Add(dr);
-                }
+        //        // fill previous Shipments
+        //        foreach (var item in model.PreviousShipments)
+        //        {
+        //            dr = soaDs.Tables["PreviousShipments"].NewRow();
+        //            dr["SoaDate"] = item.StatementOfAccount.StatementOfAccountDateString;
+        //            dr["SoaNo"] = item.StatementOfAccount.StatementOfAccountNo;
+        //            dr["AwbNo"] = item.AirwayBillNo;
+        //            dr["PreviousAmountDue"] = item.PreviousAmountDueString;
+        //            dr["PreviousPayment"] = item.PreviousPaymentsString;
+        //            dr["PreviousAdjustment"] = item.PreviousAdjustmentsString;
+        //            dr["PreviousBalance"] = item.PreviousBalanceString;
+        //            dr["Surcharge"] = item.SurchargeString;
+        //            soaDs.Tables["PreviousShipments"].Rows.Add(dr);
+        //        }
 
-                // fill SOA Payments
-                foreach (var item in model.PreviousSoaPayments)
-                {
-                    dr = soaDs.Tables["Payments"].NewRow();
-                    dr["PaymentDate"] = item.PaymentDateString;
-                    dr["OrPrNo"] = item.OrNo;
-                    dr["Form"] = item.PaymentType.PaymentTypeName;
-                    dr["Remarks"] = item.CheckBankName + " " + item.CheckNo + " " + item.Remarks;
-                    dr["AmountPaid"] = item.AmountString;
-                    soaDs.Tables["Payments"].Rows.Add(dr);
-                }
+        //        // fill SOA Payments
+        //        foreach (var item in model.PreviousSoaPayments)
+        //        {
+        //            dr = soaDs.Tables["Payments"].NewRow();
+        //            dr["PaymentDate"] = item.PaymentDateString;
+        //            dr["OrPrNo"] = item.OrNo;
+        //            dr["Form"] = item.PaymentType.PaymentTypeName;
+        //            dr["Remarks"] = item.CheckBankName + " " + item.CheckNo + " " + item.Remarks;
+        //            dr["AmountPaid"] = item.AmountString;
+        //            soaDs.Tables["Payments"].Rows.Add(dr);
+        //        }
 
-                try
-                {
-                    ReportDocument report = new ReportDocument();
-                    report.Load(reportTemplatePath + soaTemplateFile);
-                    report.SetDataSource(soaDs);
-                    report.ExportToDisk(ExportFormatType.PortableDocFormat, soaReportPath + soaReportFile);
-                    Logs.AppLogs(LogPath, "SOA BL - CreateSavePdfFile", "Successfull");
-                }
-                catch (Exception ex)
-                {
-                    Logs.ErrorLogs(LogPath, "SOA BL - CreateSavePdfFile", ex);
-                }
-            }
-            else
-            {
-                //Logs.ErrorLogs(LogPath, "SOA BL - CreateSavePdfFile", "Application Settings is null");
-            }
-        }
+        //        try
+        //        {
+        //            ReportDocument report = new ReportDocument();
+        //            report.Load(reportTemplatePath + soaTemplateFile);
+        //            report.SetDataSource(soaDs);
+        //            report.ExportToDisk(ExportFormatType.PortableDocFormat, soaReportPath + soaReportFile);
+        //            Logs.AppLogs(LogPath, "SOA BL - CreateSavePdfFile", "Successfull");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Logs.ErrorLogs(LogPath, "SOA BL - CreateSavePdfFile", ex);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Logs.ErrorLogs(LogPath, "SOA BL - CreateSavePdfFile", "Application Settings is null");
+        //    }
+        //}
 
         /// <summary>
         /// Bill Run
