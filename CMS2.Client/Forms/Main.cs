@@ -21,10 +21,6 @@ using CMS2.Client.ViewModels;
 using CMS2.DataAccess;
 using System.Security.Principal;
 using CMS2.Common;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
-using CMS2.Client.Reports;
-using System.Drawing.Printing;
 using CMS2.Client.SyncHelper;
 using System.Threading.Tasks;
 using System.Threading;
@@ -1021,7 +1017,12 @@ namespace CMS2.Client
             shipment.AcceptedById = AppUser.Employee.EmployeeId;
             shipment.AcceptedBy = AppUser.Employee;
             if (shipment.CommodityId == null || shipment.CommodityId == Guid.Empty)
+            {
                 shipment.CommodityId = Guid.Parse(lstCommodity.SelectedValue.ToString());
+                shipment.Commodity = commodities.Find(x => x.CommodityId == shipment.CommodityId);
+                    
+            }
+                
             shipment.Notes = txtNotes.Text;
             shipment.GoodsDescriptionId = Guid.Parse(lstGoodsDescription.SelectedValue.ToString());
 
@@ -1104,6 +1105,70 @@ namespace CMS2.Client
         {
             CommodityTypeSelected();
         }
+
+        private void lstCommodityType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (lstCommodityType.SelectedIndex > -1)
+                {
+                    if (lstCommodityType.Items.Count > 0)
+                    {
+                        if (lstCommodityType.SelectedIndex >= 0)
+                        {
+                            Guid commodityTypeId = Guid.Parse(lstCommodityType.SelectedValue.ToString());
+                            commodityType = commodityTypes.Find(x => x.CommodityTypeId == commodityTypeId);
+                            shipment.CommodityTypeId = commodityTypeId;
+                            shipment.CommodityType = commodityTypes.Find(x => x.CommodityTypeId == commodityTypeId);
+
+                            var _commodities =
+                                commodities.Where(x => x.CommodityTypeId == commodityTypeId).OrderBy(x => x.CommodityName).ToList();
+                            lstCommodity.DataSource = _commodities;
+                            lstCommodity.DisplayMember = "CommodityName";
+                            lstCommodity.ValueMember = "CommodityId";
+                        }
+                        else
+                        {
+                            lstCommodityType.Focus();
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                
+            }
+            
+        }
+        private void lstCommodityType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //CommodityTypeSelected();
+            //if (lstCommodityType.SelectedIndex > -1)
+            //{
+            //    if (lstCommodityType.Items.Count > 0)
+            //    {
+            //        if (lstCommodityType.SelectedIndex >= 0)
+            //        {
+            //            Guid commodityTypeId = Guid.Parse(lstCommodityType.SelectedValue.ToString());
+            //            commodityType = commodityTypes.Find(x => x.CommodityTypeId == commodityTypeId);
+            //            shipment.CommodityTypeId = commodityTypeId;
+            //            shipment.CommodityType = commodityTypes.Find(x => x.CommodityTypeId == commodityTypeId);
+
+            //            var _commodities =
+            //                commodities.Where(x => x.CommodityTypeId == commodityTypeId).OrderBy(x => x.CommodityName).ToList();
+            //            lstCommodity.DataSource = _commodities;
+            //            lstCommodity.DisplayMember = "CommodityName";
+            //            lstCommodity.ValueMember = "CommodityId";
+            //        }
+            //        else
+            //        {
+            //            lstCommodityType.Focus();
+            //        }
+            //    }
+            //}
+          
+        }
+
         private void txtWeight_KeyUp(object sender, KeyEventArgs e)
         {
 
@@ -1961,15 +2026,17 @@ namespace CMS2.Client
         private void PopulateGrid()
         {
             DateTime date = DateTime.Now;
-            List<Booking> books = bookingService.FilterActive().Where(x => x.BookingStatus.BookingStatusName != "Picked-up" 
-            && x.AssignedToArea.City.BranchCorpOfficeId == GlobalVars.DeviceBcoId
-            && x.DateBooked.ToShortDateString() == date.ToShortDateString()).OrderByDescending(x => x.DateBooked).ToList(); //bookingService.FilterActiveBy(x => x.AssignedToArea.City.BranchCorpOfficeId == GlobalVars.DeviceBcoId).ToList().OrderByDescending(x => x.CreatedDate);
+            List<Booking> books = bookingService.FilterActive().Where(x => x.BookingStatus.BookingStatusName != "Picked-up"
+            && x.AssignedToArea.City.BranchCorpOfficeId == GlobalVars.DeviceBcoId).OrderByDescending(x => x.DateBooked).ToList();
             if (books.Count > 0 && books != null)
             {
                 BookingGridView.DataSource = null;
                 BookingGridView.DataSource = books;
                 BookingGridView.MasterTemplate.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
+                
             }
+
+            
         }
         /// <summary>
         /// 
@@ -2981,11 +3048,12 @@ namespace CMS2.Client
             lstCommodityType.DataSource = bsCommodityType;
             lstCommodityType.DisplayMember = "CommodityTypeName";
             lstCommodityType.ValueMember = "CommodityTypeId";
-
+            
             lstCommodity.DataSource = bsCommodity;
             lstCommodity.DisplayMember = "CommodityName";
             lstCommodity.ValueMember = "CommodityId";
 
+            
             lstServiceType.DataSource = bsServiceType;
             lstServiceType.DisplayMember = "ServiceTypeName";
             lstServiceType.ValueMember = "ServiceTypeId";
@@ -3024,6 +3092,7 @@ namespace CMS2.Client
             //bsGoodsDescription.ResetBindings(false);
             //bsShipMode.ResetBindings(false);
             //bsTranshipmentLeg.ResetBindings(false);
+
 
             lstCommodityType.SelectedIndex = -1;
             lstCommodity.SelectedIndex = -1;
@@ -3220,7 +3289,8 @@ namespace CMS2.Client
                 shipment.DeclaredValue = Decimal.Parse(txtDeclaredValue.Value.ToString().Replace("₱", ""));
                 shipment.HandlingFee = Decimal.Parse(txtHandlingFee.Value.ToString().Replace("₱", ""));
                 shipment.QuarantineFee = Decimal.Parse(txtQuarantineFee.Value.ToString().Replace("₱", ""));
-                shipment.Discount = Decimal.Parse(txtRfa.Value.ToString());
+                shipment.Discount = (Decimal.Parse(txtRfa.Value.ToString())* 100);
+               
             }
             catch (Exception ex)
             {
@@ -3338,7 +3408,8 @@ namespace CMS2.Client
                 txtDeclaredValue.Text = shipment.DeclaredValueString;
                 txtHandlingFee.Text = shipment.HandlingFeeString;
                 txtQuarantineFee.Text = shipment.QuanrantineFeeString;
-                txtRfa.Text = (shipment.Discount * (Decimal)(.100)).ToString();
+                //txtRfa.Text = (shipment.Discount * (Decimal)(.100)).ToString();
+                txtRfa.Text = shipment.Discount.ToString();
                 txtNotes.Text = shipment.Notes;
                 chkNonVatable.Checked = false;
                 if (!shipment.IsVatable)
@@ -3820,13 +3891,17 @@ namespace CMS2.Client
                 dimensions.AppendLine(Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString());
 
             }
+            string CommodityName = "";
 
-            
-            //string CommodityName = commodityService.FilterActive().Where(x => x.CommodityId == shipment.CommodityId).Select(x => x.CommodityName).ToString();
+            if (shipment.CommodityId != null)
+            {
+                CommodityName = commodityService.FilterActive().Find(x => x.CommodityId == shipment.CommodityId).CommodityName;
+            }
+          
 
             DataRow row = dt.NewRow();
             row[0] = shipment.Commodity.CommodityName;
-           // row[0] = CommodityName;
+            //row[0] = CommodityName;
             row[1] = txtQuantity.Text;
             row[2] = txtWeight.Text;
             row[4] = txtTotalEvm.Text;
@@ -3846,10 +3921,10 @@ namespace CMS2.Client
             AcceptanceModelReport.AWB2 = AcceptancetxtAirwayBill.Text;
 
             AcceptanceModelReport.ShipperName = AcceptancetxtShipperFullName.Text;
-            AcceptanceModelReport.ShipperAddress = AcceptancetxtShipperAddress.Text;
+            AcceptanceModelReport.ShipperAddress = AcceptancetxtShipperAddress.Text + "," + AcceptancetxtShipperBarangay.Text;
 
             AcceptanceModelReport.ConsigneeName = AcceptancetxtConsigneeFullName.Text;
-            AcceptanceModelReport.ConsigneeAddress = AcceptancetxtConsigneeCity.Text;
+            AcceptanceModelReport.ConsigneeAddress = AcceptancetxtConsigneeAddress.Text + "," + AcceptancetxtConsigneeBarangay.Text;
 
             AcceptanceModelReport.txt1 = txtSumChargeableWeight.Text;
             AcceptanceModelReport.txt2 = txtSumWeightCharge.Text;
@@ -7042,6 +7117,7 @@ namespace CMS2.Client
                     ProgressIndicator saving = new ProgressIndicator("Payment Summary", "Saving ...", SavingofPaymentSummary);
                     saving.ShowDialog();
                     btnPrintPaymentSummary.Enabled = true;
+                    
                     //chk_ReceivedAll.Checked = false;
                 }
             }
@@ -8410,5 +8486,7 @@ namespace CMS2.Client
                 cmb_PaymentRemarks.SelectedValue = "Partial";
             }
         }
+
+        
     }
 }

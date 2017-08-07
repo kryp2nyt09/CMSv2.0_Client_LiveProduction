@@ -397,9 +397,10 @@ namespace CMS2.BusinessLogic
             {
                 ApplicableRate _applicableRate = applicableRateService.GetApplicableRate(model.CommodityTypeId, model.ServiceModeId, model.ServiceTypeId);
 
-                //if (_applicableRate != null)
-                //{
-                matrix = rateMatrixService.GetMatrix(_applicableRate.ApplicableRateId);
+                if (_applicableRate != null)
+                {
+                    matrix = rateMatrixService.GetMatrix(_applicableRate.ApplicableRateId);
+                }
                 //matrix = rateMatrixService.FilterActiveBy(x => x.CommodityTypeId == model.a && x.ServiceTypeId == model.ServiceTypeId && x.ServiceModeId == model.ServiceModeId).FirstOrDefault();
                 if (model.PaymentMode.PaymentModeCode.Equals("FC"))
                 {
@@ -551,7 +552,7 @@ namespace CMS2.BusinessLogic
                 // get discount
                 if (model.Discount > 0)
                 {
-                    model.DiscountAmount = model.WeightCharge * model.Discount;
+                    model.DiscountAmount = model.WeightCharge * (model.Discount/100);
                 }
 
 
@@ -695,13 +696,13 @@ namespace CMS2.BusinessLogic
 
             ApplicableRate _applicableRate = applicableRateService.GetApplicableRate(model.CommodityTypeId, model.ServiceModeId, model.ServiceTypeId);
 
-            //if (_applicableRate != null)
-            //{
-            matrix = rateMatrixService.GetMatrix(_applicableRate.ApplicableRateId);
-            //}
+            if (_applicableRate != null)
+            {
+                matrix = rateMatrixService.GetMatrix(_applicableRate.ApplicableRateId);
+            }
             //else
             //{
-            //    //matrix = rateMatrixService.GetMatrix(model.CommodityTypeId, model.ServiceTypeId,
+            //    matrix = rateMatrixService.GetMatrix(model.CommodityTypeId, model.ServiceTypeId,
             //    model.ServiceModeId);
             //}
 

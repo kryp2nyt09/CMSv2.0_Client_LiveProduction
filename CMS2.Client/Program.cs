@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Windows.Forms;
 using System.Xml;
 using CMS2.Client.Properties;
-using Microsoft.Practices.Unity;
 using CMS2_Client;
 using System.Security.Principal;
 using System.Collections.Generic;

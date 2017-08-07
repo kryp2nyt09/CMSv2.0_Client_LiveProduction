@@ -214,6 +214,7 @@ namespace CMS2.DataAccess
             modelBuilder.Entity<Shipment>().Property(x => x.HandlingFee).HasPrecision(9, 2);
             modelBuilder.Entity<Shipment>().Property(x => x.QuarantineFee).HasPrecision(9, 2);
             modelBuilder.Entity<Shipment>().Property(x => x.Discount).HasPrecision(9, 2);
+            modelBuilder.Entity<Shipment>().Property(x => x.TotalAmount).HasPrecision(9, 2);
             modelBuilder.Entity<Shipment>().Property(x => x.AwbFeeId).IsOptional();
             modelBuilder.Entity<Shipment>().Property(x => x.FreightCollectChargeId).IsOptional();
             modelBuilder.Entity<Shipment>().Property(x => x.FuelSurchargeId).IsOptional();

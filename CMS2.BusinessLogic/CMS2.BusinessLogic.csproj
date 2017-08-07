@@ -48,17 +48,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BarcodeLib, Version=1.0.0.20, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CMS-Clientv2.0\CMS2.BusinessLogic\bin\Debug\BarcodeLib.dll</HintPath>
-    </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CMS-Clientv2.0\CMS2.BusinessLogic\bin\Debug\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\..\CMS-Clientv2.0\CMS2.BusinessLogic\bin\Debug\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -120,7 +109,6 @@
     <Compile Include="GroupBL.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\BarcodeGenerator.cs" />
     <Compile Include="HoldCargoBL.cs" />
     <Compile Include="IndustryBL.cs" />
     <Compile Include="MenuAccessBL.cs" />
@@ -151,35 +139,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RemarkBL.cs" />
-    <Compile Include="ReportModels\StatementOfAccountDataSet.cs">
-      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="ReportModels\StatementOfAccountDataSet.Designer.cs">
-      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Reports\SoaCurrentCharges.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SoaCurrentCharges.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Reports\SoaPastBalances.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SoaPastBalances.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Reports\StatementOfAccount.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StatementOfAccount.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="RevenueUnitBL.cs" />
     <Compile Include="RevenueUnitTypeBL.cs" />
     <Compile Include="RoleStore.cs" />
@@ -222,31 +181,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Content Include="ReportModels\StatementOfAccountDataSet.xsc">
-      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="ReportModels\StatementOfAccountDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>StatementOfAccountDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="ReportModels\StatementOfAccountDataSet.xss">
-      <DependentUpon>StatementOfAccountDataSet.xsd</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\SoaCurrentCharges.rpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\SoaPastBalances.rpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\SoaPayments.rpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\StatementOfAccount.rpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
