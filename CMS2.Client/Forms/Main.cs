@@ -3888,8 +3888,9 @@ namespace CMS2.Client
             System.Text.StringBuilder dimensions = new System.Text.StringBuilder();
             for (int x = 0; x < shipmentModel.PackageDimensions.Count; x++)
             {
-                dimensions.AppendLine(Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString());
-
+                
+                    dimensions.AppendLine(Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString());
+               
             }
             string CommodityName = "";
 
