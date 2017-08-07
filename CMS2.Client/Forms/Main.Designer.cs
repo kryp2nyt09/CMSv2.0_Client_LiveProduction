@@ -1448,7 +1448,7 @@
             this.pageViewMain.Font = new System.Drawing.Font("Tahoma", 9F);
             this.pageViewMain.Location = new System.Drawing.Point(0, 0);
             this.pageViewMain.Name = "pageViewMain";
-            this.pageViewMain.SelectedPage = this.PaymentSummaryPage;
+            this.pageViewMain.SelectedPage = this.AcceptancePage;
             this.pageViewMain.Size = new System.Drawing.Size(1258, 683);
             this.pageViewMain.TabIndex = 0;
             this.pageViewMain.Text = "Manifest";
@@ -1899,7 +1899,7 @@
             this.dateDateBooked.Size = new System.Drawing.Size(145, 20);
             this.dateDateBooked.TabIndex = 30;
             this.dateDateBooked.TabStop = false;
-            this.dateDateBooked.Text = "Friday, December 2, 2016";
+            this.dateDateBooked.Text = "Friday, 2 December 2016";
             this.dateDateBooked.ThemeName = "Office2010Black";
             this.dateDateBooked.Value = new System.DateTime(2016, 12, 2, 15, 47, 16, 261);
             // 
@@ -4109,7 +4109,7 @@
             this.txtRfa.Size = new System.Drawing.Size(94, 20);
             this.txtRfa.TabIndex = 25;
             this.txtRfa.TabStop = false;
-            this.txtRfa.Text = "0.00 %";
+            this.txtRfa.Text = "0.00%";
             this.txtRfa.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtRfa.ThemeName = "Office2010Black";
             // 
@@ -4777,7 +4777,7 @@
             this.dateAcceptedDate.Size = new System.Drawing.Size(202, 20);
             this.dateAcceptedDate.TabIndex = 4;
             this.dateAcceptedDate.TabStop = false;
-            this.dateAcceptedDate.Text = "11/26/2015";
+            this.dateAcceptedDate.Text = "26/11/2015";
             this.dateAcceptedDate.ThemeName = "Office2010Black";
             this.dateAcceptedDate.Value = new System.DateTime(2015, 11, 26, 0, 0, 0, 0);
             this.dateAcceptedDate.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dateAcceptedDate_KeyUp);
@@ -5000,7 +5000,7 @@
             this.datePaymentDate.Size = new System.Drawing.Size(161, 20);
             this.datePaymentDate.TabIndex = 4;
             this.datePaymentDate.TabStop = false;
-            this.datePaymentDate.Text = "12/10/2016";
+            this.datePaymentDate.Text = "10/12/2016";
             this.datePaymentDate.ThemeName = "Office2010Black";
             this.datePaymentDate.Value = new System.DateTime(2016, 12, 10, 10, 55, 47, 86);
             // 
@@ -5094,7 +5094,7 @@
             this.dateCheckDate.Size = new System.Drawing.Size(161, 20);
             this.dateCheckDate.TabIndex = 12;
             this.dateCheckDate.TabStop = false;
-            this.dateCheckDate.Text = "12/10/2016";
+            this.dateCheckDate.Text = "10/12/2016";
             this.dateCheckDate.ThemeName = "Office2010Black";
             this.dateCheckDate.Value = new System.DateTime(2016, 12, 10, 10, 55, 47, 14);
             // 
@@ -5152,7 +5152,7 @@
             this.txtTaxWithheld.Size = new System.Drawing.Size(161, 20);
             this.txtTaxWithheld.TabIndex = 7;
             this.txtTaxWithheld.TabStop = false;
-            this.txtTaxWithheld.Text = "0 %";
+            this.txtTaxWithheld.Text = "0%";
             this.txtTaxWithheld.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtTaxWithheld.ThemeName = "Office2010Black";
             this.txtTaxWithheld.TextChanged += new System.EventHandler(this.txtTaxWithheld_TextChanged);
@@ -5647,7 +5647,7 @@
             // txtTotalCash
             // 
             this.txtTotalCash.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCash.Location = new System.Drawing.Point(132, 3);
+            this.txtTotalCash.Location = new System.Drawing.Point(145, 3);
             this.txtTotalCash.Name = "txtTotalCash";
             this.txtTotalCash.ReadOnly = true;
             this.txtTotalCash.Size = new System.Drawing.Size(145, 20);
@@ -5659,7 +5659,7 @@
             // txtTotalPending
             // 
             this.txtTotalPending.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalPending.Location = new System.Drawing.Point(132, 133);
+            this.txtTotalPending.Location = new System.Drawing.Point(145, 133);
             this.txtTotalPending.Name = "txtTotalPending";
             this.txtTotalPending.ReadOnly = true;
             this.txtTotalPending.Size = new System.Drawing.Size(145, 20);
@@ -5672,7 +5672,7 @@
             // txtTotalPdc
             // 
             this.txtTotalPdc.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalPdc.Location = new System.Drawing.Point(132, 107);
+            this.txtTotalPdc.Location = new System.Drawing.Point(145, 107);
             this.txtTotalPdc.Name = "txtTotalPdc";
             this.txtTotalPdc.ReadOnly = true;
             this.txtTotalPdc.Size = new System.Drawing.Size(145, 20);
@@ -5687,7 +5687,7 @@
             this.label42.AutoSize = true;
             this.label42.Location = new System.Drawing.Point(3, 110);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(55, 13);
+            this.label42.Size = new System.Drawing.Size(61, 14);
             this.label42.TabIndex = 2;
             this.label42.Text = "Total PDC";
             // 
@@ -5697,7 +5697,7 @@
             this.label47.AutoSize = true;
             this.label47.Location = new System.Drawing.Point(3, 84);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(101, 13);
+            this.label47.Size = new System.Drawing.Size(113, 14);
             this.label47.TabIndex = 1;
             this.label47.Text = "Total Tax WithHeld";
             // 
@@ -5707,14 +5707,14 @@
             this.label62.AutoSize = true;
             this.label62.Location = new System.Drawing.Point(3, 58);
             this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(86, 13);
+            this.label62.Size = new System.Drawing.Size(91, 14);
             this.label62.TabIndex = 10;
             this.label62.Text = "Total Collection";
             // 
             // txtRemarksPaymentSummary
             // 
             this.txtRemarksPaymentSummary.AutoSize = false;
-            this.txtRemarksPaymentSummary.Location = new System.Drawing.Point(132, 263);
+            this.txtRemarksPaymentSummary.Location = new System.Drawing.Point(145, 263);
             this.txtRemarksPaymentSummary.Multiline = true;
             this.txtRemarksPaymentSummary.Name = "txtRemarksPaymentSummary";
             this.txtRemarksPaymentSummary.Size = new System.Drawing.Size(145, 44);
@@ -5724,7 +5724,7 @@
             // 
             // txtTotalCheckReceived
             // 
-            this.txtTotalCheckReceived.Location = new System.Drawing.Point(132, 185);
+            this.txtTotalCheckReceived.Location = new System.Drawing.Point(145, 185);
             this.txtTotalCheckReceived.Name = "txtTotalCheckReceived";
             this.txtTotalCheckReceived.ReadOnly = true;
             this.txtTotalCheckReceived.Size = new System.Drawing.Size(145, 20);
@@ -5735,7 +5735,7 @@
             // 
             // txtDifference
             // 
-            this.txtDifference.Location = new System.Drawing.Point(132, 237);
+            this.txtDifference.Location = new System.Drawing.Point(145, 237);
             this.txtDifference.Name = "txtDifference";
             this.txtDifference.ReadOnly = true;
             this.txtDifference.Size = new System.Drawing.Size(145, 20);
@@ -5750,13 +5750,13 @@
             this.label63.AutoSize = true;
             this.label63.Location = new System.Drawing.Point(3, 32);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(65, 13);
+            this.label63.Size = new System.Drawing.Size(72, 14);
             this.label63.TabIndex = 0;
             this.label63.Text = "Total Check";
             // 
             // txtTotalAmntReceived
             // 
-            this.txtTotalAmntReceived.Location = new System.Drawing.Point(132, 211);
+            this.txtTotalAmntReceived.Location = new System.Drawing.Point(145, 211);
             this.txtTotalAmntReceived.Name = "txtTotalAmntReceived";
             this.txtTotalAmntReceived.ReadOnly = true;
             this.txtTotalAmntReceived.Size = new System.Drawing.Size(145, 20);
@@ -5771,7 +5771,7 @@
             this.label64.AutoSize = true;
             this.label64.Location = new System.Drawing.Point(3, 188);
             this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(113, 13);
+            this.label64.Size = new System.Drawing.Size(125, 14);
             this.label64.TabIndex = 28;
             this.label64.Text = "Total Check Received";
             // 
@@ -5781,7 +5781,7 @@
             this.label65.AutoSize = true;
             this.label65.Location = new System.Drawing.Point(3, 6);
             this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(59, 13);
+            this.label65.Size = new System.Drawing.Size(64, 14);
             this.label65.TabIndex = 24;
             this.label65.Text = "Total Cash";
             // 
@@ -5791,7 +5791,7 @@
             this.label66.AutoSize = true;
             this.label66.Location = new System.Drawing.Point(3, 136);
             this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(77, 13);
+            this.label66.Size = new System.Drawing.Size(83, 14);
             this.label66.TabIndex = 27;
             this.label66.Text = "Total Pending";
             this.label66.Visible = false;
@@ -5799,7 +5799,7 @@
             // txtTotalCashReceived
             // 
             this.txtTotalCashReceived.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCashReceived.Location = new System.Drawing.Point(132, 159);
+            this.txtTotalCashReceived.Location = new System.Drawing.Point(145, 159);
             this.txtTotalCashReceived.Name = "txtTotalCashReceived";
             this.txtTotalCashReceived.ReadOnly = true;
             this.txtTotalCashReceived.Size = new System.Drawing.Size(145, 20);
@@ -5814,7 +5814,7 @@
             this.label69.AutoSize = true;
             this.label69.Location = new System.Drawing.Point(3, 278);
             this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(50, 13);
+            this.label69.Size = new System.Drawing.Size(52, 14);
             this.label69.TabIndex = 3;
             this.label69.Text = "Remarks";
             // 
@@ -5824,7 +5824,7 @@
             this.label70.AutoSize = true;
             this.label70.Location = new System.Drawing.Point(3, 240);
             this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(60, 13);
+            this.label70.Size = new System.Drawing.Size(63, 14);
             this.label70.TabIndex = 1;
             this.label70.Text = "Difference";
             // 
@@ -5834,7 +5834,7 @@
             this.label71.AutoSize = true;
             this.label71.Location = new System.Drawing.Point(3, 214);
             this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(123, 13);
+            this.label71.Size = new System.Drawing.Size(136, 14);
             this.label71.TabIndex = 26;
             this.label71.Text = "Total Amount Received";
             // 
@@ -5844,14 +5844,14 @@
             this.label72.AutoSize = true;
             this.label72.Location = new System.Drawing.Point(3, 162);
             this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(107, 13);
+            this.label72.Size = new System.Drawing.Size(117, 14);
             this.label72.TabIndex = 30;
             this.label72.Text = "Total Cash Received";
             // 
             // txtTotalTax
             // 
             this.txtTotalTax.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalTax.Location = new System.Drawing.Point(132, 81);
+            this.txtTotalTax.Location = new System.Drawing.Point(145, 81);
             this.txtTotalTax.Name = "txtTotalTax";
             this.txtTotalTax.ReadOnly = true;
             this.txtTotalTax.Size = new System.Drawing.Size(145, 20);
@@ -5863,7 +5863,7 @@
             // txtTotalCheck
             // 
             this.txtTotalCheck.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCheck.Location = new System.Drawing.Point(132, 29);
+            this.txtTotalCheck.Location = new System.Drawing.Point(145, 29);
             this.txtTotalCheck.Name = "txtTotalCheck";
             this.txtTotalCheck.ReadOnly = true;
             this.txtTotalCheck.Size = new System.Drawing.Size(145, 20);
@@ -5875,7 +5875,7 @@
             // txtTotalCollection
             // 
             this.txtTotalCollection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtTotalCollection.Location = new System.Drawing.Point(132, 55);
+            this.txtTotalCollection.Location = new System.Drawing.Point(145, 55);
             this.txtTotalCollection.Name = "txtTotalCollection";
             this.txtTotalCollection.ReadOnly = true;
             this.txtTotalCollection.Size = new System.Drawing.Size(145, 20);
@@ -6333,7 +6333,7 @@
             this.dateCollectionDate.Size = new System.Drawing.Size(156, 20);
             this.dateCollectionDate.TabIndex = 3;
             this.dateCollectionDate.TabStop = false;
-            this.dateCollectionDate.Text = "Thursday, December 29, 2016";
+            this.dateCollectionDate.Text = "Thursday, 29 December 2016";
             this.dateCollectionDate.ThemeName = "Office2010Black";
             this.dateCollectionDate.Value = new System.DateTime(2016, 12, 29, 13, 24, 31, 594);
             this.dateCollectionDate.ValueChanged += new System.EventHandler(this.dateCollectionDate_ValueChanged);
@@ -6837,7 +6837,7 @@
             this.dateTimePicker_PickupCargo.Size = new System.Drawing.Size(170, 20);
             this.dateTimePicker_PickupCargo.TabIndex = 70;
             this.dateTimePicker_PickupCargo.TabStop = false;
-            this.dateTimePicker_PickupCargo.Text = "Thursday, December 29, 2016";
+            this.dateTimePicker_PickupCargo.Text = "Thursday, 29 December 2016";
             this.dateTimePicker_PickupCargo.ThemeName = "Office2010Black";
             this.dateTimePicker_PickupCargo.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimePicker_PickupCargo.ValueChanged += new System.EventHandler(this.dateTimePicker_PickupCargo_ValueChanged);
@@ -7087,7 +7087,7 @@
             this.dateTimePickerBranchAcceptance_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimePickerBranchAcceptance_Date.TabIndex = 75;
             this.dateTimePickerBranchAcceptance_Date.TabStop = false;
-            this.dateTimePickerBranchAcceptance_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimePickerBranchAcceptance_Date.Text = "Thursday, 29 December 2016";
             this.dateTimePickerBranchAcceptance_Date.ThemeName = "Office2010Black";
             this.dateTimePickerBranchAcceptance_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimePickerBranchAcceptance_Date.ValueChanged += new System.EventHandler(this.dateTimePickerBranchAcceptance_Date_ValueChanged);
@@ -7379,7 +7379,7 @@
             this.dateTimeBundle_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeBundle_Date.TabIndex = 83;
             this.dateTimeBundle_Date.TabStop = false;
-            this.dateTimeBundle_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeBundle_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeBundle_Date.ThemeName = "Office2010Black";
             this.dateTimeBundle_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeBundle_Date.ValueChanged += new System.EventHandler(this.dateTimeBundle_Date_ValueChanged);
@@ -7627,7 +7627,7 @@
             this.dateTimeUnbunde_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeUnbunde_Date.TabIndex = 83;
             this.dateTimeUnbunde_Date.TabStop = false;
-            this.dateTimeUnbunde_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeUnbunde_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeUnbunde_Date.ThemeName = "Office2010Black";
             this.dateTimeUnbunde_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeUnbunde_Date.ValueChanged += new System.EventHandler(this.dateTimeUnbunde_Date_ValueChanged);
@@ -8002,7 +8002,7 @@
             this.dateTimeGatewayTransmital_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeGatewayTransmital_Date.TabIndex = 78;
             this.dateTimeGatewayTransmital_Date.TabStop = false;
-            this.dateTimeGatewayTransmital_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeGatewayTransmital_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeGatewayTransmital_Date.ThemeName = "Office2010Black";
             this.dateTimeGatewayTransmital_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeGatewayTransmital_Date.ValueChanged += new System.EventHandler(this.dateTimeGatewayTransmital_Date_ValueChanged);
@@ -8340,7 +8340,7 @@
             this.dateTimeGatewayOutbound_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeGatewayOutbound_Date.TabIndex = 82;
             this.dateTimeGatewayOutbound_Date.TabStop = false;
-            this.dateTimeGatewayOutbound_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeGatewayOutbound_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeGatewayOutbound_Date.ThemeName = "Office2010Black";
             this.dateTimeGatewayOutbound_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeGatewayOutbound_Date.ValueChanged += new System.EventHandler(this.dateTimeGatewayOutbound_Date_ValueChanged);
@@ -8634,7 +8634,7 @@
             this.dateTimePickerGatewayInbound_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimePickerGatewayInbound_Date.TabIndex = 94;
             this.dateTimePickerGatewayInbound_Date.TabStop = false;
-            this.dateTimePickerGatewayInbound_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimePickerGatewayInbound_Date.Text = "Thursday, 29 December 2016";
             this.dateTimePickerGatewayInbound_Date.ThemeName = "Office2010Black";
             this.dateTimePickerGatewayInbound_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimePickerGatewayInbound_Date.ValueChanged += new System.EventHandler(this.dateTimePickerGatewayInbound_Date_ValueChanged);
@@ -8929,7 +8929,7 @@
             this.dateTimeCargoTransfer_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeCargoTransfer_Date.TabIndex = 83;
             this.dateTimeCargoTransfer_Date.TabStop = false;
-            this.dateTimeCargoTransfer_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeCargoTransfer_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeCargoTransfer_Date.ThemeName = "Office2010Black";
             this.dateTimeCargoTransfer_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeCargoTransfer_Date.ValueChanged += new System.EventHandler(this.dateTimeCargoTransfer_Date_ValueChanged);
@@ -9201,7 +9201,7 @@
             this.dateTimeSegregation_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeSegregation_Date.TabIndex = 101;
             this.dateTimeSegregation_Date.TabStop = false;
-            this.dateTimeSegregation_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeSegregation_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeSegregation_Date.ThemeName = "Office2010Black";
             this.dateTimeSegregation_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeSegregation_Date.ValueChanged += new System.EventHandler(this.dateTimeSegregation_Date_ValueChanged);
@@ -9452,7 +9452,7 @@
             this.dateTimeDailyTrip_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeDailyTrip_Date.TabIndex = 89;
             this.dateTimeDailyTrip_Date.TabStop = false;
-            this.dateTimeDailyTrip_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeDailyTrip_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeDailyTrip_Date.ThemeName = "Office2010Black";
             this.dateTimeDailyTrip_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeDailyTrip_Date.ValueChanged += new System.EventHandler(this.dateTimeDailyTrip_Date_ValueChanged);
@@ -9766,7 +9766,7 @@
             this.dateTimeHoldCargo_FromDate.Size = new System.Drawing.Size(170, 20);
             this.dateTimeHoldCargo_FromDate.TabIndex = 83;
             this.dateTimeHoldCargo_FromDate.TabStop = false;
-            this.dateTimeHoldCargo_FromDate.Text = "Thursday, December 29, 2016";
+            this.dateTimeHoldCargo_FromDate.Text = "Thursday, 29 December 2016";
             this.dateTimeHoldCargo_FromDate.ThemeName = "Office2010Black";
             this.dateTimeHoldCargo_FromDate.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeHoldCargo_FromDate.ValueChanged += new System.EventHandler(this.dateTimeHoldCargo_FromDate_ValueChanged);
@@ -9778,7 +9778,7 @@
             this.dateTimeHoldCargo_ToDate.Size = new System.Drawing.Size(169, 20);
             this.dateTimeHoldCargo_ToDate.TabIndex = 84;
             this.dateTimeHoldCargo_ToDate.TabStop = false;
-            this.dateTimeHoldCargo_ToDate.Text = "Thursday, December 29, 2016";
+            this.dateTimeHoldCargo_ToDate.Text = "Thursday, 29 December 2016";
             this.dateTimeHoldCargo_ToDate.ThemeName = "Office2010Black";
             this.dateTimeHoldCargo_ToDate.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeHoldCargo_ToDate.ValueChanged += new System.EventHandler(this.dateTimeHoldCargo_ToDate_ValueChanged);
@@ -10106,7 +10106,7 @@
             this.dateTimeDeliveryStatus_Date.Size = new System.Drawing.Size(170, 20);
             this.dateTimeDeliveryStatus_Date.TabIndex = 80;
             this.dateTimeDeliveryStatus_Date.TabStop = false;
-            this.dateTimeDeliveryStatus_Date.Text = "Thursday, December 29, 2016";
+            this.dateTimeDeliveryStatus_Date.Text = "Thursday, 29 December 2016";
             this.dateTimeDeliveryStatus_Date.ThemeName = "Office2010Black";
             this.dateTimeDeliveryStatus_Date.Value = new System.DateTime(2016, 12, 29, 16, 31, 36, 782);
             this.dateTimeDeliveryStatus_Date.ValueChanged += new System.EventHandler(this.dateTimeDeliveryStatus_Date_ValueChanged);

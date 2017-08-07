@@ -465,13 +465,13 @@ namespace CMS2.BusinessLogic
                         model.InsuranceId = _insurance.ShipmentBasicFeeId;
                         model.Insurance = _insurance;
                     }
-                    if (model.Weight > model.PackageDimensions.Sum(x => x.Evm))
+                    if (model.Weight > model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.Evm))
                     {
                         insuranceCharge = model.Weight * model.Insurance.Amount;
                     }
                     else
                     {
-                        insuranceCharge = model.PackageDimensions.Sum(x => x.Evm) * model.Insurance.Amount;
+                        insuranceCharge = model.PackageDimensions.Where(x=>x.RecordStatus==1).Sum(x => x.Evm) * model.Insurance.Amount;
                     }
                 }
                 if (matrix.HasFuelCharge)
@@ -552,7 +552,7 @@ namespace CMS2.BusinessLogic
                 // get discount
                 if (model.Discount > 0)
                 {
-                    model.DiscountAmount = model.WeightCharge * (model.Discount/100);
+                    model.DiscountAmount = model.WeightCharge * (model.Discount / 100);
                 }
 
 
@@ -601,7 +601,7 @@ namespace CMS2.BusinessLogic
         public ShipmentModel ComputePackageEvmCrating(ShipmentModel model)
         {
             CommodityType commodityType;
-            var packageDimensions = model.PackageDimensions;
+            List<PackageDimensionModel> packageDimensions = model.PackageDimensions.Where(x=>x.RecordStatus ==1).ToList();
             if (packageDimensions != null)
             {
                 if (packageDimensions.Count > 0)
@@ -681,9 +681,9 @@ namespace CMS2.BusinessLogic
                 }
             }
 
-            model.DrainingFee = model.PackageDimensions.Sum(x => x.DrainingFee);
-            model.CratingFee = model.PackageDimensions.Sum(x => x.CratingFee);
-            model.PackagingFee = model.PackageDimensions.Sum(x => x.PackagingFee);
+            model.DrainingFee = model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.DrainingFee);
+            model.CratingFee = model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.CratingFee);
+            model.PackagingFee = model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.PackagingFee);
 
             return model;
         }
@@ -799,7 +799,7 @@ namespace CMS2.BusinessLogic
 
                 if (matrix.ApplyEvm && !matrix.ApplyWeight)
                 {
-                    model.ChargeableWeight = model.PackageDimensions.Sum(x => x.Evm);
+                    model.ChargeableWeight = model.PackageDimensions.Where(x=>x.RecordStatus ==1).Sum(x => x.Evm);
                 }
                 else if (!matrix.ApplyEvm && matrix.ApplyWeight)
                 {
@@ -808,8 +808,8 @@ namespace CMS2.BusinessLogic
                 else
                 {
                     model.ChargeableWeight = model.Weight;
-                    if (model.Weight < model.PackageDimensions.Sum(x => x.Evm))
-                        model.ChargeableWeight = Math.Round(model.PackageDimensions.Sum(x => x.Evm));
+                    if (model.Weight < model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.Evm))
+                        model.ChargeableWeight = Math.Round(model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.Evm));
                 }
             }
             #region GetExpressRates
@@ -897,28 +897,16 @@ namespace CMS2.BusinessLogic
             }
             else
             {
-                //var dimensions = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId);
-                //foreach (var entityDimension in dimensions)
-                //{
-                //    entityDimension.ModifiedBy = model.ModifiedBy;
-                //    entityDimension.ModifiedDate = model.ModifiedDate;
-                //    entityDimension.RecordStatus = (int)RecordStatus.Deleted;
-                //    packageDimensionService.Edit(entityDimension);
-                //}
                 foreach (var modelDimension in model.PackageDimensions)
                 {
-                    //if (packageDimensionService.IsExist(x => x.ShipmentId == model.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height))
                     if (packageDimensionService.IsExist(x => x.PackageDimensionId == modelDimension.PackageDimensionId))
                     {
-                        //var dim = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId 
-                        //&& x.Length == modelDimension.Length 
-                        //&& x.Width == modelDimension.Width 
-                        //&& x.Height == modelDimension.Height).FirstOrDefault();
-                        var dim = packageDimensionService.FilterActiveBy(x => x.PackageDimensionId == modelDimension.PackageDimensionId).FirstOrDefault();
+                        var dim = packageDimensionService.FilterBy(x => x.PackageDimensionId == modelDimension.PackageDimensionId).FirstOrDefault();
                         dim.ModifiedBy = modelDimension.ModifiedBy;
                         dim.ModifiedDate = modelDimension.ModifiedDate;
                         dim.RecordStatus = modelDimension.RecordStatus;
                         packageDimensionService.Edit(dim);
+
                     }
                     else
                     {
@@ -944,9 +932,9 @@ namespace CMS2.BusinessLogic
                 }
 
                 Shipment shipment = new Shipment();
-                List<PackageDimension> _dimensions = packageDimensionService.FilterActiveBy(x => x.ShipmentId == model.ShipmentId).ToList();
+                List<PackageDimension> _dimensions = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId).ToList();
                 shipment = this.ModelToEntity(model);
-                shipment.PackageDimensions = _dimensions;                
+                shipment.PackageDimensions = _dimensions;
                 this.Edit(shipment);
 
                 //Edit(this.ModelToEntity(shipment));

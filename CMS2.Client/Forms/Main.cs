@@ -3717,8 +3717,8 @@ namespace CMS2.Client
                     gridPackage.Columns["Packaging"].TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
                     gridPackage.Columns["Draining"].TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
 
-                    shipment = shipmentService.ComputePackageWeightCharge(shipment);
-
+                    //shipment = shipmentService.ComputePackageWeightCharge(shipment);
+                    ComputeCharges();
                 }
                 else
                 {
