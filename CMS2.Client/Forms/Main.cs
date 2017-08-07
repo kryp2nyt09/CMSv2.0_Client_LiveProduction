@@ -3886,9 +3886,10 @@ namespace CMS2.Client
             dt.Columns.Add(new DataColumn("EVM", typeof(string)));
 
             System.Text.StringBuilder dimensions = new System.Text.StringBuilder();
-            for (int x = 0; x < shipmentModel.PackageDimensions.Count; x++)
+            List<PackageDimensionModel> packagedimensions = shipmentModel.PackageDimensions.Where(x => x.RecordStatus == 1).ToList();
+            for (int x = 0; x < packagedimensions.Count; x++)
             {
-                dimensions.AppendLine(Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString());
+                dimensions.AppendLine(Math.Round(packagedimensions[x].Length).ToString() + " x " + Math.Round(packagedimensions[x].Width).ToString() + " x " + Math.Round(packagedimensions[x].Height).ToString());
 
             }
             string CommodityName = "";
