@@ -32,6 +32,7 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn1 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CmsDbCon));
             this.label1 = new Telerik.WinControls.UI.RadLabel();
             this.txtLocalDbPassword = new Telerik.WinControls.UI.RadTextBox();
             this.txtLocalDbUsername = new Telerik.WinControls.UI.RadTextBox();
@@ -723,6 +724,7 @@
             this.Controls.Add(this.radPageView1);
             this.Controls.Add(this.lblDown);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(310, 407);

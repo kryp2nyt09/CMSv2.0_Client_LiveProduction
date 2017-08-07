@@ -11,6 +11,8 @@ using CMS2.Common.Enums;
 using CMS2.DataAccess.Interfaces;
 using CMS2.Entities;
 using CMS2.Common;
+using System.Data.Entity.Infrastructure;
+
 namespace CMS2.DataAccess
 {
     // use internal since only the UnitOfWork will access this class
@@ -21,7 +23,7 @@ namespace CMS2.DataAccess
 
         public CmsRepository()
         {
-            this._context = new CmsContext();            
+            this._context = new CmsContext();
             this._dbSet = _context.Set<TEntity>();
         }
 
@@ -61,7 +63,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository GetAll", ex );
+                Logs.ErrorLogs("", "Cms Repository GetAll", ex);
                 throw;
             }
             return entities;
@@ -76,7 +78,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository GetAllAsync", ex );
+                Logs.ErrorLogs("", "Cms Repository GetAllAsync", ex);
                 throw;
             }
             return entities;
@@ -92,7 +94,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository FilterActive", ex );
+                Logs.ErrorLogs("", "Cms Repository FilterActive", ex);
                 throw;
             }
             return entities;
@@ -109,7 +111,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository FilterActiveAsync", ex );
+                Logs.ErrorLogs("", "Cms Repository FilterActiveAsync", ex);
                 throw;
             }
             return entities;
@@ -160,7 +162,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository FilterAciveBy", ex  );
+                Logs.ErrorLogs("", "Cms Repository FilterAciveBy", ex);
                 throw;
             }
             return entities;
@@ -176,7 +178,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository FilterActiveByAsync", ex );
+                Logs.ErrorLogs("", "Cms Repository FilterActiveByAsync", ex);
                 throw;
             }
             return entities;
@@ -193,7 +195,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository isExist", ex );
+                Logs.ErrorLogs("", "Cms Repository isExist", ex);
                 throw;
             }
             return false;
@@ -208,7 +210,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository IsExist", ex );
+                Logs.ErrorLogs("", "Cms Repository IsExist", ex);
                 throw;
             }
             return entity;
@@ -253,7 +255,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository GetByIdAsync", ex );
+                Logs.ErrorLogs("", "Cms Repository GetByIdAsync", ex);
                 throw;
             }
             return entity;
@@ -282,9 +284,9 @@ namespace CMS2.DataAccess
                 entity = await _dbSet.FindAsync(id);
             }
             catch (Exception ex)
-            { 
+            {
                 Logs.ErrorLogs("", "Cms Repository GetByIdAsync", ex);
-            throw;
+                throw;
             }
             return entity;
         }
@@ -297,7 +299,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository Create", ex );
+                Logs.ErrorLogs("", "Cms Repository Create", ex);
                 throw;
             }
 
@@ -325,7 +327,8 @@ namespace CMS2.DataAccess
                         }
                     }
                     var propertyValue = entity.GetType().GetProperty(propertyName).GetValue(entity);
-                    if (propertyName.Equals(primaryKey) || // specific properties to be excluded
+                    var modelvalue = model.GetType().GetProperty(propertyName).GetValue(model);
+                    if (propertyName.Equals(primaryKey) ||
                         propertyName.Contains("Created") ||
                         propertyName.Equals("Record_Status") ||
                         propertyName.Equals("RecordStatusString") ||
@@ -339,11 +342,21 @@ namespace CMS2.DataAccess
                         prop.SetValue(model, propertyValue);
                     }
                 }
+
+
+                _context.ChangeTracker.DetectChanges(); // Force EF to match associations.
+                var objectContext = ((IObjectContextAdapter)_context).ObjectContext;
+                var objectStateManager = objectContext.ObjectStateManager;
+                var fieldInfo = objectStateManager.GetType().GetField("_entriesWithConceptualNulls", BindingFlags.Instance | BindingFlags.NonPublic);
+                var conceptualNulls = fieldInfo.GetValue(objectStateManager);
+
+
+                //_context.Entry(model).CurrentValues.SetValues(entity);
                 _context.Entry(model).State = EntityState.Modified;
             }
             catch (Exception ex)
-            {
-                Logs.ErrorLogs("", "Cms Repository Update", ex );
+            {   
+                Logs.ErrorLogs("", "Cms Repository Update", ex);
                 throw;
             }
 
@@ -359,7 +372,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository Delete", ex );
+                Logs.ErrorLogs("", "Cms Repository Delete", ex);
                 throw;
             }
         }
@@ -374,7 +387,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository Delete", ex );
+                Logs.ErrorLogs("", "Cms Repository Delete", ex);
                 throw;
             }
 
@@ -390,7 +403,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository Delete", ex );
+                Logs.ErrorLogs("", "Cms Repository Delete", ex);
                 throw;
             }
         }
@@ -405,7 +418,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository DeletePhysically", ex );
+                Logs.ErrorLogs("", "Cms Repository DeletePhysically", ex);
                 throw;
             }
         }
@@ -419,7 +432,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository DeletePhysically", ex );
+                Logs.ErrorLogs("", "Cms Repository DeletePhysically", ex);
                 throw;
             }
         }
@@ -433,7 +446,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository DeletePhysically", ex );
+                Logs.ErrorLogs("", "Cms Repository DeletePhysically", ex);
                 throw;
             }
         }
@@ -464,7 +477,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository GetEntityId", ex );
+                Logs.ErrorLogs("", "Cms Repository GetEntityId", ex);
                 throw;
             }
 
@@ -484,7 +497,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.ErrorLogs("", "Cms Repository GetPrimaryKey", ex );
+                Logs.ErrorLogs("", "Cms Repository GetPrimaryKey", ex);
                 throw;
             }
             return "";

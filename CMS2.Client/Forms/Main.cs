@@ -329,12 +329,11 @@ namespace CMS2.Client
         private void Main_Load(object sender, EventArgs e)
         {
             //rs.FindAllControls(this);
-            timer1.Start();
-
+            //timer1.Start();
             LoadBookingComponents();
             BookingResetAll();
             PopulateGrid();
-            AddDailyBooking();
+            //AddDailyBooking();
 
         }
         private void radPageView1_SelectedPageChanged(object sender, EventArgs e)
@@ -601,6 +600,7 @@ namespace CMS2.Client
                 BookingGridView.Rows[e.RowIndex].IsSelected = true;
                 BookingSelected(rowId);
                 NewShipment();
+                btnSearchShipment.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -638,7 +638,7 @@ namespace CMS2.Client
         }
         private void btnAcceptance_Click(object sender, EventArgs e)
         {
-            btnAcceptance.Enabled = false;
+            btnSearchShipment.Enabled = false;
             btnSave.Enabled = false;
             NewShipment();
         }
@@ -1068,7 +1068,7 @@ namespace CMS2.Client
                 item.CreatedDate = DateTime.Now;
                 item.ModifiedBy = AppUser.User.UserId;
                 item.ModifiedDate = DateTime.Now;
-                item.RecordStatus = (int)RecordStatus.Active;
+                //item.RecordStatus = (int)RecordStatus.Active;
             }
 
             #endregion
@@ -1079,12 +1079,14 @@ namespace CMS2.Client
             saving.ShowDialog();
 
             shipmentModel = shipment;
+
+            DisableForm();
             btnAcceptanceReset.Enabled = true;
             btnPrint.Enabled = true;
             btnPayment.Enabled = true;
             btnSearchShipment.Enabled = true;
 
-            DisableForm();
+            
 
         }
         private void AcceptancebtnPrint_Click(object sender, EventArgs e)
@@ -1180,14 +1182,13 @@ namespace CMS2.Client
         }
         private void btnSearchShipment_Click(object sender, EventArgs e)
         {
-            List<Shipment> _shipment = shipmentService.FilterActiveBy(x => x.AirwayBillNo.Equals(AcceptancetxtAirwayBill.Text.ToString()));
+            Shipment _shipment = shipmentService.FilterActiveBy(x => x.AirwayBillNo.Equals(AcceptancetxtAirwayBill.Text.ToString())).FirstOrDefault();
 
-            if (_shipment != null && _shipment.Count > 0)
+            if (_shipment != null )
             {
                 AcceptanceLoadData();
 
-                shipment = shipmentService.EntityToModel(_shipment.FirstOrDefault());
-                commodityType = commodityTypes.Find(x => x.CommodityTypeId == shipment.CommodityTypeId);
+                shipment = shipmentService.EntityToModel(_shipment);
 
                 AcceptancePopulateForm();
                 RefreshGridPackages();
@@ -1294,7 +1295,7 @@ namespace CMS2.Client
 
             int index = Convert.ToInt32(e.Rows[0].Cells["No"].Value) - 1; ;
             PackageDimensionModel item = shipment.PackageDimensions.FirstOrDefault(x => x.Index == index);
-            shipment.PackageDimensions.Remove(item);
+            item.RecordStatus =(int) RecordStatus.Deleted;
 
             RefreshGridPackages();
         }
@@ -1309,7 +1310,7 @@ namespace CMS2.Client
 
             btnAcceptanceEdit.Enabled = false;
             btnCompute.Enabled = true;
-            btnSave.Enabled = true;
+            btnAcceptanceSave.Enabled = true;
             btnPrint.Enabled = true;
             btnPayment.Enabled = true;
             btnReset.Enabled = true;
@@ -1901,13 +1902,18 @@ namespace CMS2.Client
                 if (dayOfWeek.Equals("Mon"))
                 {
                     DateTime saturdayBooking = DateTime.Now.AddDays(-2);
-                    todayBooking = bookingService.FilterActiveBy(x => x.DateBooked.Year == today.Year && x.DateBooked.Month == today.Month && x.DateBooked.Day == today.Day).ToList();
+                    todayBooking = bookingService.FilterActiveBy(x => x.DateBooked.Year == today.Year 
+                    && x.DateBooked.Month == today.Month 
+                    && x.DateBooked.Day == today.Day).ToList();
                     yesterdayBooking = bookingService.FilterActiveBy(x => x.HasDailyBooking == true && x.DateBooked.Year == saturdayBooking.Year && x.DateBooked.Month == saturdayBooking.Month && x.DateBooked.Day == saturdayBooking.Day).ToList();
                 }
                 else
                 {
                     DateTime yesterday = DateTime.Now.AddDays(-1);
-                    todayBooking = bookingService.FilterActiveBy(x => x.DateBooked.Year == today.Year && x.DateBooked.Month == today.Month && x.DateBooked.Day == today.Day).ToList();
+                    todayBooking = bookingService.FilterActiveBy(x => x.DateBooked.Year == today.Year 
+                    && x.DateBooked.Month == today.Month 
+                    && x.DateBooked.Day == today.Day
+                    ).ToList();
                     yesterdayBooking = bookingService.FilterActiveBy(x => x.HasDailyBooking == true && x.DateBooked.Year == yesterday.Year && x.DateBooked.Month == yesterday.Month && x.DateBooked.Day == yesterday.Day).ToList();
                 }
 
@@ -1954,8 +1960,10 @@ namespace CMS2.Client
         }
         private void PopulateGrid()
         {
-
-            List<Booking> books = bookingService.FilterActiveBy(x => x.BookingStatus.BookingStatusName != "Picked-up" && x.AssignedToArea.City.BranchCorpOfficeId == GlobalVars.DeviceBcoId).OrderByDescending(x => x.DateBooked).ToList(); //bookingService.FilterActiveBy(x => x.AssignedToArea.City.BranchCorpOfficeId == GlobalVars.DeviceBcoId).ToList().OrderByDescending(x => x.CreatedDate);
+            DateTime date = DateTime.Now;
+            List<Booking> books = bookingService.FilterActive().Where(x => x.BookingStatus.BookingStatusName != "Picked-up" 
+            && x.AssignedToArea.City.BranchCorpOfficeId == GlobalVars.DeviceBcoId
+            && x.DateBooked.ToShortDateString() == date.ToShortDateString()).OrderByDescending(x => x.DateBooked).ToList(); //bookingService.FilterActiveBy(x => x.AssignedToArea.City.BranchCorpOfficeId == GlobalVars.DeviceBcoId).ToList().OrderByDescending(x => x.CreatedDate);
             if (books.Count > 0 && books != null)
             {
                 BookingGridView.DataSource = null;
@@ -1983,7 +1991,7 @@ namespace CMS2.Client
 
             dt.BeginLoadData();
 
-            foreach (PackageDimensionModel item in list.PackageDimensions)
+            foreach (PackageDimensionModel item in list.PackageDimensions.Where(x=>x.RecordStatus == (int) RecordStatus.Active))
             {
                 totalEvm = totalEvm + item.Evm;
                 DataRow row = dt.NewRow();
@@ -2239,7 +2247,7 @@ namespace CMS2.Client
             btnNew.Enabled = true;
             btnSave.Enabled = false;
             btnReset.Enabled = false;
-            btnAcceptance.Enabled = false;
+            //btnSearchShipment.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
         }
@@ -2258,7 +2266,7 @@ namespace CMS2.Client
                 deviceCode = "C000";
             }
 
-            return deviceCode + date + lastBooking.ToString("00000");
+            return deviceCode + '-'+ date + '-'+ lastBooking.ToString("00000");
         }
         private void CreateShipper()
         {
@@ -2285,6 +2293,11 @@ namespace CMS2.Client
                 {
                     lstOriginBco.SelectedValue = shipper.City.BranchCorpOfficeId;
                     lstOriginCity.SelectedValue = shipper.City.CityId;
+                    
+                }
+                if(shipper.Area !=null)
+                {
+                    lstAssignedTo.SelectedValue = shipper.Area.RevenueUnitId;
                 }
                 txtShipperContactNo.Text = shipper.ContactNo;
                 txtShipperMobile.Text = shipper.Mobile;
@@ -2700,22 +2713,25 @@ namespace CMS2.Client
 
                 ProgressIndicator saving = new ProgressIndicator("Booking", "Saving ...", Saving);
                 saving.ShowDialog();
-
-                //if (booking.AssignedToAreaId == null || booking.AssignedToAreaId == Guid.Empty)
-                if (booking.AssignedToArea.RevenueUnitName.Contains("Walk"))
+                if (saving.Result == 0)
                 {
-                    BookingSelected(booking.BookingId);
-                    NewShipment();
-                }
-                else
-                {
-                    PopulateGrid();
-                    BookingResetAll();
-                }
+                    if (booking.AssignedToArea.RevenueUnitName.Contains("Walk"))
+                    {
+                        BookingSelected(booking.BookingId);
+                        NewShipment();
+                    }
+                    else
+                    {
+                        PopulateGrid();
+                        BookingResetAll();
+                    }
 
-                booking = null;
-                shipper = null;
-                consignee = null;
+                    booking = null;
+                    shipper = null;
+                    consignee = null;
+                }
+                
+                
             }
         }
         private void Saving(object sender, DoWorkEventArgs e)
@@ -2787,7 +2803,9 @@ namespace CMS2.Client
             catch (Exception ex)
             {
                 Log.WriteErrorLogs(ex);
+                _worker.ReportProgress(percent,"Error");
                 MessageBox.Show("Unable to save booking.");
+
             }
            
         }
@@ -2871,7 +2889,7 @@ namespace CMS2.Client
             transShipmentLegs = new List<TransShipmentLeg>();
             paymentTerms = new List<PaymentTerm>();
 
-            applicableRateService = new ApplicableRateBL();
+            applicableRateService = new ApplicableRateBL(GlobalVars.UnitOfWork);
             commodityTypeService = new CommodityTypeBL(GlobalVars.UnitOfWork);
             commodityService = new CommodityBL(GlobalVars.UnitOfWork);
             serviceTypeService = new ServiceTypeBL(GlobalVars.UnitOfWork);
@@ -3057,6 +3075,7 @@ namespace CMS2.Client
             int max = 2; // # of processes
 
             #region SaveShipment
+            //Shipment _shipment = shipmentService.FilterActiveBy(x => x.AirwayBillNo.Equals(AcceptancetxtAirwayBill.Text.ToString())).First();
 
             shipmentService.AddEdit(shipment);
             percent = index * 100 / max;
@@ -3166,10 +3185,14 @@ namespace CMS2.Client
             shipment.ServiceMode = serviceModes.Find(x => x.ServiceModeId == shipment.ServiceModeId);
             shipment.ShipModeId = Guid.Parse(lstShipMode.SelectedValue.ToString());
             shipment.ShipMode = shipModes.Find(x => x.ShipModeId == shipment.ShipModeId);
+            shipment.Weight = Convert.ToDecimal(txtWeight.Value);
             if (shipment.ShipMode.ShipModeName == "Transhipment")
             {
                 shipment.TransShipmentLegId = Guid.Parse(lstHub.SelectedValue.ToString());
                 shipment.TransShipmentLeg = transShipmentLegs.Find(x => x.TransShipmentLegId == shipment.TransShipmentLegId);
+            }else
+            {
+                shipment.TransShipmentLegId = null;
             }
             if (shipment.GoodsDescriptionId == null || shipment.GoodsDescription == null)
             {
@@ -3305,7 +3328,7 @@ namespace CMS2.Client
                 }
                 if (shipment.TransShipmentLeg != null && shipment.TransShipmentLegId != Guid.Empty)
                 {
-                    lstHub.SelectedValue = transShipmentLegService.GetById(shipment.TransShipmentLegId).TransShipmentLegId;
+                    lstHub.SelectedValue = transShipmentLegService.GetById((Guid)shipment.TransShipmentLegId).TransShipmentLegId;
                 }
                 if (shipment.GoodsDescriptionId != null && shipment.GoodsDescriptionId != Guid.Empty)
                     lstGoodsDescription.SelectedValue = shipment.GoodsDescriptionId;
@@ -3525,6 +3548,7 @@ namespace CMS2.Client
             packageDimensionModel.Length = length;
             packageDimensionModel.Width = width;
             packageDimensionModel.Height = height;
+            packageDimensionModel.RecordStatus = (int)RecordStatus.Active;
             packageDimensionModel.CommodityTypeId = shipment.CommodityTypeId;
             packageDimensionModel.CratingId = null;
             if (lstCrating.SelectedValue != null)
@@ -3781,25 +3805,33 @@ namespace CMS2.Client
             btnCompute.Enabled = false;
             btnSave.Enabled = false;
             btnPrint.Enabled = false;
+            
 
             DataTable dt = new DataTable();
-            dt.Columns.Add(new DataColumn("CommodityType", typeof(string)));
+            dt.Columns.Add(new DataColumn("CommodityName", typeof(string)));
             dt.Columns.Add(new DataColumn("Qty", typeof(string)));
             dt.Columns.Add(new DataColumn("ActualWt", typeof(string)));
             dt.Columns.Add(new DataColumn("Dimensions", typeof(string)));
             dt.Columns.Add(new DataColumn("EVM", typeof(string)));
-            
 
+            System.Text.StringBuilder dimensions = new System.Text.StringBuilder();
             for (int x = 0; x < shipmentModel.PackageDimensions.Count; x++)
             {
-                DataRow row = dt.NewRow();
-                row[0] = shipment.CommodityType.CommodityTypeName;
-                row[1] = txtQuantity.Text;
-                row[2] = txtWeight.Text;
-                row[3] = Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString();
-                row[4] = txtTotalEvm.Text;
-                dt.Rows.Add(row);
+                dimensions.AppendLine(Math.Round(shipmentModel.PackageDimensions[x].Length).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Width).ToString() + " x " + Math.Round(shipmentModel.PackageDimensions[x].Height).ToString());
+
             }
+
+            
+            //string CommodityName = commodityService.FilterActive().Where(x => x.CommodityId == shipment.CommodityId).Select(x => x.CommodityName).ToString();
+
+            DataRow row = dt.NewRow();
+            row[0] = shipment.Commodity.CommodityName;
+           // row[0] = CommodityName;
+            row[1] = txtQuantity.Text;
+            row[2] = txtWeight.Text;
+            row[4] = txtTotalEvm.Text;
+            row[3] = dimensions.ToString();
+            dt.Rows.Add(row);
 
             AcceptanceModelReport.table = dt;
 
@@ -3919,6 +3951,15 @@ namespace CMS2.Client
                 else
                 {
                     amountdue = decimal.Parse(txtAmountDue.Value.ToString().Replace("Php", ""));
+                }
+
+                if (txtTaxWithheld.Value.ToString().Contains("₱"))
+                {
+                    tax = decimal.Parse(txtTaxWithheld.Value.ToString());
+                }
+                else
+                {
+                    tax = decimal.Parse(txtTaxWithheld.Value.ToString());
                 }
 
                 tax = decimal.Parse(txtTaxWithheld.Value.ToString());
@@ -8305,5 +8346,69 @@ namespace CMS2.Client
 
 
         #endregion
+
+        private void txtAmountPaid_Leave(object sender, EventArgs e)
+        {
+            decimal amountdue = 0;
+            decimal amountpaid = 0;
+            if (txtAmountDue.Value.ToString().Contains("₱"))
+            {
+                amountdue = decimal.Parse(txtAmountDue.Value.ToString().Replace("₱", ""));
+            }
+            else
+            {
+                amountdue = decimal.Parse(txtAmountDue.Value.ToString().Replace("Php", ""));
+            }
+
+            if (txtAmountPaid.Value.ToString().Contains("₱"))
+            {
+                amountpaid = decimal.Parse(txtAmountPaid.Value.ToString().Replace("₱", ""));
+            }
+            else
+            {
+                amountpaid = decimal.Parse(txtAmountPaid.Value.ToString().Replace("Php", ""));
+            }
+
+            if (amountdue == amountpaid || amountpaid > amountdue)
+            {
+                cmb_PaymentRemarks.SelectedValue = "Full";
+            }
+            else
+            {
+                cmb_PaymentRemarks.SelectedValue = "Partial";
+            }
+        }
+
+        private void txtAmountPaid_TextChanged(object sender, EventArgs e)
+        {
+            decimal amountdue = 0;
+            decimal amountpaid = 0;
+            if (txtAmountDue.Value.ToString().Contains("₱"))
+            {
+                amountdue = decimal.Parse(txtAmountDue.Value.ToString().Replace("₱", ""));
+            }
+            else
+            {
+                amountdue = decimal.Parse(txtAmountDue.Value.ToString().Replace("Php", ""));
+            }
+
+            if (txtAmountPaid.Value.ToString().Contains("₱"))
+            {
+                amountpaid = decimal.Parse(txtAmountPaid.Value.ToString().Replace("₱", ""));
+            }
+            else
+            {
+                amountpaid = decimal.Parse(txtAmountPaid.Value.ToString().Replace("Php", ""));
+            }
+
+            if (amountdue == amountpaid || amountpaid > amountdue)
+            {
+                cmb_PaymentRemarks.SelectedValue = "Full";
+            }
+            else
+            {
+                cmb_PaymentRemarks.SelectedValue = "Partial";
+            }
+        }
     }
 }

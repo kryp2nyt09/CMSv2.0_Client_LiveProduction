@@ -98,6 +98,14 @@ namespace CMS2.DataAccess
             {
                 throw;
             }
+            catch(DataException dataEx)
+            {
+                throw;
+            }
+            catch(InvalidOperationException e)
+            {
+                throw;
+            }
             catch(Exception e)
             {
                 throw;

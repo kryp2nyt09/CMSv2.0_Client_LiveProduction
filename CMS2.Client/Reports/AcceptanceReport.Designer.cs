@@ -91,7 +91,7 @@ namespace CMS2.Client.Reports
             this.textBox15.Style.Font.Name = "Calibri";
             this.textBox15.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
             this.textBox15.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            this.textBox15.Value = "Commodity";
+            this.textBox15.Value = "Commodity Name";
             // 
             // textBox17
             // 
@@ -200,7 +200,7 @@ namespace CMS2.Client.Reports
             // table1
             // 
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(0.99466729164123535D)));
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(0.53350812196731567D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(0.53350824117660522D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(0.62543022632598877D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(1.0080307722091675D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(0.4501088559627533D)));
@@ -252,7 +252,7 @@ namespace CMS2.Client.Reports
             this.textBox16.Style.Font.Name = "Calibri";
             this.textBox16.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
             this.textBox16.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            this.textBox16.Value = "= Fields.CommodityType";
+            this.textBox16.Value = "= Fields.CommodityName";
             // 
             // textBox18
             // 

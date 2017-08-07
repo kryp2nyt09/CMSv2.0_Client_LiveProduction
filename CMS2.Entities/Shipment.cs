@@ -12,6 +12,7 @@ namespace CMS2.Entities
     public class Shipment : BaseEntity
     {
         [Key]
+        
         public Guid ShipmentId { get; set; }
         [Required]
         [MaxLength(8)]
@@ -40,6 +41,7 @@ namespace CMS2.Entities
         public Guid ShipperId { get; set; }
         [ForeignKey("ShipperId")]
         public virtual Client Shipper { get; set; }
+        [Required]
         public Guid AcceptedById { get; set; }
         [ForeignKey("AcceptedById")]
         public virtual Employee AcceptedBy { get; set; }
@@ -48,10 +50,13 @@ namespace CMS2.Entities
         public Guid CommodityTypeId { get; set; }
         [ForeignKey("CommodityTypeId")]
         public virtual CommodityType CommodityType { get; set; }
+       [Required]
         public Guid CommodityId { get; set; }
         public virtual Commodity Commodity { get; set; }
+        [Required]
         public Guid ServiceModeId { get; set; }
         public virtual ServiceMode ServiceMode { get; set; }
+        [Required]
         public Guid PaymentModeId { get; set; }
         public virtual PaymentMode PaymentMode { get; set; }
         public Guid PaymentTermId { get; set; }
@@ -94,6 +99,7 @@ namespace CMS2.Entities
         [DefaultValue(0)]
         public decimal Weight { get; set; }
         public List<PackageDimension> PackageDimensions { get; set; }
+
         public Guid BookingId { get; set; }
         [ForeignKey("BookingId")]
         public Booking Booking { get; set; }

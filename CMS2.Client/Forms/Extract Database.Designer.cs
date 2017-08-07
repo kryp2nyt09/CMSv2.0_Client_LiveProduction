@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Extract_Database));
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.dboBranchCoprOffice = new Telerik.WinControls.UI.RadDropDownList();
             this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
@@ -128,6 +129,7 @@
             // 
             // dboBranchCoprOffice
             // 
+            this.dboBranchCoprOffice.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.dboBranchCoprOffice.Location = new System.Drawing.Point(144, 327);
             this.dboBranchCoprOffice.Name = "dboBranchCoprOffice";
             this.dboBranchCoprOffice.Size = new System.Drawing.Size(198, 20);
@@ -445,6 +447,7 @@
             this.Controls.Add(this.ClientApp);
             this.Controls.Add(this.SubServer);
             this.Controls.Add(this.radPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Extract_Database";
             // 
             // 
