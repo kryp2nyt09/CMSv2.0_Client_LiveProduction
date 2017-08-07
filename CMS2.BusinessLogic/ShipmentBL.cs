@@ -590,7 +590,7 @@ namespace CMS2.BusinessLogic
             model.InsuranceAmount = insuranceCharge;
             model.ValuationAmount = valuation;
             model.FreightCharge = model.ShipmentSubTotal;
-            model.ShipmentTotal = (model.ShipmentSubTotal + model.ShipmentVatAmount);
+            model.ShipmentTotal = (Math.Round( model.ShipmentSubTotal,2) + Math.Round( model.ShipmentVatAmount,2));
             #endregion
 
             Logs.AppLogs(LogPath, "Shipment BL - ComputeCharges - Done");
