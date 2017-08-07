@@ -1105,7 +1105,42 @@ namespace CMS2.Client
         {
             CommodityTypeSelected();
         }
-        private void lstCommodityType_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
+
+        private void lstCommodityType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (lstCommodityType.SelectedIndex > -1)
+                {
+                    if (lstCommodityType.Items.Count > 0)
+                    {
+                        if (lstCommodityType.SelectedIndex >= 0)
+                        {
+                            Guid commodityTypeId = Guid.Parse(lstCommodityType.SelectedValue.ToString());
+                            commodityType = commodityTypes.Find(x => x.CommodityTypeId == commodityTypeId);
+                            shipment.CommodityTypeId = commodityTypeId;
+                            shipment.CommodityType = commodityTypes.Find(x => x.CommodityTypeId == commodityTypeId);
+
+                            var _commodities =
+                                commodities.Where(x => x.CommodityTypeId == commodityTypeId).OrderBy(x => x.CommodityName).ToList();
+                            lstCommodity.DataSource = _commodities;
+                            lstCommodity.DisplayMember = "CommodityName";
+                            lstCommodity.ValueMember = "CommodityId";
+                        }
+                        else
+                        {
+                            lstCommodityType.Focus();
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                
+            }
+            
+        }
+        private void lstCommodityType_SelectedIndexChanged(object sender, EventArgs e)
         {
             //CommodityTypeSelected();
             //if (lstCommodityType.SelectedIndex > -1)
@@ -1131,6 +1166,7 @@ namespace CMS2.Client
             //        }
             //    }
             //}
+          
         }
 
         private void txtWeight_KeyUp(object sender, KeyEventArgs e)
@@ -3012,11 +3048,12 @@ namespace CMS2.Client
             lstCommodityType.DataSource = bsCommodityType;
             lstCommodityType.DisplayMember = "CommodityTypeName";
             lstCommodityType.ValueMember = "CommodityTypeId";
-
+            
             lstCommodity.DataSource = bsCommodity;
             lstCommodity.DisplayMember = "CommodityName";
             lstCommodity.ValueMember = "CommodityId";
 
+            
             lstServiceType.DataSource = bsServiceType;
             lstServiceType.DisplayMember = "ServiceTypeName";
             lstServiceType.ValueMember = "ServiceTypeId";
@@ -3055,6 +3092,7 @@ namespace CMS2.Client
             //bsGoodsDescription.ResetBindings(false);
             //bsShipMode.ResetBindings(false);
             //bsTranshipmentLeg.ResetBindings(false);
+
 
             lstCommodityType.SelectedIndex = -1;
             lstCommodity.SelectedIndex = -1;
@@ -3251,7 +3289,8 @@ namespace CMS2.Client
                 shipment.DeclaredValue = Decimal.Parse(txtDeclaredValue.Value.ToString().Replace("₱", ""));
                 shipment.HandlingFee = Decimal.Parse(txtHandlingFee.Value.ToString().Replace("₱", ""));
                 shipment.QuarantineFee = Decimal.Parse(txtQuarantineFee.Value.ToString().Replace("₱", ""));
-                shipment.Discount = Decimal.Parse(txtRfa.Value.ToString());
+                shipment.Discount = (Decimal.Parse(txtRfa.Value.ToString())* 100);
+               
             }
             catch (Exception ex)
             {
@@ -3369,7 +3408,8 @@ namespace CMS2.Client
                 txtDeclaredValue.Text = shipment.DeclaredValueString;
                 txtHandlingFee.Text = shipment.HandlingFeeString;
                 txtQuarantineFee.Text = shipment.QuanrantineFeeString;
-                txtRfa.Text = (shipment.Discount * (Decimal)(.100)).ToString();
+                //txtRfa.Text = (shipment.Discount * (Decimal)(.100)).ToString();
+                txtRfa.Text = shipment.Discount.ToString();
                 txtNotes.Text = shipment.Notes;
                 chkNonVatable.Checked = false;
                 if (!shipment.IsVatable)
@@ -8447,6 +8487,6 @@ namespace CMS2.Client
             }
         }
 
-       
+        
     }
 }
