@@ -6,6 +6,7 @@ using CMS2.Client.Properties;
 using CMS2_Client;
 using System.Security.Principal;
 using System.Collections.Generic;
+using System.Net;
 
 namespace CMS2.Client
 {
@@ -19,9 +20,10 @@ namespace CMS2.Client
         {
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
-           
+            CheckForUpdate();
+
             bool xBool = Convert.ToBoolean(ConfigurationManager.AppSettings["isSync"]);
-            if (xBool)
+            if (!xBool)
             {
                 Extract_Database extract = new Extract_Database();
                 Application.Run(extract);
@@ -35,6 +37,14 @@ namespace CMS2.Client
                 Application.Run(cmsMainWindow);
             }
 
+        }
+
+        private static void CheckForUpdate()
+        {
+            using (System.Net.HttpClient hh = new System.Net.HttpClient())
+            {
+                
+            }
         }
     }
 }
