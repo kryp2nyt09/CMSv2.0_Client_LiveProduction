@@ -168,7 +168,7 @@ namespace CMS2_Client
         }
         private void Extract_Click(object sender, EventArgs e)
         {
-
+            //Use to clean all synchronization data in selected database
            //StartDeprovisionWholeServer();
 
             int index = dboBranchCoprOffice.SelectedItem.ToString().IndexOf(" ");

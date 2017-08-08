@@ -355,7 +355,8 @@ namespace CMS2.DataAccess
                 _context.Entry(model).State = EntityState.Modified;
             }
             catch (Exception ex)
-            {   
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 Logs.ErrorLogs("", "Cms Repository Update", ex);
                 throw;
             }
