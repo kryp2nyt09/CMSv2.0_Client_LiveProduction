@@ -177,33 +177,32 @@ namespace CMS2.BusinessLogic
             };
 
             entity.PackageDimensions = packageDimensionService.ModelsToEntities(model.PackageDimensions);// FilterActiveBy(x => x.ShipmentId == model.ShipmentId);
-            //entity.PackageDimensions = packageDimensionService.FilterActiveBy(x => x.ShipmentId == model.ShipmentId);
-            if (model.PeracFeeId != null)
+            if (model.PeracFeeId == null)
                 entity.PeracFee = model.PeracFee;
-            if (model.DeliveryFeeId != null)
+            if (model.DeliveryFeeId == null)
                 entity.DeliveryFee = model.DeliveryFee;
-            if (model.DangerousFeeId != null)
+            if (model.DangerousFeeId == null)
                 entity.DangerousFee = model.DangerousFee;
-            if (model.FreightCollectChargeId != null)
+            if (model.FreightCollectChargeId == null)
                 entity.FreightCollectCharge = model.FreightCollectCharge;
-            if (model.EvatId != null)
+            if (model.EvatId == null)
                 entity.EVat = model.EVat;
-            if (model.FuelSurchargeId != null)
+            if (model.FuelSurchargeId == null)
                 entity.FuelSurcharge = model.FuelSurcharge;
-            if (model.ValuationFactorId != null)
+            if (model.ValuationFactorId == null)
                 entity.ValuationFactor = model.ValuationFactor;
-            if (model.AwbFeeId != null)
+            if (model.AwbFeeId == null)
                 entity.AwbFee = model.AwbFee;
-            if (model.InsuranceId != null)
+            if (model.InsuranceId == null)
                 entity.Insurance = model.Insurance;
-            if (model.StatementOfAccountId != null)
-            {
-                entity.StatementOfAccount = soaService.GetById(Guid.Parse(model.StatementOfAccountId.ToString()));
-            }
+            //if (model.StatementOfAccountId == null)
+            //{
+            //    entity.StatementOfAccount = soaService.GetById(Guid.Parse(model.StatementOfAccountId.ToString()));
+            //}
 
             if (model.TransShipmentLegId != null && model.TransShipmentLegId != Guid.Empty)
             {
-                entity.TransShipmentLeg = model.TransShipmentLeg;
+                //entity.TransShipmentLeg = model.TransShipmentLeg;
             }
             else
             {
@@ -471,7 +470,7 @@ namespace CMS2.BusinessLogic
                     }
                     else
                     {
-                        insuranceCharge = model.PackageDimensions.Where(x=>x.RecordStatus==1).Sum(x => x.Evm) * model.Insurance.Amount;
+                        insuranceCharge = model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.Evm) * model.Insurance.Amount;
                     }
                 }
                 if (matrix.HasFuelCharge)
@@ -590,7 +589,7 @@ namespace CMS2.BusinessLogic
             model.InsuranceAmount = insuranceCharge;
             model.ValuationAmount = valuation;
             model.FreightCharge = model.ShipmentSubTotal;
-            model.ShipmentTotal = (Math.Round( model.ShipmentSubTotal,2) + Math.Round( model.ShipmentVatAmount,2));
+            model.ShipmentTotal = (Math.Round(model.ShipmentSubTotal, 2) + Math.Round(model.ShipmentVatAmount, 2));
             #endregion
 
             Logs.AppLogs(LogPath, "Shipment BL - ComputeCharges - Done");
@@ -601,7 +600,7 @@ namespace CMS2.BusinessLogic
         public ShipmentModel ComputePackageEvmCrating(ShipmentModel model)
         {
             CommodityType commodityType;
-            List<PackageDimensionModel> packageDimensions = model.PackageDimensions.Where(x=>x.RecordStatus ==1).ToList();
+            List<PackageDimensionModel> packageDimensions = model.PackageDimensions.Where(x => x.RecordStatus == 1).ToList();
             if (packageDimensions != null)
             {
                 if (packageDimensions.Count > 0)
@@ -667,6 +666,7 @@ namespace CMS2.BusinessLogic
                         {
                             if (packagings != null)
                             {
+                                //0.000035315 must be updated when the packaging is available
                                 decimal result = itemVolume * (decimal)0.000035315;
                                 if (packagings.Exists(x => result <= x.BaseMaximum && result >= x.BaseMinimum))
                                 {
@@ -799,7 +799,7 @@ namespace CMS2.BusinessLogic
 
                 if (matrix.ApplyEvm && !matrix.ApplyWeight)
                 {
-                    model.ChargeableWeight = model.PackageDimensions.Where(x=>x.RecordStatus ==1).Sum(x => x.Evm);
+                    model.ChargeableWeight = model.PackageDimensions.Where(x => x.RecordStatus == 1).Sum(x => x.Evm);
                 }
                 else if (!matrix.ApplyEvm && matrix.ApplyWeight)
                 {
@@ -897,6 +897,9 @@ namespace CMS2.BusinessLogic
             }
             else
             {
+                Shipment shipment = this.ModelToEntity(model);
+                this.Edit(shipment);
+
                 foreach (var modelDimension in model.PackageDimensions)
                 {
                     if (packageDimensionService.IsExist(x => x.PackageDimensionId == modelDimension.PackageDimensionId))
@@ -931,18 +934,10 @@ namespace CMS2.BusinessLogic
                             newDim.RecordStatus = model.RecordStatus;
                             packageDimensionService.Add(newDim);
                             modelDimension.PackageDimensionId = newDim.PackageDimensionId;
-                        }                       
-                        
+                        }
+
                     }
                 }
-
-                Shipment shipment = new Shipment();
-                List<PackageDimension> _dimensions = packageDimensionService.FilterBy(x => x.ShipmentId == model.ShipmentId).ToList();
-                shipment = this.ModelToEntity(model);
-                shipment.PackageDimensions = _dimensions;
-                this.Edit(shipment);
-
-                //Edit(this.ModelToEntity(shipment));
             }
         }
 
@@ -958,6 +953,8 @@ namespace CMS2.BusinessLogic
             }
             else
             {
+                Edit(entity);
+
                 var dimensions = packageDimensionService.FilterBy(x => x.ShipmentId == entity.ShipmentId);
                 foreach (var entityDimension in dimensions)
                 {
@@ -968,38 +965,42 @@ namespace CMS2.BusinessLogic
                 }
                 foreach (var modelDimension in entity.PackageDimensions)
                 {
-                    if (packageDimensionService.IsExist(x => x.ShipmentId == entity.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height))
+                    if (packageDimensionService.IsExist(x => x.PackageDimensionId == modelDimension.PackageDimensionId))
                     {
-                        var dim = packageDimensionService.FilterBy(x => x.ShipmentId == entity.ShipmentId && x.Length == modelDimension.Length && x.Width == modelDimension.Width && x.Height == modelDimension.Height).FirstOrDefault();
-                        dim.ModifiedBy = entity.ModifiedBy;
-                        dim.ModifiedDate = entity.ModifiedDate;
-                        dim.RecordStatus = entity.RecordStatus;
+                        var dim = packageDimensionService.FilterBy(x => x.PackageDimensionId == modelDimension.PackageDimensionId).FirstOrDefault();
+                        dim.ModifiedBy = modelDimension.ModifiedBy;
+                        dim.ModifiedDate = modelDimension.ModifiedDate;
+                        dim.RecordStatus = modelDimension.RecordStatus;
                         packageDimensionService.Edit(dim);
+
                     }
                     else
                     {
-                        PackageDimension newDim = new PackageDimension();
-                        newDim.PackageDimensionId = Guid.NewGuid();
-                        newDim.ShipmentId = entity.ShipmentId;
-                        newDim.Length = modelDimension.Length;
-                        newDim.Width = modelDimension.Width;
-                        newDim.Height = modelDimension.Height;
-                        newDim.CratingId = modelDimension.CratingId;
-                        newDim.Crating = modelDimension.Crating;
-                        newDim.PackagingId = modelDimension.PackagingId;
-                        newDim.Packaging = modelDimension.Packaging;
-                        newDim.DrainingId = modelDimension.DrainingId;
-                        newDim.DrainingFee = modelDimension.DrainingFee;
-                        newDim.CreatedDate = entity.ModifiedDate;
-                        newDim.CreatedBy = entity.ModifiedBy;
-                        newDim.ModifiedBy = entity.ModifiedBy;
-                        newDim.ModifiedDate = entity.ModifiedDate;
-                        newDim.RecordStatus = entity.RecordStatus;
-                        packageDimensionService.Add(newDim);
-                    }
-                }
+                        if (modelDimension.RecordStatus == (int)RecordStatus.Active)
+                        {
+                            PackageDimension newDim = new PackageDimension();
+                            newDim.PackageDimensionId = Guid.NewGuid();
+                            newDim.ShipmentId = entity.ShipmentId;
+                            newDim.Length = modelDimension.Length;
+                            newDim.Width = modelDimension.Width;
+                            newDim.Height = modelDimension.Height;
+                            newDim.CratingId = modelDimension.CratingId;
+                            newDim.Crating = modelDimension.Crating;
+                            newDim.DrainingId = modelDimension.DrainingId;
+                            newDim.DrainingFee = modelDimension.DrainingFee;
+                            newDim.PackagingId = modelDimension.PackagingId;
+                            newDim.Packaging = modelDimension.Packaging;
+                            newDim.CreatedBy = entity.ModifiedBy;
+                            newDim.CreatedDate = entity.ModifiedDate;
+                            newDim.ModifiedBy = entity.ModifiedBy;
+                            newDim.ModifiedDate = entity.ModifiedDate;
+                            newDim.RecordStatus = entity.RecordStatus;
+                            packageDimensionService.Add(newDim);
+                            modelDimension.PackageDimensionId = newDim.PackageDimensionId;
+                        }
 
-                Edit(entity);
+                    }
+                }            
             }
         }
 

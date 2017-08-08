@@ -1120,6 +1120,7 @@ namespace CMS2.Client.SyncHelper
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 Log.WriteErrorLogs(_tableName, ex);
                 state.table.Status = TableStatus.ErrorDeprovision;
                 Log.WriteLogs(_tableName + " has deprovision error.");

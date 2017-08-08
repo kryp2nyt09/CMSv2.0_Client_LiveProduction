@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using CMS2.DataAccess.Interfaces;
 using CMS2.Entities;
 using CMS2.Entities.Models;
+using System.Linq;
 
 namespace CMS2.BusinessLogic
 {
@@ -32,7 +33,11 @@ namespace CMS2.BusinessLogic
 
         public PackageDimension ModelToEntity(PackageDimensionModel model)
         {
-            PackageDimension entity = new PackageDimension();
+            PackageDimension entity = this.FilterBy(x => x.PackageDimensionId == model.PackageDimensionId).FirstOrDefault(); //new PackageDimension();
+            if (entity == null)
+            {
+                entity = new PackageDimension();
+            }
             entity.PackageDimensionId = model.PackageDimensionId;
             entity.ShipmentId = model.ShipmentId;
             entity.Shipment = model.Shipment;
@@ -49,8 +54,7 @@ namespace CMS2.BusinessLogic
             entity.CreatedDate = model.CreatedDate;
             entity.ModifiedBy = model.ModifiedBy;
             entity.ModifiedDate = model.ModifiedDate;
-            entity.RecordStatus = model.RecordStatus;
-         
+            entity.RecordStatus = model.RecordStatus;         
             
             return entity;
         }
