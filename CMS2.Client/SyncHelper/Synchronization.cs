@@ -520,7 +520,7 @@ namespace CMS2.Client.SyncHelper
 
                         filterColumn = "BookingId";
                         filterClause = "[side].[BookingId] IN (SELECT c.BookingId FROM " +
-                                        "((SELECT book.BookingId  FROM Booking as book " +
+                                        "((SELECT book.BookingId FROM Booking as book " +
                                         "left join RevenueUnit as ru on ru.RevenueUnitId = book.AssignedToAreaId " +
                                         "left join City as city on city.CityId = ru.CityId " +
                                         "where city.BranchCorpOfficeId = @BranchCorpOfficeId) " +
@@ -586,7 +586,7 @@ namespace CMS2.Client.SyncHelper
                         filterColumn = "PackageNumberId";
                         filterClause = "[side].[PackageNumberId] In (SELECT c.PackageNumberId FROM " +
                                         "((SELECT pack.PackageNumberId FROM PackageNumber as pack  " +
-                                        "left join   Shipment as ship on ship.ShipmentId = pack.ShipmentId  " +
+                                        "left join Shipment as ship on ship.ShipmentId = pack.ShipmentId  " +
                                         "left join Booking as book on book.BookingId = ship.BookingId  " +
                                         "left join RevenueUnit as ru on ru.RevenueUnitId = book.AssignedToAreaId  " +
                                         "left join City as city on city.CityId = ru.CityId  " +
@@ -620,9 +620,9 @@ namespace CMS2.Client.SyncHelper
                     case "PackageDimension":
 
                         filterColumn = "PackageDimensionId";
-                        filterClause = "[side].[PackageDimensionId] In (SELECT  c.PackageDimensionId FROM " +
+                        filterClause = "[side].[PackageDimensionId] In (SELECT c.PackageDimensionId FROM " +
                                         "((SELECT pack.PackageDimensionId FROM PackageDimension as pack " +
-                                        "left join   Shipment as ship on ship.ShipmentId = pack.ShipmentId " +
+                                        "left join Shipment as ship on ship.ShipmentId = pack.ShipmentId " +
                                         "left join Booking as book on book.BookingId = ship.BookingId " +
                                         "left join RevenueUnit as ru on ru.RevenueUnitId = book.AssignedToAreaId " +
                                         "left join City as city on city.CityId = ru.CityId " +
@@ -683,9 +683,9 @@ namespace CMS2.Client.SyncHelper
                     case "Payment":
 
                         filterColumn = "PaymentId";
-                        filterClause = "[side].[PaymentId] In (SELECT  c.PaymentId FROM " +
+                        filterClause = "[side].[PaymentId] In (SELECT c.PaymentId FROM " +
                                         "((SELECT pack.PaymentId FROM Payment as pack " +
-                                        "left join   Shipment as ship on ship.ShipmentId = pack.ShipmentId " +
+                                        "left join Shipment as ship on ship.ShipmentId = pack.ShipmentId " +
                                         "left join Booking as book on book.BookingId = ship.BookingId " +
                                         "left join RevenueUnit as ru on ru.RevenueUnitId = book.AssignedToAreaId " +
                                         "left join City as city on city.CityId = ru.CityId " +
@@ -775,9 +775,9 @@ namespace CMS2.Client.SyncHelper
                     case "Delivery":
 
                         filterColumn = "DeliveryId";
-                        filterClause = "[side].[DeliveryId] In (SELECT  c.DeliveryId FROM " +
+                        filterClause = "[side].[DeliveryId] In (SELECT c.DeliveryId FROM " +
                                         "((SELECT delivery.DeliveryId FROM Delivery as delivery " +
-                                        "left join   Shipment as ship on ship.ShipmentId = delivery.ShipmentId " +
+                                        "left join Shipment as ship on ship.ShipmentId = delivery.ShipmentId " +
                                         "left join Booking as book on book.BookingId = ship.BookingId " +
                                         "left join RevenueUnit as ru on ru.RevenueUnitId = book.AssignedToAreaId " +
                                         "left join City as city on city.CityId = ru.CityId " +
@@ -820,8 +820,8 @@ namespace CMS2.Client.SyncHelper
                                         "UNION  " +
                                         "(SELECT package.DeliveredPackageId from DeliveredPackage as package " +
                                         "LEFT JOIN Delivery delivery on delivery.DeliveryId = package.DeliveryId " +
-                                        "LEFT JOIN   Shipment as ship on ship.ShipmentId = delivery.DeliveryId " +
-                                        "LEFT JOIN Booking book ON book.BookingId = SHIP.BookingId " +
+                                        "LEFT JOIN Shipment as ship on ship.ShipmentId = delivery.DeliveryId " +
+                                        "LEFT JOIN Booking book ON book.BookingId = ship.BookingId " +
                                         "LEFT JOIN City c ON c.CityId = book.DestinationCityId  " +
                                         "LEFT JOIN BranchCorpOffice bco ON bco.BranchCorpOfficeId = c.BranchCorpOfficeId  " +
                                         "WHERE bco.BranchCorpOfficeId = @BranchCorpOfficeId)) c)";
@@ -846,10 +846,10 @@ namespace CMS2.Client.SyncHelper
                     case "DeliveryReceipt":
 
                         filterColumn = "DeliveryReceiptId";
-                        filterClause = "[side].[DeliveryReceiptId] In (SELECT  c.DeliveryReceiptId FROM " +
+                        filterClause = "[side].[DeliveryReceiptId] In (SELECT c.DeliveryReceiptId FROM " +
                                         "((SELECT reciept.DeliveryReceiptId from DeliveryReceipt as reciept " +
                                         "left join Delivery delivery on delivery.DeliveryId = reciept.DeliveryId " +
-                                        "left join   Shipment as ship on ship.ShipmentId = delivery.ShipmentId  " +
+                                        "left join Shipment as ship on ship.ShipmentId = delivery.ShipmentId  " +
                                         "left join Booking as book on book.BookingId = ship.BookingId  " +
                                         "left join RevenueUnit as ru on ru.RevenueUnitId = book.AssignedToAreaId  " +
                                         "left join City as city on city.CityId = ru.CityId  " +
@@ -857,7 +857,7 @@ namespace CMS2.Client.SyncHelper
                                         "UNION  " +
                                         "(SELECT reciept.DeliveryReceiptId from DeliveryReceipt as reciept " +
                                         "LEFT JOIN Delivery delivery on delivery.DeliveryId = reciept.DeliveryId " +
-                                        "LEFT JOIN   Shipment as ship on ship.ShipmentId = delivery.DeliveryId  " +
+                                        "LEFT JOIN Shipment as ship on ship.ShipmentId = delivery.DeliveryId  " +
                                         "LEFT JOIN Booking book ON book.BookingId = SHIP.BookingId " +
                                         "LEFT JOIN City c ON c.CityId = book.DestinationCityId  " +
                                         "LEFT JOIN BranchCorpOffice bco ON bco.BranchCorpOfficeId = c.BranchCorpOfficeId  " +

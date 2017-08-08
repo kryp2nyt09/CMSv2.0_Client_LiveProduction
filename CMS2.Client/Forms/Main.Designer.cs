@@ -3717,6 +3717,7 @@
             this.lstCommodity.Size = new System.Drawing.Size(208, 20);
             this.lstCommodity.TabIndex = 5;
             this.lstCommodity.ThemeName = "Office2010Black";
+            this.lstCommodity.SelectedIndexChanged += new Telerik.WinControls.UI.Data.PositionChangedEventHandler(this.lstCommodity_SelectedIndexChanged);
             this.lstCommodity.Enter += new System.EventHandler(this.lstCommodity_Enter);
             // 
             // txtNotes

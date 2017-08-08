@@ -1249,7 +1249,6 @@ namespace CMS2.Client
         private void btnSearchShipment_Click(object sender, EventArgs e)
         {
             Shipment _shipment = shipmentService.FilterActiveBy(x => x.AirwayBillNo.Equals(AcceptancetxtAirwayBill.Text.ToString())).FirstOrDefault();
-
             if (_shipment != null)
             {
                 AcceptanceLoadData();
