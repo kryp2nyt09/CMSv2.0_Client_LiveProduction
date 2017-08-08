@@ -7015,8 +7015,8 @@ namespace CMS2.Client
                         && x.PaymentSummaryStatus.PaymentSummaryStatusName == PaymentSummaryStatuses.Validated).Sum(x => x.AmountDue);
                     decimal totalAmountReceived = totalCashReceived + totalCheckReceived;
                     decimal totaltax = PaymentSummaryDetailsList.Where(x => x.PaymentSummaryStatus.PaymentSummaryStatusName == PaymentSummaryStatuses.Validated).Sum(x => x.TaxWithheld);
-                    decimal difference = totalAmountReceived - totaltax;
-
+                    //decimal difference = totalAmountReceived - totaltax;
+                    decimal difference = Convert.ToDecimal(txtTotalCollection.Text) - totalAmountReceived;
                     txtTotalCashReceived.Text = totalCashReceived.ToString("N2");
                     txtTotalCheckReceived.Text = totalCheckReceived.ToString("N2");
                     txtTotalAmntReceived.Text = totalAmountReceived.ToString("N2");
@@ -7049,8 +7049,8 @@ namespace CMS2.Client
                     decimal totalCheckReceived = PaymentSummaryDetailsList.Where(x => x.PaymentTypeName == PaymentTypes.Check
                         && x.PaymentSummaryStatus.PaymentSummaryStatusName == PaymentSummaryStatuses.Validated).Sum(x => x.AmountDue);
                     decimal totalAmountReceived = totalCashReceived + totalCheckReceived;
-                    decimal difference = totalAmountReceived - Convert.ToDecimal(txtTotalTax.Text);
-
+                    //decimal difference = totalAmountReceived - Convert.ToDecimal(txtTotalTax.Text);
+                    decimal difference = Convert.ToDecimal(txtTotalCollection.Text) - totalAmountReceived;
                     txtTotalCashReceived.Text = totalCashReceived.ToString("N2");
                     txtTotalCheckReceived.Text = totalCheckReceived.ToString("N2");
                     txtTotalAmntReceived.Text = totalAmountReceived.ToString("N2");
@@ -8465,7 +8465,5 @@ namespace CMS2.Client
                
             }
         }
-
-
     }
 }
