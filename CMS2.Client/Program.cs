@@ -41,10 +41,7 @@ namespace CMS2.Client
 
         private static void CheckForUpdate()
         {
-            //using (System.Net.WebClient client = new System.Net.WebClient())
-            //{
-            //    client.DownloadFile(@"C:\inetpub\wwwroot\CMSUpdate","version.xml");
-            //}
+            
         }
     }
 }
