@@ -499,7 +499,6 @@ namespace CMS2.DataAccess
             catch (Exception ex)
             {
                 Logs.ErrorLogs("", "Cms Repository GetPrimaryKey", ex);
-                throw;
             }
             return "";
         }

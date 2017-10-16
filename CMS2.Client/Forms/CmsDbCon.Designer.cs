@@ -704,6 +704,7 @@
             this.lblDown.Size = new System.Drawing.Size(44, 13);
             this.lblDown.TabIndex = 24;
             this.lblDown.Text = "label11";
+            this.lblDown.Visible = false;
             // 
             // lblUp
             // 
@@ -713,6 +714,7 @@
             this.lblUp.Size = new System.Drawing.Size(44, 13);
             this.lblUp.TabIndex = 25;
             this.lblUp.Text = "label11";
+            this.lblUp.Visible = false;
             // 
             // CmsDbCon
             // 

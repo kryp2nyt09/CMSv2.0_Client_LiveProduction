@@ -12,7 +12,7 @@ namespace CMS2.Common
         private static string AppLogFile;
         private static string ErrorLogFile;        
         
-        public static async Task AppLogs(string logpath, string functionName, string message = "")
+        public static async void AppLogs(string logpath, string functionName, string message = "")
         {
             LogDate = DateTime.Now;
             string _fileName = "\\AppLogs_" + LogFileDate(LogDate) + ".txt";
@@ -24,6 +24,26 @@ namespace CMS2.Common
         public static void ErrorLogs(string logpath,string functionName, Exception error)
         {
             
+            LogDate = DateTime.Now;
+            string _fileName = "\\ErrorLogs_" + LogFileDate(LogDate) + ".txt";
+            ErrorLogFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs";
+            System.IO.Directory.CreateDirectory(ErrorLogFile);
+            string message = error.Message;
+            if (error.InnerException != null)
+            {
+                message = message + Environment.NewLine + " :: Inner Exception :: " + error.InnerException.ToString();
+            }
+            if (error.StackTrace != null)
+            {
+                message = message + Environment.NewLine + " :: Stack Trace :: " + error.StackTrace.ToString();
+            }
+
+            File.AppendAllText(@ErrorLogFile + _fileName, LogDate.ToString("yyyy/MM/dd HH:mm:ss") + " :: " + functionName + " :: " + message + "\r\n");
+        }
+
+        public static void ErrorLogs( string functionName, Exception error)
+        {
+
             LogDate = DateTime.Now;
             string _fileName = "\\ErrorLogs_" + LogFileDate(LogDate) + ".txt";
             ErrorLogFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs";

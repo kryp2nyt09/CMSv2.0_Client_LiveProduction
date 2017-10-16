@@ -32,7 +32,7 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                Logs.AppLogs("", "CmsUoW constructor", ex.Message);
+                Logs.ErrorLogs("CmsUow Constructor", ex);
             }
            
         }
@@ -47,9 +47,8 @@ namespace CMS2.DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception();
-            }
-          
+                Logs.ErrorLogs("CmsUow Constructor", ex);
+            }          
         }
 
         public ICmsRepository<TEntity> Repository<TEntity>() where TEntity : class
@@ -93,22 +92,10 @@ namespace CMS2.DataAccess
                     }
                 }
                 throw raise;
-            }
-           catch(ValidationException e)
+            }          
+            catch(Exception ex)
             {
-                throw;
-            }
-            catch(DataException dataEx)
-            {
-                throw;
-            }
-            catch(InvalidOperationException e)
-            {
-                throw;
-            }
-            catch(Exception e)
-            {
-                throw;
+                Logs.ErrorLogs("CmsUow Save", ex);
             }
         }
 

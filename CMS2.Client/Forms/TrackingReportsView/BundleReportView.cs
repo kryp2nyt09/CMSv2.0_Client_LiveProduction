@@ -27,7 +27,8 @@ namespace CMS2.Client.Forms.TrackingReportsView
             txtDate.Value = ReportGlobalModel.Date;
             txtBundleNo.Value = ReportGlobalModel.SackNo;
             txtDestination.Value = ReportGlobalModel.Destination;
-            txtWeight.Value = ReportGlobalModel.Weight;
+            string wt = ReportGlobalModel.Weight + " kg/s.";
+            txtWeight.Value = wt;
 
             //txtRemarks.Value = TrackingReportGlobalModel.Remarks;
             txtScannedBy.Value = ReportGlobalModel.ScannedBy;

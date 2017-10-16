@@ -121,7 +121,7 @@ namespace CMS2.BusinessLogic
             return paymentTypeService.FilterActive();
         }
 
-        public new StatementOfAccountModel GetModelById(Guid id)
+        public  StatementOfAccountModel GetModelById(Guid id)
         {
             StatementOfAccount entity = base.GetById(id);
             if (entity != null)

@@ -4387,9 +4387,9 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]CMS2.Client.Primary output</td><td/></row>
-		<row><td>ProductCode</td><td>{8C7A66E5-58D0-4CA7-8D83-78A34DCC4E08}</td><td/></row>
+		<row><td>ProductCode</td><td>{636ADBAC-9741-4AF2-998A-78C51E7DD319}</td><td/></row>
 		<row><td>ProductName</td><td>APCargo</td><td/></row>
-		<row><td>ProductVersion</td><td>2.10.0001</td><td/></row>
+		<row><td>ProductVersion</td><td>2.3.7</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4679,7 +4679,7 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<col def="s72">ActionProperty</col>
 		<col def="S72">ISDisplayName</col>
 		<row><td>{00000000-0000-0000-0000-000000000000}</td><td>***ALL_VERSIONS***</td><td></td><td></td><td>2</td><td/><td>ISFOUNDNEWERPRODUCTVERSION</td><td>ISPreventDowngrade</td></row>
-		<row><td>{E985E0C0-5606-4E09-A944-3C9C39B08932}</td><td>2.0.0001</td><td>2.10.0001</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP2</td><td>NewUpgradeEntry</td></row>
+		<row><td>{E985E0C0-5606-4E09-A944-3C9C39B08932}</td><td>2.0.0001</td><td>2.3.7</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP2</td><td>NewUpgradeEntry</td></row>
 	</table>
 
 	<table name="Verb">

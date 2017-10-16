@@ -24,7 +24,7 @@ namespace AP_CARGO_SERVICE
 
         public Synchronization()
         {
-            this.ClientConnection = new SqlConnection( Settings.Default.LocalConnectionString);
+            this.ClientConnection = new SqlConnection(Settings.Default.LocalConnectionString);
             this.ServerConnection = new SqlConnection(Settings.Default.ServerConnectionString);
             this.Filter = Settings.Default.Filter;
             this.DeviceBranchCorpOfficeID = Settings.Default.BranchCorpOfficeId.ToString();
@@ -48,6 +48,7 @@ namespace AP_CARGO_SERVICE
                 }
                 catch (Exception ex)
                 {
+                    Log.WriteErrorLogs(ex);
                 }
             }
 
@@ -126,7 +127,15 @@ namespace AP_CARGO_SERVICE
                 case "Booking":
                 case "Client":
                 case "Bundle":
-
+                case "GatewayTransmittal":
+                case "GatewayOutbound":
+                case "GatewayInbound":
+                case "HoldCargo":
+                case "Distribution":
+                case "Segregation":
+                case "CargoTransfer":
+                case "BranchAcceptance":
+                case "Unbundle":
 
                     try
                     {
@@ -155,17 +164,7 @@ namespace AP_CARGO_SERVICE
                     break;
 
                 case "PaymentSummary":
-                case "BranchAcceptance":
-                case "GatewayTransmittal":
-                case "GatewayOutbound":
-                case "GatewayInbound":
-                case "Unbundle":
-                case "HoldCargo":
-                case "Distribution":
-                case "Segregation":
-                case "CargoTransfer":
-
-
+                                
                     try
                     {
                         syncOrchestrator.Direction = SyncDirectionOrder.Upload;
@@ -336,7 +335,7 @@ namespace AP_CARGO_SERVICE
                                         "LEFT JOIN Booking book ON book.BookingId = SHIP.BookingId " +
                                         "LEFT JOIN City c ON c.CityId = book.DestinationCityId  " +
                                         "LEFT JOIN BranchCorpOffice bco ON bco.BranchCorpOfficeId = c.BranchCorpOfficeId  " +
-                                        "WHERE bco.BranchCorpOfficeId = @BranchCorpOfficeId)) c)"; 
+                                        "WHERE bco.BranchCorpOfficeId = @BranchCorpOfficeId)) c)";
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
@@ -564,7 +563,7 @@ namespace AP_CARGO_SERVICE
                     default:
                         ProvisionServer(_tableName);
                         ProvisionClient(_tableName);
-                       
+
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
@@ -572,7 +571,8 @@ namespace AP_CARGO_SERVICE
                 }
             }
             catch (Exception ex)
-            {                
+            {
+                Log.WriteErrorLogs(ex);
                 state.table.Status = TableStatus.ErrorProvision;
                 state.worker.ReportProgress(1, _tableName + " has provision error.");
                 Log.WriteLogs(_tableName + " has provision error.");
@@ -799,17 +799,17 @@ namespace AP_CARGO_SERVICE
 
     }
 
-     static class Log
+    static class Log
     {
         private static string _fileName = "\\" + DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString() + ".txt";
-        public static void WriteLogs(string Logs)
+        public static async void WriteLogs(string Logs)
         {
             string _filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs\\SyncTransactionLogs";
             System.IO.Directory.CreateDirectory(_filepath);
             System.IO.File.AppendAllText(_filepath + _fileName, Environment.NewLine + DateTime.Now.ToString() + " :: " + Logs);
         }
 
-        public static void WriteErrorLogs(Exception ex)
+        public static async void WriteErrorLogs(Exception ex)
         {
             string _filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs\\SyncErrorLogs";
             System.IO.Directory.CreateDirectory(_filepath);
@@ -817,7 +817,7 @@ namespace AP_CARGO_SERVICE
             System.IO.File.AppendAllText(_filepath + _fileName, Environment.NewLine + DateTime.Now.ToString() + " :: " + ex.StackTrace.ToString());
         }
 
-        public static  void WriteErrorLogs(string Location, Exception ex)
+        public static async void WriteErrorLogs(string Location, Exception ex)
         {
             string _filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\APCARGO\\Logs\\SyncErrorLogs";
             System.IO.Directory.CreateDirectory(_filepath);

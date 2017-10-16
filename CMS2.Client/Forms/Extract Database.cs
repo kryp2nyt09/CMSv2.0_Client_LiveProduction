@@ -40,8 +40,7 @@ namespace CMS2_Client
         private string _mainConnectionString { get; set; }
         private string _filter { get; set; }
         public string _branchCorpOfficeId { get; set; }
-        private Synchronization _synchronization;
-        private List<BranchCorpOffice> _branchCorpOffices;
+
         private List<SyncTables> _entities;
 
         private string fileName = @"C:\Program Files (x86)\APCargo\APCargo\AP CARGO SERVICE.exe.config";
@@ -168,8 +167,7 @@ namespace CMS2_Client
         }
         private void Extract_Click(object sender, EventArgs e)
         {
-            //Use to clean all synchronization data in selected database
-           //StartDeprovisionWholeServer();
+
 
             int index = dboBranchCoprOffice.SelectedItem.ToString().IndexOf(" ");
             _filter = dboBranchCoprOffice.SelectedItem.ToString().Substring(0, index);
@@ -344,8 +342,11 @@ namespace CMS2_Client
         {
             using (SqlConnection connection = new SqlConnection(_localConnectionString))
             {
-                using (SqlCommand command = new SqlCommand("Select COUNT(*) from master.dbo.sysdatabases where name = '" + _localDbName + "'", connection))
+                using (SqlCommand command = new SqlCommand())
                 {
+                    command.Connection = connection;
+                    command.CommandText = "Select COUNT(*) from master.dbo.sysdatabases where name = @localDbName";
+                    command.Parameters.AddWithValue("@localDbName", _localDbName);
                     try
                     {
                         connection.Open();
@@ -353,13 +354,14 @@ namespace CMS2_Client
 
                         if (count == 1)
                         {
-                            command.CommandText = "Use master alter database[" + _localDbName + "] set single_user with rollback immediate; DROP DATABASE [" + _localDbName + "]";
+                            command.CommandText = "Use master alter database [@localDbName] set single_user with rollback immediate; DROP DATABASE [@localDbName]";
                             command.ExecuteNonQuery();
                             Worker.ReportProgress(0, "Database was dropped.");
                         }
                     }
                     catch (Exception ex)
                     {
+                        Logs.ErrorLogs("DropDatabaseIfExist", ex);
                         Worker.ReportProgress(0, "Database was unable to drop.");
                     }
                 }
@@ -370,8 +372,11 @@ namespace CMS2_Client
         {
             using (SqlConnection connection = new SqlConnection(_localConnectionString))
             {
-                using (SqlCommand command = new SqlCommand("Create Database " + _localDbName, connection))
+                using (SqlCommand command = new SqlCommand())
                 {
+                    command.Connection = connection;
+                    command.CommandText = "Create Database @localDbName";
+                    command.Parameters.AddWithValue("@localDbName", _localDbName);
                     try
                     {
                         connection.Open();
@@ -380,6 +385,7 @@ namespace CMS2_Client
                     }
                     catch (Exception ex)
                     {
+                        Log.WriteErrorLogs("CreateDatabase", ex);
                         Worker.ReportProgress(0, "Unable to create database " + _localDbName + ".");
                     }
                 }
@@ -392,20 +398,20 @@ namespace CMS2_Client
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("SELECT * FROM BranchCorpOffice ORDER BY BranchCorpOfficeName ASC", connectionString);
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-                    DataTable dt = new DataTable();
-                    dataAdapter.Fill(dt);
+                    using (SqlCommand command = new SqlCommand("SELECT * FROM BranchCorpOffice ORDER BY BranchCorpOfficeName ASC", connectionString))
+                    {
+                        SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                        DataTable dt = new DataTable();
+                        dataAdapter.Fill(dt);
 
-                    dboBranchCoprOffice.ValueMember = "BranchCorpOfficeId";
-                    dboBranchCoprOffice.DisplayMember = "BranchCorpOfficeName";
-                    dboBranchCoprOffice.DataSource = dt;
-
-                    connectionString.Close();
+                        dboBranchCoprOffice.ValueMember = "BranchCorpOfficeId";
+                        dboBranchCoprOffice.DisplayMember = "BranchCorpOfficeName";
+                        dboBranchCoprOffice.DataSource = dt;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // MessageBox.Show("Error occured!");
+                    Log.WriteErrorLogs("LoadBranchAcceptance", ex);
                 }
             }
         }
@@ -425,7 +431,7 @@ namespace CMS2_Client
                     LocalServer.Focus();
                     isValid = false;
                 }
-              
+
             }
             return isValid;
         }
@@ -444,7 +450,7 @@ namespace CMS2_Client
         {
             List<string> list = new List<string>(){"AccountStatus", "AccountType", "AdjustmentReason", "ApplicableRate", "ApplicationSetting",
                 "ApprovingAuthority", "Company", "Employee", "RevenueUnit", "City", "BranchCorpOffice", "Cluster", "Province", "Region",
-                "Group", "RevenueUnitType", "Department", "Position", "BillingPeriod", "BusinessType", "Client", "Industry", 
+                "Group", "RevenueUnitType", "Department", "Position", "BillingPeriod", "BusinessType", "Client", "Industry",
                 "OrganizationType", "PaymentMode", "PaymentTerm", "AwbIssuance", "Batch", "BookingRemark", "Booking", "BookingStatus",
                 "BranchAcceptance", "Remarks", "Bundle", "CargoTransfer", "Reason", "Status", "User", "Claim", "Role", "Commodity",
                 "CommodityType", "WeightBreak", "DeliveredPackage", "Delivery", "DeliveryReceipt", "DeliveryRemark", "DeliveryStatus",
@@ -484,6 +490,7 @@ namespace CMS2_Client
                 }
                 catch (Exception ex)
                 {
+                    Logs.ErrorLogs("ReplicateDatabase", ex);
                 }
             }
         }
@@ -509,7 +516,7 @@ namespace CMS2_Client
                 }
                 catch (Exception ex)
                 {
-
+                    Logs.ErrorLogs("ProvisionForReplication", ex);
                 }
             }
         }
@@ -531,6 +538,7 @@ namespace CMS2_Client
                 }
                 catch (Exception ex)
                 {
+                    Logs.ErrorLogs("StartSynchronization", ex);
                 }
             }
         }
@@ -556,7 +564,7 @@ namespace CMS2_Client
                 }
                 catch (Exception ex)
                 {
-
+                    Log.WriteErrorLogs("StartProvision", ex);
                 }
             }
         }
@@ -580,6 +588,7 @@ namespace CMS2_Client
                 }
                 catch (Exception ex)
                 {
+                    Logs.ErrorLogs("StartDeprovisionServer", ex);
                 }
             }
         }

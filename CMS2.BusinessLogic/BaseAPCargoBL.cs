@@ -7,6 +7,7 @@ using CMS2.DataAccess;
 using CMS2.DataAccess.Interfaces;
 using CMS2.Entities;
 using System.Windows.Forms;
+using CMS2.Common;
 
 namespace CMS2.BusinessLogic
 {
@@ -18,6 +19,7 @@ namespace CMS2.BusinessLogic
 
         public BaseAPCargoBL()
         {
+            
             this._unitOfWork = new CmsUoW();
             this._entityRepository = _unitOfWork.Repository<TEntity>();
         }
@@ -127,7 +129,7 @@ namespace CMS2.BusinessLogic
             }
             catch (Exception ex)
             {
-                throw;
+                Logs.ErrorLogs("BaseAPCargoBL Add", ex);
 
             }
         }
@@ -194,7 +196,7 @@ namespace CMS2.BusinessLogic
             }
             catch (Exception ex)
             {
-                throw;
+                Logs.ErrorLogs("BaseAPCargoBL - SaveChanges", ex);
             }
 
         }

@@ -37,6 +37,8 @@ namespace CMS2.Entities
 
         public Guid ShipmentId { get; set; }
 
+        public Guid? PackageNumberId { get; set; }
+
         public Guid ConsigneeID { get; set; }
 
         public Guid PaymentModeID { get; set; }

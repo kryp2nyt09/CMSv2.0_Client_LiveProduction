@@ -19,10 +19,11 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.ComponentModel;
 using CMS2.Entities;
 using CMS2.Entities.ReportModel;
+using CMS2.Common;
 
 namespace CMS2.Client.SyncHelper
 {
-    public class Synchronization
+    public class Synchronization : IDisposable
     {
 
         private SqlConnection ServerConnection;
@@ -140,6 +141,7 @@ namespace CMS2.Client.SyncHelper
                 }
                 catch (Exception ex)
                 {
+                    Logs.ErrorLogs("Synchronize", ex);
                 }
             }
 
@@ -263,12 +265,12 @@ namespace CMS2.Client.SyncHelper
             {
                 //ObjectContext objContext = ((IObjectContextAdapter)context).ObjectContext;
                 //MetadataWorkspace workspace = objContext.MetadataWorkspace;
-                
+
                 //IEnumerable<EntityType> tables = workspace.GetItems<EntityType>(DataSpace.SSpace);
 
                 List<string> list = new List<string>(){"AccountStatus", "AccountType", "AdjustmentReason", "ApplicableRate", "ApplicationSetting",
                 "ApprovingAuthority", "Company", "Employee", "RevenueUnit", "City", "BranchCorpOffice", "Cluster", "Province", "Region",
-                "Group", "RevenueUnitType", "Department", "Position", "BillingPeriod", "BusinessType", "Client", "Industry", 
+                "Group", "RevenueUnitType", "Department", "Position", "BillingPeriod", "BusinessType", "Client", "Industry",
                 "OrganizationType", "PaymentMode", "PaymentTerm", "AwbIssuance", "Batch", "BookingRemark", "Booking", "BookingStatus",
                 "BranchAcceptance", "Remarks", "Bundle", "CargoTransfer", "Reason", "Status", "User", "Claim", "Role", "Commodity",
                 "CommodityType", "WeightBreak", "DeliveredPackage", "Delivery", "DeliveryReceipt", "DeliveryRemark", "DeliveryStatus",
@@ -290,6 +292,44 @@ namespace CMS2.Client.SyncHelper
             }
         }
 
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    ServerConnection.Dispose();
+                    ClientConnection.Dispose();
+
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~Synchronization() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+
     }
 
     public class Synchronize
@@ -300,7 +340,7 @@ namespace CMS2.Client.SyncHelper
         private SqlConnection _localConnection;
         private SqlConnection _serverConnection;
         private string _filter;
-        
+
         ThreadState State;
 
         public Synchronize(string tableName, string filter, ManualResetEvent currentEvent, SqlConnection localConnection, SqlConnection serverConnection)
@@ -319,9 +359,9 @@ namespace CMS2.Client.SyncHelper
             syncOrchestrator.LocalProvider = new SqlSyncProvider(_tableName + _filter, _localConnection);
             syncOrchestrator.RemoteProvider = new SqlSyncProvider(_tableName + _filter, _serverConnection);
             SyncOperationStatistics syncStats;
-            
+
             State.worker.ReportProgress(0, _tableName + " was synchronizing.");
-            
+
             switch (_tableName)
             {
                 case "Shipment":
@@ -336,8 +376,8 @@ namespace CMS2.Client.SyncHelper
                 case "DeliveryReceipt":
                 case "Booking":
                 case "Client":
-                case "Bundle":                    
-                    
+                case "Bundle":
+
 
                     try
                     {
@@ -369,7 +409,7 @@ namespace CMS2.Client.SyncHelper
                 case "BranchAcceptance":
                 case "GatewayTransmittal":
                 case "GatewayOutbound":
-                case "GatewayInbound":                
+                case "GatewayInbound":
                 case "Unbundle":
                 case "HoldCargo":
                 case "Distribution":
@@ -475,7 +515,7 @@ namespace CMS2.Client.SyncHelper
 
     }
 
-    public class Provision
+    public class Provision : IDisposable
     {
 
         SqlConnection _serverConnection;
@@ -532,7 +572,7 @@ namespace CMS2.Client.SyncHelper
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -542,7 +582,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
@@ -565,7 +605,7 @@ namespace CMS2.Client.SyncHelper
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -575,7 +615,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
@@ -601,7 +641,7 @@ namespace CMS2.Client.SyncHelper
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -611,7 +651,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
@@ -637,7 +677,7 @@ namespace CMS2.Client.SyncHelper
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -647,7 +687,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
@@ -665,7 +705,7 @@ namespace CMS2.Client.SyncHelper
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -675,7 +715,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
@@ -700,7 +740,7 @@ namespace CMS2.Client.SyncHelper
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -710,7 +750,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
@@ -727,7 +767,7 @@ namespace CMS2.Client.SyncHelper
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
 
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -737,7 +777,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
 
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
@@ -756,7 +796,7 @@ namespace CMS2.Client.SyncHelper
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
 
-                        
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -766,7 +806,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
 
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
@@ -801,7 +841,7 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
 
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
@@ -828,7 +868,7 @@ namespace CMS2.Client.SyncHelper
                         param = new SqlParameter("@BranchCorpOfficeId", SqlDbType.UniqueIdentifier);
 
                         CreateTemplate(_tableName, filterColumn, filterClause, param);
-                                               
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName, param, _branchCorpOfficeId);
@@ -875,14 +915,14 @@ namespace CMS2.Client.SyncHelper
                         {
                             flag = ProvisionClient(_tableName);
                         }
-                        
+
 
                         state.table.Status = TableStatus.Provisioned;
                         state.worker.ReportProgress(1, _tableName + " was provisioned.");
                         Log.WriteLogs(_tableName + " was provisioned.");
                         break;
                     default:
-                       
+
                         while (!flag)
                         {
                             flag = ProvisionServer(_tableName);
@@ -903,14 +943,14 @@ namespace CMS2.Client.SyncHelper
             {
                 state.table.Status = TableStatus.ErrorProvision;
                 state.worker.ReportProgress(1, _tableName + " has provision error.");
-                Log.WriteLogs(_tableName + " has provision error.");
+                Log.WriteLogs(_tableName + " has provision error." + ex.Message);
             }
             state._event.Set();
         }
 
         public void PrepareDatabaseForReplication(Object obj)
         {
-            SqlParameter param;
+
             ThreadState state = (ThreadState)obj;
             try
             {
@@ -927,7 +967,7 @@ namespace CMS2.Client.SyncHelper
                 state._event.Set();
                 state.table.Status = TableStatus.ErrorProvision;
                 state.worker.ReportProgress(1, _tableName + " has provision error.");
-                Log.WriteLogs(_tableName + " has provision error.");
+                Log.WriteLogs(_tableName + " has provision error." + ex.Message);
             }
         }
 
@@ -945,7 +985,7 @@ namespace CMS2.Client.SyncHelper
 
                 // create a server scope provisioning object based on the tableNameScope
                 SqlSyncScopeProvisioning serverProvision = new SqlSyncScopeProvisioning(_serverConnection, scopeDesc);
-                
+
                 // start the provisioning process
                 if (!serverProvision.ScopeExists(scopeDesc.ScopeName))
                 {
@@ -1026,8 +1066,8 @@ namespace CMS2.Client.SyncHelper
             catch (Exception)
             {
                 return false;
-            }   
-           
+            }
+
         }
 
         private void CreateTemplate(string TableName, string filterColumn, string filterClause, SqlParameter param)
@@ -1090,10 +1130,47 @@ namespace CMS2.Client.SyncHelper
             serverTemplate.Tables[TableName].FilterParameters.Add(param);
         }
 
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    _localConnection.Dispose();
+                    _serverConnection.Dispose();
+                    _currentEvent.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~Provision() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
 
     }
 
-    class Deprovision
+    class Deprovision : IDisposable
     {
         private SqlConnection _connection;
         private ManualResetEvent _currentEvent;
@@ -1114,7 +1191,7 @@ namespace CMS2.Client.SyncHelper
             try
             {
                 SqlSyncScopeDeprovisioning storeClientDeprovision = new SqlSyncScopeDeprovisioning(_connection);
-                storeClientDeprovision.DeprovisionScope(this._tableName + this._filter);                
+                storeClientDeprovision.DeprovisionScope(this._tableName + this._filter);
                 state.table.Status = TableStatus.Deprovisioned;
                 Log.WriteLogs(_tableName + " was deprovisioned.");
             }
@@ -1161,6 +1238,11 @@ namespace CMS2.Client.SyncHelper
             }
         }
 
+        public void Dispose()
+        {
+            _connection.Dispose();
+            _currentEvent.Dispose();
+        }
     }
 
     static class Log
@@ -1191,7 +1273,7 @@ namespace CMS2.Client.SyncHelper
         }
     }
 
-    public class ThreadState
+    public class ThreadState : IDisposable
     {
         public ManualResetEvent _event = new ManualResetEvent(false);
 
@@ -1202,6 +1284,44 @@ namespace CMS2.Client.SyncHelper
         public BindingList<Booking> bindingList;
 
         public int count;
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    _event.Dispose();
+                    worker.Dispose();                    
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~ThreadState() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+
     }
 }
 

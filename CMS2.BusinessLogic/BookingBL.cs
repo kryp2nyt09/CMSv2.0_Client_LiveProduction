@@ -45,7 +45,7 @@ namespace CMS2.BusinessLogic
                 Add(entity);
             }
             else
-            {
+            {                
                 Edit(entity);
             }
         }

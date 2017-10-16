@@ -61,6 +61,30 @@ namespace CMS2.BusinessLogic
             return result;
         }
 
+        public ExpressRate GetExpressRateByRoro(Guid MatrixId, City originCity, City destinationCity)
+        {
+            ExpressRate result = null;
+            //Check PER City
+            result = FilterActiveBy(x => x.OriginCity.CityId == originCity.CityId && x.DestinationCity.CityId == destinationCity.CityId && x.RateMatrixId == MatrixId).FirstOrDefault();
+            if (result == null)
+            {
+                result = FilterActiveBy(x => x.OriginCity.CityId == destinationCity.CityId && x.DestinationCity.CityId == destinationCity.CityId && x.RateMatrixId == MatrixId).FirstOrDefault();
+            }
+
+            //If result is still null
+            //Check PER BranchCorpOffice and get the first value if EXIST           
+            if (result == null)
+            {
+                result = FilterActiveBy(x => x.OriginCity.BranchCorpOfficeId == originCity.BranchCorpOfficeId && x.DestinationCity.BranchCorpOfficeId == destinationCity.BranchCorpOfficeId).FirstOrDefault();
+                if (result == null)
+                {
+                    result = FilterActiveBy(x => x.OriginCity.BranchCorpOfficeId == destinationCity.BranchCorpOfficeId && x.OriginCity.BranchCorpOfficeId == destinationCity.BranchCorpOfficeId).FirstOrDefault();
+                }
+            }
+            
+            return result;
+        }
+
         public List<City> GetOriginCitiesByMatrixId(Guid id)
         {
             return FilterActiveBy(x => x.RateMatrixId == id).Select(x => x.OriginCity).Distinct().ToList();

@@ -161,6 +161,7 @@ namespace CMS2.DataAccess
             modelBuilder.Entity<Distribution>().HasRequired(x => x.Shipment).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<Distribution>().HasRequired(x => x.PaymentMode).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<Distribution>().HasRequired(x => x.ServiceMode).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Distribution>().Property(x => x.PackageNumberId).IsOptional();
 
             modelBuilder.Entity<ExpressRate>().Property(x => x.C1to5Cost).HasPrecision(9, 2);
             modelBuilder.Entity<ExpressRate>().Property(x => x.C6to49Cost).HasPrecision(9, 2);

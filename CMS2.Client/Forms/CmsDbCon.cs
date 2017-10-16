@@ -23,9 +23,7 @@ namespace CMS2.Client
     {
 
         #region Properties
-
-        private XmlNodeList settings;
-
+        
         private bool isLocalConnected { get; set; }
         private bool isMainConnected { get; set; }
         private string _localServer { get; set; }
@@ -62,8 +60,6 @@ namespace CMS2.Client
         private bool isProvision = true;
         private bool isDeprovisionClient = true;
         private bool IsDeprovisionServer = true;
-
-        private int DoneCount = 0;
 
         private bool isRenew = false;
 
@@ -619,6 +615,7 @@ namespace CMS2.Client
             }
             catch (Exception ex)
             {
+                Logs.ErrorLogs("CmsDbCon - GatherInputs", ex);
                 return false;
             }
 
@@ -670,6 +667,7 @@ namespace CMS2.Client
                 }
                 catch (Exception ex)
                 {
+                    Logs.ErrorLogs("StartProvision", ex);
                 }
             }
         }
@@ -694,7 +692,7 @@ namespace CMS2.Client
                 }
                 catch (Exception ex)
                 {
-
+                    Logs.ErrorLogs("StartDeprovisionClient", ex);
                 }
             }
         }
@@ -734,6 +732,7 @@ namespace CMS2.Client
                 }
                 catch (Exception ex)
                 {
+                    Log.WriteErrorLogs("CmsDbCon - StartDeprovisionServer", ex);
                 }
             }
         }

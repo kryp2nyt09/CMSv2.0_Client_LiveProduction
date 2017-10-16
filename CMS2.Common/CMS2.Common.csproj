@@ -48,9 +48,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CMS2.DataAccess">
-      <HintPath>..\..\CMS-Clientv2.0\CMS2.BusinessLogic\bin\Debug\CMS2.DataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\CMS-Clientv2.0\CMS2.BusinessLogic\bin\Debug\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
